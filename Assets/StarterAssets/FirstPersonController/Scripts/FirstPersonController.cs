@@ -119,7 +119,10 @@ namespace StarterAssets
 
 		private void LateUpdate()
 		{
-			CameraRotation();
+			if (Cursor.lockState == CursorLockMode.Locked)
+			{
+				CameraRotation();
+			}
 		}
 
 		private void GroundedCheck()
