@@ -8,15 +8,19 @@ public class RayCast : MonoBehaviour
 
     public LayerMask layerMask;
 
+    private Hand_Raycast HandRC;
+
     private Camera mainCamera;
 
     private InputAction interact;
 
     private Quest_Manager QM;
 
-    private GameObject questObject;
+    public GameObject questObject;
 
     private GameObject instanceObject;
+
+    
 
     private void FindQM()
     {
@@ -30,6 +34,8 @@ public class RayCast : MonoBehaviour
         interact = GameObject.Find("PlayerCapsule").GetComponent<PlayerInput>().actions.FindAction("Interact");
 
         QM = GameObject.Find("Quest_Manager").GetComponent<Quest_Manager>();
+
+        HandRC = gameObject.GetComponentInChildren<Hand_Raycast>();
 
     }
 
@@ -48,15 +54,29 @@ public class RayCast : MonoBehaviour
             {
                 hit.collider.gameObject.GetComponent<Interaction_MenuTest>().Show_UI();
                 questObject = hit.collider.gameObject;
+                Debug.Log(questObject.name);
                 instanceObject = hit.collider.gameObject.GetComponent<Instantiate_Collection>().intanceObjects[0];
                 //Debug.Log(QM.isDoingQuest);
             }
-            else if(hit.collider.tag == "Shelf" && interact.WasPressedThisFrame() && QM.isDoingQuest && !QM.shelfQuestCompleted)
+
+            if(hit.collider.tag == "ProduceCan" && QM.isDoingQuest && !QM.shelfQuestCompleted)
+            {
+                Debug.Log("RayCast Hit");
+                Debug.Log(HandRC.name);
+                if (interact.WasPressedThisFrame())
+                {
+                    Destroy(hit.collider.gameObject);
+                    Debug.Log("RayCast executed");
+                    HandRC.PickUpObject(0);
+                }
+                
+            }
+            /*else if(hit.collider.tag == "Shelf" && interact.WasPressedThisFrame() && QM.isDoingQuest && !QM.shelfQuestCompleted)
             {
                 Instantiate(instanceObject, hit.point, transform.rotation);
                 questObject.GetComponent<actionsScript>().PlaceObject();
 
-            }
+            }*/
 
             /*if(hit.collider.tag == "shelfProduce" && interact.WasPressedThisFrame())
             {

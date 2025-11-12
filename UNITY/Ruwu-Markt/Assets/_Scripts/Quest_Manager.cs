@@ -59,8 +59,9 @@ public class Quest_Manager : MonoBehaviour
     }
 
     //Completes Quests by setting bools and resets doingQuest bool, so other quests ca nbe started
-    public void CompleteQuest (int questType)
+    public void CompleteQuest (int questType, int questVariant, GameObject actionObject)
     {
+        actionsScript aS = actionObject.GetComponent<actionsScript>();
         switch (questType)
         {
             case 0:
@@ -68,7 +69,23 @@ public class Quest_Manager : MonoBehaviour
                 shelfQuestText.text = defaultQuestText;
                 shelfQuestText.fontStyle = FontStyles.Strikethrough;
                 isDoingQuest = false;
+                switch (questVariant)
+                {
+                    case 0:
+                        aS.TriggerSanityChange(questVariant);
+                        break;
+                    case 1:
+                        aS.TriggerSanityChange(questVariant);
+                        break;
+                    case 2:
+                        aS.TriggerSanityChange(questVariant);
+                        break;
+                    case 3:
+                        aS.TriggerSanityChange(questVariant);
+                        break;
+                }
                 break;
+                
         }
 
         CheckDayCompletion();
