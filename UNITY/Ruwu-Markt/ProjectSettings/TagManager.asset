@@ -8,6 +8,7 @@ TagManager:
   - Block
   - PourPuddle
   - Shelf
+  - ProduceCan
   layers:
   - Default
   - TransparentFX
