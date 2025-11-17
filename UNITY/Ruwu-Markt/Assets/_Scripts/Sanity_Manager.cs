@@ -1,11 +1,14 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Sanity_Manager : MonoBehaviour
 {
     public TMP_Text sanityCounter;
 
     public TMP_Text jobSecCounter;
+
+    public SanitySpriteChanger SanitySprite;
 
     public int sanity;
 
@@ -17,6 +20,8 @@ public class Sanity_Manager : MonoBehaviour
         sanity = Mathf.Clamp(50, 0, 100);
 
         jobSecurity = Mathf.Clamp(50, 0, 100);
+
+        SanitySprite.CheckSanitySprite();
     }
 
     private void Update()
@@ -32,7 +37,10 @@ public class Sanity_Manager : MonoBehaviour
 
         jobSecurity = Mathf.Clamp(jobSecurity + addJobSecurity, 0, 100);
 
+        SanitySprite.CheckSanitySprite();
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
     }
 }
