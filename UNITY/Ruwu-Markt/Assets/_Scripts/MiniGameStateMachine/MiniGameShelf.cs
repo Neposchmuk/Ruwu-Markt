@@ -86,7 +86,7 @@ public class MiniGameShelf : MiniGameBaseState
 
     public override void EndQuest()
     {
-        QM.CompleteQuest(0, questVariant, QuestSource.gameObject);
+        QM.CompleteQuest(0, questVariant -1, QuestSource.gameObject);
     }
 
 }

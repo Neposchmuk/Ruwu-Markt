@@ -2264,6 +2264,7 @@ GameObject:
   - component: {fileID: 1058663731}
   - component: {fileID: 1058663730}
   - component: {fileID: 1058663729}
+  - component: {fileID: 1058663735}
   m_Layer: 6
   m_Name: Shelf_InteractionPlane
   m_TagString: Shelf
@@ -2410,6 +2411,24 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1058663727}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1058663735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1058663727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4ef0fc501c8d624787965f6e82ad749, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDoingQuest: 0
+  interactionLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  selectedQuest: 0
+  IU: {fileID: 0}
 --- !u!1 &1091348397
 GameObject:
   m_ObjectHideFlags: 0
@@ -3152,6 +3171,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   rayIsActive: 0
+  objectHolding: {fileID: 0}
 --- !u!65 &1529049954
 BoxCollider:
   m_ObjectHideFlags: 0
