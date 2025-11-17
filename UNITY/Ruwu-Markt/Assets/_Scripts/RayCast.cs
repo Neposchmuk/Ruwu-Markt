@@ -52,14 +52,14 @@ public class RayCast : MonoBehaviour
         {
             if(hit.collider.tag == "Shelf" && interact.WasPressedThisFrame() && !QM.isDoingQuest && !QM.shelfQuestCompleted)
             {
-                hit.collider.gameObject.GetComponent<Interaction_MenuTest>().Show_UI();
+                hit.collider.gameObject.GetComponent<Interaction_MenuTest>().ToggleUI(true);
                 questObject = hit.collider.gameObject;
                 Debug.Log(questObject.name);
                 instanceObject = hit.collider.gameObject.GetComponent<Instantiate_Collection>().intanceObjects[0];
                 //Debug.Log(QM.isDoingQuest);
             }
 
-            if(hit.collider.tag == "ProduceCan" && QM.isDoingQuest && !QM.shelfQuestCompleted)
+            /*if(hit.collider.tag == "ProduceCan" && QM.isDoingQuest && !QM.shelfQuestCompleted)
             {
                 Debug.Log("RayCast Hit");
                 Debug.Log(HandRC.name);
@@ -70,7 +70,7 @@ public class RayCast : MonoBehaviour
                     HandRC.PickUpObject(0);
                 }
                 
-            }
+            }*/
             /*else if(hit.collider.tag == "Shelf" && interact.WasPressedThisFrame() && QM.isDoingQuest && !QM.shelfQuestCompleted)
             {
                 Instantiate(instanceObject, hit.point, transform.rotation);

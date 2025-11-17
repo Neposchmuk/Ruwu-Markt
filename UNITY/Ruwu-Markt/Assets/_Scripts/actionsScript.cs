@@ -70,23 +70,27 @@ public class actionsScript : MonoBehaviour
                 {
                     case 0:
                         ShelfQuest(i);
-                        LockCursor();
-                        IM.interactionUI.SetActive(false);
+                        IM.ToggleUI(false);
+                        //LockCursor();
+                        //IM.interactionUI.SetActive(false);
                         break;
                     case 1:
                         ShelfQuest(i);
-                        LockCursor();
-                        IM.interactionUI.SetActive(false);
+                        IM.ToggleUI(false);
+                        //LockCursor();
+                        //IM.interactionUI.SetActive(false);
                         break;
                     case 2:
                         ShelfQuest(i);
-                        LockCursor();
-                        IM.interactionUI.SetActive(false);
+                        IM.ToggleUI(false);
+                        //LockCursor();
+                        //IM.interactionUI.SetActive(false);
                         break;
                     case 3:
                         ShelfQuest(i);
-                        LockCursor();
-                        IM.interactionUI.SetActive(false);
+                        IM.ToggleUI(false);
+                        //LockCursor();
+                        //IM.interactionUI.SetActive(false);
                         break;
                 }
                 break;

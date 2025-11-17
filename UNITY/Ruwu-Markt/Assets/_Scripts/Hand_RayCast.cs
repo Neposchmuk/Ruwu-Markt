@@ -70,10 +70,10 @@ public class Hand_Raycast: MonoBehaviour
             }
         }
 
-        if(QM.isDoingQuest && placeQuestActive)
+        /*if(QM.isDoingQuest && placeQuestActive)
         {
             Place();
-        }
+        }*/
 
     }
 
