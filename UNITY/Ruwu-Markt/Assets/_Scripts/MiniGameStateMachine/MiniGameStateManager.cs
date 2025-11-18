@@ -1,18 +1,19 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+
+public enum QuestType
+{
+    Shelf,
+    Floor,
+    Bottles,
+    Flowers
+}
 
 public class MiniGameStateManager : MonoBehaviour
 {
     public bool isDoingQuest;
 
     public LayerMask interactionLayer;
-
-    public enum QuestType
-    {
-        Shelf,
-        Floor,
-        Bottles,
-        Flowers
-    }
 
     public QuestType selectedQuest;
 
@@ -22,12 +23,21 @@ public class MiniGameStateManager : MonoBehaviour
 
     private Quest_Manager QM;
 
+    private InputAction interact;
+
+    private InputAction attack;
+
     MiniGameBaseState currentQuest;
     MiniGameShelf ShelfQuest = new MiniGameShelf();
+    MiniGameWipeFloor FloorQuest = new MiniGameWipeFloor();
 
     private void Start()
     {
         QM = FindFirstObjectByType<Quest_Manager>();
+
+        attack = GameObject.Find("PlayerCapsule").GetComponent<PlayerInput>().actions.FindAction("Attack");
+
+        interact = GameObject.FindFirstObjectByType<PlayerInput>().actions.FindAction("Interact");
     }
 
     public void StartQuest(int questVariant)
@@ -38,9 +48,16 @@ public class MiniGameStateManager : MonoBehaviour
             case QuestType.Shelf:
                 currentQuest = ShelfQuest;
                 currentQuest.StartQuest(this, questVariant);
+                QM.SetQuestText(0);
+                break;
+            case QuestType.Floor:
+                currentQuest = FloorQuest;
+                currentQuest.StartQuest(this, questVariant);
+                QM.SetQuestText(1);
                 break;
             
         }
+
         
     }
 
@@ -48,7 +65,17 @@ public class MiniGameStateManager : MonoBehaviour
     {
         if (QM.isDoingQuest)
         {
-            currentQuest.UpdateQuest();
+            if (interact.WasPressedThisFrame())
+            {
+                currentQuest.Interact();
+            }
+
+            if (attack.IsPressed())
+            {
+                currentQuest.Attack();
+            }
+            /*Debug.Log(currentQuest);
+            currentQuest.UpdateQuest();*/
         }
         
     }

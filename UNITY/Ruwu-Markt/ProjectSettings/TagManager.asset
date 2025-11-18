@@ -9,6 +9,9 @@ TagManager:
   - PourPuddle
   - Shelf
   - ProduceCan
+  - Mop
+  - Puddle
+  - FloorQuest
   layers:
   - Default
   - TransparentFX

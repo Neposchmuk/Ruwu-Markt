@@ -6,11 +6,17 @@ using UnityEngine.SceneManagement;
 
 public class Quest_Manager : MonoBehaviour
 {
+    private QuestType currentQuest;
+
     public bool isDoingQuest;
 
     public TMP_Text shelfQuestText;
 
+    public TMP_Text floorQuestText;
+
     public bool shelfQuestCompleted;
+
+    public bool floorQuestCompleted;
 
     public int stepsDone;
 
@@ -36,11 +42,7 @@ public class Quest_Manager : MonoBehaviour
 
         SM = GameObject.FindFirstObjectByType<Sanity_Manager>();
 
-        defaultQuestText = shelfQuestText.text;
-
         ResetQuests();
-
-        defaultQuestText = shelfQuestText.text;
     }
 
     private void Update()
@@ -81,6 +83,21 @@ public class Quest_Manager : MonoBehaviour
                         SM.ChangeSanity(MGM.sanityChangeValue[questVariant], MGM.jobSecurityChangeValue[questVariant]);
                         break;
                     case 3:
+                        SM.ChangeSanity(MGM.sanityChangeValue[questVariant], MGM.jobSecurityChangeValue[questVariant]);
+                        break;
+                }
+                break;
+            case 1:
+                floorQuestCompleted = true;
+                floorQuestText.text = defaultQuestText;
+                floorQuestText.fontStyle = FontStyles.Strikethrough;
+                isDoingQuest = false;
+                switch (questVariant)
+                {
+                    case 0:
+                        SM.ChangeSanity(MGM.sanityChangeValue[questVariant], MGM.jobSecurityChangeValue[questVariant]);
+                        break;
+                    case 1:
                         SM.ChangeSanity(MGM.sanityChangeValue[questVariant], MGM.jobSecurityChangeValue[questVariant]);
                         break;
                 }
@@ -131,11 +148,27 @@ public class Quest_Manager : MonoBehaviour
         isDoingQuest = false;
 
         shelfQuestCompleted = false;
-        shelfQuestText.text = defaultQuestText;
+        floorQuestCompleted = false;
         shelfQuestText.fontStyle = FontStyles.Normal;
+        floorQuestText.fontStyle = FontStyles.Normal;
 
         endDayText.SetActive(false);
     }
+
+    public void SetQuestText(int questType)
+    {
+        switch (questType)
+        {
+            case 0:
+                defaultQuestText = shelfQuestText.text;
+                break;
+            case 1:
+                defaultQuestText = floorQuestText.text;
+                break;
+        }
+        
+    }
+
     //Checks if all quests have been completed to unlock Scene Change
     private void CheckDayCompletion()
     {

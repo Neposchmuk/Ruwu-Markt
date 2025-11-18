@@ -1,13 +1,20 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Hand_Raycast: MonoBehaviour
+public class Hand_Actions: MonoBehaviour
 {
     public GameObject[] instanceObject;
+
+    public Animator MopAnimator;
 
     private float timeToPour = 5;
 
     private GameObject objectHolding;
+
+    private GameObject objectToPlace;
+
+    private Collider MopTrigger;
 
     //Instantiates Object on Ray hit position, if Instance Object is already present, increases size of Object
     public float Pour()
@@ -34,9 +41,22 @@ public class Hand_Raycast: MonoBehaviour
         Instantiate(objectHolding, hit.point, transform.rotation);
     }
 
-    public void PickUpObject(int PickUp)
+    public GameObject PickUpObject(int PickUp)
     {
-        Instantiate(instanceObject[PickUp], transform.position, transform.rotation, gameObject.transform);
-        objectHolding = instanceObject[PickUp];
-    }      
+        objectHolding = Instantiate(instanceObject[PickUp], transform.position, transform.rotation, gameObject.transform);
+        objectToPlace = instanceObject[PickUp];
+
+        return objectHolding;
+    }
+    
+    public void DestroyObjectInHand()
+    {
+        Destroy(objectHolding);
+    }
+
+    public void Clean()
+    {
+        MopAnimator = objectHolding.GetComponent<Animator>();
+
+    }
 }

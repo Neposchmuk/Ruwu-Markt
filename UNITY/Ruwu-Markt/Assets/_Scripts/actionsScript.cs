@@ -22,7 +22,7 @@ public class actionsScript : MonoBehaviour
 
     private Interaction_MenuTest IM;
 
-    private Hand_Raycast handRC;
+    private Hand_Actions handRC;
 
     private Quest_Manager QM;
 
@@ -42,7 +42,7 @@ public class actionsScript : MonoBehaviour
         SM = GameObject.Find("Sanity_Manager").GetComponent<Sanity_Manager>();
         QM = GameObject.Find("Quest_Manager").GetComponent<Quest_Manager>();
         IM = GetComponent<Interaction_MenuTest>();
-        handRC = GameObject.Find("Hand").GetComponent<Hand_Raycast>();       
+        handRC = GameObject.Find("Hand").GetComponent<Hand_Actions>();       
 
         switch (Quest)
         {

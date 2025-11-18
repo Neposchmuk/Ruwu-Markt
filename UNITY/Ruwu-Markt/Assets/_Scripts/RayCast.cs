@@ -8,7 +8,7 @@ public class RayCast : MonoBehaviour
 
     public LayerMask layerMask;
 
-    private Hand_Raycast HandRC;
+    private Hand_Actions HandRC;
 
     private Camera mainCamera;
 
@@ -18,7 +18,6 @@ public class RayCast : MonoBehaviour
 
     public GameObject questObject;
 
-    private GameObject instanceObject;
 
     
 
@@ -35,7 +34,7 @@ public class RayCast : MonoBehaviour
 
         QM = GameObject.Find("Quest_Manager").GetComponent<Quest_Manager>();
 
-        HandRC = gameObject.GetComponentInChildren<Hand_Raycast>();
+        HandRC = gameObject.GetComponentInChildren<Hand_Actions>();
 
     }
 
@@ -55,7 +54,14 @@ public class RayCast : MonoBehaviour
                 hit.collider.gameObject.GetComponent<Interaction_MenuTest>().ToggleUI(true);
                 questObject = hit.collider.gameObject;
                 Debug.Log(questObject.name);
-                instanceObject = hit.collider.gameObject.GetComponent<Instantiate_Collection>().intanceObjects[0];
+                //Debug.Log(QM.isDoingQuest);
+            }
+
+            if (hit.collider.tag == "FloorQuest" && interact.WasPressedThisFrame() && !QM.isDoingQuest && !QM.floorQuestCompleted)
+            {
+                hit.collider.gameObject.GetComponent<Interaction_MenuTest>().ToggleUI(true);
+                questObject = hit.collider.gameObject;
+                Debug.Log(questObject.name);
                 //Debug.Log(QM.isDoingQuest);
             }
 
