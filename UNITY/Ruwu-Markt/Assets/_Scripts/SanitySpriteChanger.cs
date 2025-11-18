@@ -9,8 +9,8 @@ public class SanitySpriteChanger : MonoBehaviour
 
     private Image Image;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    private void Awake()
     {
         SM = GameObject.Find("Sanity_Manager").GetComponent<Sanity_Manager>();
 

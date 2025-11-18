@@ -34,7 +34,7 @@ public class Quest_Manager : MonoBehaviour
 
         endDay = GameObject.Find("PlayerCapsule").GetComponent<PlayerInput>().actions.FindAction("TriggerSceneChange");
 
-        SM = GameObject.Find("Sanity_Manager").GetComponent<Sanity_Manager>();
+        SM = GameObject.FindFirstObjectByType<Sanity_Manager>();
 
         defaultQuestText = shelfQuestText.text;
 
@@ -59,9 +59,9 @@ public class Quest_Manager : MonoBehaviour
     }
 
     //Completes Quests by setting bools and resets doingQuest bool, so other quests ca nbe started
-    public void CompleteQuest (int questType, int questVariant, GameObject actionObject)
+    public void CompleteQuest (int questType, int questVariant, GameObject questObject)
     {
-        actionsScript aS = actionObject.GetComponent<actionsScript>();
+        MiniGameStateManager MGM = questObject.GetComponent<MiniGameStateManager>();
         switch (questType)
         {
             case 0:
@@ -72,16 +72,16 @@ public class Quest_Manager : MonoBehaviour
                 switch (questVariant)
                 {
                     case 0:
-                        aS.TriggerSanityChange(questVariant);
+                        SM.ChangeSanity(MGM.sanityChangeValue[questVariant], MGM.jobSecurityChangeValue[questVariant]);
                         break;
                     case 1:
-                        aS.TriggerSanityChange(questVariant);
+                        SM.ChangeSanity(MGM.sanityChangeValue[questVariant], MGM.jobSecurityChangeValue[questVariant]);
                         break;
                     case 2:
-                        aS.TriggerSanityChange(questVariant);
+                        SM.ChangeSanity(MGM.sanityChangeValue[questVariant], MGM.jobSecurityChangeValue[questVariant]);
                         break;
                     case 3:
-                        aS.TriggerSanityChange(questVariant);
+                        SM.ChangeSanity(MGM.sanityChangeValue[questVariant], MGM.jobSecurityChangeValue[questVariant]);
                         break;
                 }
                 break;

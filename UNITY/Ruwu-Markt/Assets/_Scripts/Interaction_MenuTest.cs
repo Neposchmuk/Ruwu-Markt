@@ -37,10 +37,10 @@ public class Interaction_MenuTest : MonoBehaviour
             sanityRequirements[i, 0] = minRequirements[i];
             sanityRequirements[i, 1] = maxRequirements[i];
 
-            //AddListeners(i);
+            AddListeners(i);
         }
 
-        AddListeners();
+        //AddListeners();
     }
 
     /*public void Show_UI()
@@ -70,14 +70,14 @@ public class Interaction_MenuTest : MonoBehaviour
         }
     }
 
-    private void AddListeners() //(int i)
+    private void AddListeners(int i) //(int i)
     {
-        //buttons[i].onClick.AddListener(() => aS.TriggerAction(i));
+        buttons[i].onClick.AddListener(() => GetComponent<MiniGameStateManager>().StartQuest(i+1));
 
-        buttons[0].onClick.AddListener(() => GetComponent<MiniGameStateManager>().StartQuest(1));
+        /*buttons[0].onClick.AddListener(() => GetComponent<MiniGameStateManager>().StartQuest(1));
         buttons[1].onClick.AddListener(() => GetComponent<MiniGameStateManager>().StartQuest(2));
         buttons[2].onClick.AddListener(() => aS.TriggerAction(2));
-        buttons[3].onClick.AddListener(() => aS.TriggerAction(3));
+        buttons[3].onClick.AddListener(() => aS.TriggerAction(3));*/
     }
 
     public void ToggleUI(bool Toggle)

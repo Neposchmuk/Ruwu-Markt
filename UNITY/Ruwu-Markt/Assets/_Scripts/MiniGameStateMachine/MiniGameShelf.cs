@@ -12,6 +12,8 @@ public class MiniGameShelf : MiniGameBaseState
 
     private InputAction interact;
 
+    private InputAction attack;
+
     private bool isHoldingObject;
 
     private MiniGameStateManager QuestSource;
@@ -27,6 +29,8 @@ public class MiniGameShelf : MiniGameBaseState
     {
         interact = GameObject.FindFirstObjectByType<PlayerInput>().actions.FindAction("Interact");
 
+        attack = GameObject.Find("PlayerCapsule").GetComponent<PlayerInput>().actions.FindAction("Attack");
+
         QM = GameObject.FindFirstObjectByType<Quest_Manager>();
 
         IC = Quest.gameObject.GetComponent<Instantiate_Collection>();
@@ -41,22 +45,37 @@ public class MiniGameShelf : MiniGameBaseState
 
         QM.isDoingQuest = true;
 
-        switch (questVariant)
-        {
-            case 1:
-                objectsToPlace = 30;
-                Quest.isDoingQuest = true;
-                break;
-            case 2:
-                objectsToPlace = 10;
-                Quest.isDoingQuest = true;
-                break;
-        }
-
         Quest.gameObject.GetComponent<Interaction_MenuTest>().ToggleUI(false);
     }
 
     public override void UpdateQuest()
+    {
+        switch (questVariant)
+        {
+            case 1:
+                objectsToPlace = 30;
+                PlaceQuest();
+                break;
+            case 2:
+                objectsToPlace = 10;
+                PlaceQuest();
+                break;
+            case 3:
+                //Needs to be changed to require Animation first
+                EndQuest();
+                break;
+            case 4:
+                PourQuest();
+                break;
+        }
+    }
+
+    public override void EndQuest()
+    {
+        QM.CompleteQuest(0, questVariant -1, QuestSource.gameObject);
+    }
+
+    private void PlaceQuest()
     {
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
 
@@ -65,28 +84,54 @@ public class MiniGameShelf : MiniGameBaseState
 
         if (Physics.Raycast(ray, out RaycastHit hit, 2, QuestSource.interactionLayer))
         {
-            if(hit.collider.tag == "ProduceCan" && interact.WasPressedThisFrame())
+            if (hit.collider.tag == "ProduceCan" && interact.WasPressedThisFrame())
             {
+                GameObject.FindFirstObjectByType<Hand_Raycast>().PickUpObject(0);
                 Debug.Log(hit.collider.gameObject.layer);
                 isHoldingObject = true;
                 Debug.Log(isHoldingObject);
+                GameObject.Destroy(hit.collider.gameObject);
             }
 
-            if(hit.collider.tag == "Shelf" && interact.WasPressedThisFrame() && isHoldingObject && objectsPlaced < objectsToPlace)
+            if (hit.collider.tag == "Shelf" && interact.WasPressedThisFrame() && isHoldingObject && objectsPlaced < objectsToPlace)
             {
+                GameObject.FindFirstObjectByType<Hand_Raycast>().Place(hit);
                 objectsPlaced++;
-                if(objectsPlaced == objectsToPlace)
+                if (objectsPlaced == objectsToPlace)
                 {
                     EndQuest();
-                    QuestSource.isDoingQuest = false;
+                    //QuestSource.isDoingQuest = false;
                 }
             }
         }
     }
 
-    public override void EndQuest()
+    private void PourQuest()
     {
-        QM.CompleteQuest(0, questVariant -1, QuestSource.gameObject);
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
+
+        QM.shelfQuestText.text = "Let it flow!!!";
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 2, QuestSource.interactionLayer))
+        {
+            if (hit.collider.tag == "ProduceCan" && interact.WasPressedThisFrame())
+            {
+                GameObject.FindFirstObjectByType<Hand_Raycast>().PickUpObject(0);
+                Debug.Log(hit.collider.gameObject.layer);
+                isHoldingObject = true;
+                Debug.Log(isHoldingObject);
+                GameObject.Destroy(hit.collider.gameObject);
+            }           
+        }
+
+        if (isHoldingObject && attack.IsPressed())
+        {
+            GameObject.FindFirstObjectByType<Hand_Raycast>().Pour();
+            if (GameObject.FindFirstObjectByType<Hand_Raycast>().Pour() <= 0)
+            {
+                EndQuest();
+            }
+        }
     }
 
 }

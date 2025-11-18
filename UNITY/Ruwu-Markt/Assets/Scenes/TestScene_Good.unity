@@ -1671,7 +1671,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 819705470}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ccd6f0a55f8a3e647a677e90476d75b3, type: 3}
   m_Name: 
@@ -1685,7 +1685,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 819705470}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 188268d3eab582c4fadd5b81beb7f745, type: 3}
   m_Name: 
@@ -1804,7 +1804,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   selectedQuest: 0
-  IU: {fileID: 0}
+  sanityChangeValue: e2fffffff1ffffff0f0000001e000000
+  jobSecurityChangeValue: 1e0000000a000000f6ffffffe2ffffff
 --- !u!1001 &865771910
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3547,15 +3548,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6ae935039be7754e8f062269583ec4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerCapsule: {fileID: 0}
   instanceObject:
   - {fileID: 5166449016664498782, guid: 9de1bc7b198aba54f80f3014f8c1721e, type: 3}
   - {fileID: 7809658899816374269, guid: da05dc44eefb74c4f82a2fdd1e7c72b6, type: 3}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  rayIsActive: 0
-  objectHolding: {fileID: 0}
 --- !u!65 &1790063669
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -146,7 +146,7 @@ public class actionsScript : MonoBehaviour
                 break;
             case 3:
                 QM.UpdateQuest(actionSelector, questVersion);
-                handRC.UnlockPour(actionSelector, questVersion, gameObject);
+                //handRC.UnlockPour(actionSelector, questVersion, gameObject);
                 break;
 
         }
