@@ -1,5 +1,7 @@
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public enum QuestType
 {
@@ -13,13 +15,13 @@ public class MiniGameStateManager : MonoBehaviour
 {
     public bool isDoingQuest;
 
-    public LayerMask interactionLayer;
+    //public LayerMask interactionLayer;
 
-    public QuestType selectedQuest;
+    //public QuestType selectedQuest;
 
-    public int[] sanityChangeValue;
+    //public List<int> sanityChangeValue = new List<int>();
 
-    public int[] jobSecurityChangeValue;
+    //public List<int> jobSecurityChangeValue = new List<int>();
 
     private Quest_Manager QM;
 
@@ -40,20 +42,22 @@ public class MiniGameStateManager : MonoBehaviour
         interact = GameObject.FindFirstObjectByType<PlayerInput>().actions.FindAction("Interact");
     }
 
-    public void StartQuest(int questVariant)
+    public void StartQuest(MiniGame_Caller MGC, QuestType selectedQuest, int questVariant, List<int> sanityChanges, List<int> jobChanges)
     {
+        //sanityChangeValue.AddRange(sanityChanges);
+        //jobSecurityChangeValue.AddRange(jobChanges);
 
         switch (selectedQuest)
         {
             case QuestType.Shelf:
                 currentQuest = ShelfQuest;
-                currentQuest.StartQuest(this, questVariant);
                 QM.SetQuestText(0);
+                currentQuest.StartQuest(MGC, questVariant);         
                 break;
             case QuestType.Floor:
                 currentQuest = FloorQuest;
-                currentQuest.StartQuest(this, questVariant);
                 QM.SetQuestText(1);
+                currentQuest.StartQuest(MGC, questVariant);              
                 break;
             
         }
@@ -72,7 +76,11 @@ public class MiniGameStateManager : MonoBehaviour
 
             if (attack.IsPressed())
             {
-                currentQuest.Attack();
+                currentQuest.HoldingAttack(true);
+            }
+            else if (attack.WasReleasedThisFrame())
+            {
+                currentQuest.HoldingAttack(false);
             }
             /*Debug.Log(currentQuest);
             currentQuest.UpdateQuest();*/

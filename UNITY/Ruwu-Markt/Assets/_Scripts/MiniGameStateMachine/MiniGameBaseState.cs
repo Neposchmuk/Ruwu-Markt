@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class MiniGameBaseState
 {
-    public abstract void StartQuest(MiniGameStateManager MiniGameManager, int questVariant);
+    public abstract void StartQuest(MiniGame_Caller MiniGame_Caller, int questVariant);
 
     public abstract void InitiateQuest();
 
@@ -12,5 +12,5 @@ public abstract class MiniGameBaseState
 
     public abstract void Interact();
 
-    public abstract void Attack();
+    public abstract void HoldingAttack(bool buttonIsPressed);
 }

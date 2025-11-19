@@ -16,7 +16,7 @@ public class MiniGameShelf : MiniGameBaseState
 
     private bool isHoldingObject;
 
-    private MiniGameStateManager QuestSource;
+    private MiniGame_Caller QuestSource;
 
     private Quest_Manager QM;
 
@@ -27,7 +27,7 @@ public class MiniGameShelf : MiniGameBaseState
     private string defaultQuestText;
 
 
-    public override void StartQuest(MiniGameStateManager Quest, int questVariant)
+    public override void StartQuest(MiniGame_Caller Quest, int questVariant)
     {
         QM = GameObject.FindFirstObjectByType<Quest_Manager>();
 
@@ -67,6 +67,7 @@ public class MiniGameShelf : MiniGameBaseState
 
         QM.isDoingQuest = true;
 
+        QM.shelfQuestText.text = "Grab the Products";
     }
 
     public override void UpdateQuest()
@@ -96,11 +97,13 @@ public class MiniGameShelf : MiniGameBaseState
 
     public override void Interact()
     {
+        Debug.Log("Called Interact");
+
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
 
         if (Physics.Raycast(ray, out RaycastHit hit, 2, QuestSource.interactionLayer))
         {
-            if (hit.collider.tag == "ProduceCan" && interact.WasPressedThisFrame())
+            if (hit.collider.tag == "ProduceCan")
             {
                 GameObject.FindFirstObjectByType<Hand_Actions>().PickUpObject(0);
                 Debug.Log(hit.collider.gameObject.layer);
@@ -111,7 +114,7 @@ public class MiniGameShelf : MiniGameBaseState
 
 
 
-            if (hit.collider.tag == "Shelf" && interact.WasPressedThisFrame() && isHoldingObject && objectsPlaced < objectsToPlace)
+            if (hit.collider.tag == "Shelf" && isHoldingObject && objectsPlaced < objectsToPlace)
             {
                 GameObject.FindFirstObjectByType<Hand_Actions>().Place(hit);
                 objectsPlaced++;
@@ -125,12 +128,12 @@ public class MiniGameShelf : MiniGameBaseState
         }
     }
 
-    public override void Attack()
+    public override void HoldingAttack(bool buttonIsPressed)
     {
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
 
 
-        if (isHoldingObject && attack.IsPressed())
+        if (isHoldingObject && buttonIsPressed)
         {
             HA.Pour();
             if (HA.Pour() <= 0)

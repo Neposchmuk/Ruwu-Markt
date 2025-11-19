@@ -1209,6 +1209,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8857054926714991017, guid: 9597e41554788c5419d1d60f3762d662, type: 3}
   m_PrefabInstance: {fileID: 229528130}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &234391975
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 234391976}
+  - component: {fileID: 234391977}
+  m_Layer: 0
+  m_Name: MiniGameStateManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &234391976
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 234391975}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2005405834}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &234391977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 234391975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4ef0fc501c8d624787965f6e82ad749, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDoingQuest: 0
 --- !u!1 &279260034
 GameObject:
   m_ObjectHideFlags: 0
@@ -2024,6 +2069,7 @@ GameObject:
   - component: {fileID: 666001046}
   - component: {fileID: 666001045}
   - component: {fileID: 666001044}
+  - component: {fileID: 666001049}
   m_Layer: 6
   m_Name: Bucket
   m_TagString: FloorQuest
@@ -2053,18 +2099,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 666001042}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4ef0fc501c8d624787965f6e82ad749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isDoingQuest: 0
-  interactionLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  selectedQuest: 1
-  sanityChangeValue: f1ffffff0f000000
-  jobSecurityChangeValue: 0a000000f6ffffff
 --- !u!114 &666001045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2157,6 +2197,24 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 666001042}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &666001049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 666001042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d93016870959ad40a2df3da2cf9e177, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Quest: 1
+  interactionLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  sanityChange: f1ffffff0f000000
+  jobSecurityChange: 0a000000f6ffffff
 --- !u!1 &666420247
 GameObject:
   m_ObjectHideFlags: 0
@@ -2175,7 +2233,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &666420248
 Transform:
   m_ObjectHideFlags: 0
@@ -3534,12 +3592,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1312092374}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.268, y: 1.229, z: 0.644}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.268, y: -0.14600003, z: 0.644}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2056031711}
+  m_Father: {fileID: 1780020717}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1312092376
 MonoBehaviour:
@@ -3573,9 +3631,9 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -3909,7 +3967,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 8997996947095583982, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 4135013735270702856, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1312092375}
     m_AddedComponents:
@@ -5020,6 +5078,7 @@ GameObject:
   - component: {fileID: 1962172973}
   - component: {fileID: 1962172974}
   - component: {fileID: 1962172975}
+  - component: {fileID: 1962172976}
   m_Layer: 6
   m_Name: Shelf_InteractionPlane
   m_TagString: Shelf
@@ -5173,18 +5232,30 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1962172967}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4ef0fc501c8d624787965f6e82ad749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isDoingQuest: 0
+--- !u!114 &1962172976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1962172967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d93016870959ad40a2df3da2cf9e177, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Quest: 0
   interactionLayer:
     serializedVersion: 2
     m_Bits: 64
-  selectedQuest: 0
-  sanityChangeValue: e2fffffff1ffffff0f0000001e000000
-  jobSecurityChangeValue: 1e0000000a000000f6ffffffe2ffffff
+  sanityChange: e2fffffff1ffffff0f0000001e000000
+  jobSecurityChange: 140000000a000000f6ffffffecffffff
 --- !u!1001 &1971342584
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5404,6 +5475,7 @@ Transform:
   m_Children:
   - {fileID: 71184181}
   - {fileID: 624564288}
+  - {fileID: 234391976}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2005405835

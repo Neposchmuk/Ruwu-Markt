@@ -63,7 +63,7 @@ public class Quest_Manager : MonoBehaviour
     //Completes Quests by setting bools and resets doingQuest bool, so other quests ca nbe started
     public void CompleteQuest (int questType, int questVariant, GameObject questObject)
     {
-        MiniGameStateManager MGM = questObject.GetComponent<MiniGameStateManager>();
+        MiniGame_Caller MGC = questObject.GetComponent<MiniGame_Caller>();
         switch (questType)
         {
             case 0:
@@ -74,16 +74,16 @@ public class Quest_Manager : MonoBehaviour
                 switch (questVariant)
                 {
                     case 0:
-                        SM.ChangeSanity(MGM.sanityChangeValue[questVariant], MGM.jobSecurityChangeValue[questVariant]);
+                        SM.ChangeSanity(MGC.sanityChange[questVariant], MGC.jobSecurityChange[questVariant]);
                         break;
                     case 1:
-                        SM.ChangeSanity(MGM.sanityChangeValue[questVariant], MGM.jobSecurityChangeValue[questVariant]);
+                        SM.ChangeSanity(MGC.sanityChange[questVariant], MGC.jobSecurityChange[questVariant]);
                         break;
                     case 2:
-                        SM.ChangeSanity(MGM.sanityChangeValue[questVariant], MGM.jobSecurityChangeValue[questVariant]);
+                        SM.ChangeSanity(MGC.sanityChange[questVariant], MGC.jobSecurityChange[questVariant]);
                         break;
                     case 3:
-                        SM.ChangeSanity(MGM.sanityChangeValue[questVariant], MGM.jobSecurityChangeValue[questVariant]);
+                        SM.ChangeSanity(MGC.sanityChange[questVariant], MGC.jobSecurityChange[questVariant]);
                         break;
                 }
                 break;
@@ -95,10 +95,10 @@ public class Quest_Manager : MonoBehaviour
                 switch (questVariant)
                 {
                     case 0:
-                        SM.ChangeSanity(MGM.sanityChangeValue[questVariant], MGM.jobSecurityChangeValue[questVariant]);
+                        SM.ChangeSanity(MGC.sanityChange[questVariant], MGC.jobSecurityChange[questVariant]);
                         break;
                     case 1:
-                        SM.ChangeSanity(MGM.sanityChangeValue[questVariant], MGM.jobSecurityChangeValue[questVariant]);
+                        SM.ChangeSanity(MGC.sanityChange[questVariant], MGC.jobSecurityChange[questVariant]);
                         break;
                 }
                 break;
@@ -161,9 +161,11 @@ public class Quest_Manager : MonoBehaviour
         {
             case 0:
                 defaultQuestText = shelfQuestText.text;
+
                 break;
             case 1:
                 defaultQuestText = floorQuestText.text;
+                Debug.Log(defaultQuestText);
                 break;
         }
         
@@ -172,7 +174,7 @@ public class Quest_Manager : MonoBehaviour
     //Checks if all quests have been completed to unlock Scene Change
     private void CheckDayCompletion()
     {
-        if (shelfQuestCompleted)
+        if (shelfQuestCompleted && floorQuestCompleted)
         {
             endDayText.SetActive(true);
         }

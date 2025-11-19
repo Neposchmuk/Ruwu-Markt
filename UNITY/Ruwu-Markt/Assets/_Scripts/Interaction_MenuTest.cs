@@ -72,7 +72,7 @@ public class Interaction_MenuTest : MonoBehaviour
 
     private void AddListeners(int i) //(int i)
     {
-        buttons[i].onClick.AddListener(() => GetComponent<MiniGameStateManager>().StartQuest(i+1));
+        buttons[i].onClick.AddListener(() => GetComponent<MiniGame_Caller>().CallStartQuest(i+1));
 
         /*buttons[0].onClick.AddListener(() => GetComponent<MiniGameStateManager>().StartQuest(1));
         buttons[1].onClick.AddListener(() => GetComponent<MiniGameStateManager>().StartQuest(2));

@@ -6,9 +6,11 @@ public class MiniGameWipeFloor : MiniGameBaseState
 {
     private Quest_Manager QM;
 
-    private MiniGameStateManager QuestSource;
+    private MiniGame_Caller QuestSource;
 
     private GameObject[] Puddles;
+
+    private GameObject objectHeld;
 
     private Animator MopAnimator;
 
@@ -35,7 +37,7 @@ public class MiniGameWipeFloor : MiniGameBaseState
 
 
 
-    public override void StartQuest(MiniGameStateManager Quest, int questVariant)
+    public override void StartQuest(MiniGame_Caller Quest, int questVariant)
     {
         QM = GameObject.FindFirstObjectByType<Quest_Manager>();
 
@@ -59,6 +61,8 @@ public class MiniGameWipeFloor : MiniGameBaseState
 
     public override void InitiateQuest()
     {
+        Clean_Puddles.OnPuddleDestroy += UpdateQuest;
+
         Puddles = GameObject.FindGameObjectsWithTag("Puddle");
 
         puddlesCleaned = 0;
@@ -66,6 +70,8 @@ public class MiniGameWipeFloor : MiniGameBaseState
         puddlesToClean = Puddles.Length;
 
         QM.isDoingQuest = true;
+
+        QM.floorQuestText.text = "Grab the Mop";
     }
 
     public override void UpdateQuest()
@@ -75,6 +81,7 @@ public class MiniGameWipeFloor : MiniGameBaseState
     }
     public override void EndQuest()
     {
+        Clean_Puddles.OnPuddleDestroy -= UpdateQuest;
         QM.CompleteQuest(1, questVariant - 1, QuestSource.gameObject);
     }
 
@@ -86,25 +93,29 @@ public class MiniGameWipeFloor : MiniGameBaseState
         {
             if (hit.collider.tag == "Mop")
             {
-                GameObject objectHeld = GameObject.FindFirstObjectByType<Hand_Actions>().PickUpObject(2);
+                objectHeld = GameObject.FindFirstObjectByType<Hand_Actions>().PickUpObject(2, new Vector3(-80, 0, 0)); // 
+                Debug.Log(objectHeld);
                 Debug.Log(hit.collider.gameObject.layer);
                 isHoldingMop = true;
                 Debug.Log(isHoldingMop);
                 MopAnimator = objectHeld.GetComponent<Animator>();
                 MopCollider = objectHeld.GetComponentInChildren<Collider>();
+                MopCollider.enabled = false;
+                Debug.Log(MopCollider.gameObject);
                 GameObject.Destroy(hit.collider.gameObject);
+                QM.floorQuestText.text = "Clean all puddles" + $"({puddlesCleaned}/{puddlesToClean}";
             }
         }
     }
 
-    public override void Attack()
+    public override void HoldingAttack(bool buttonIsPressed)
     {
-        if (isHoldingMop)
+        if (isHoldingMop && buttonIsPressed)
         {
             MopCollider.enabled = true;
             MopAnimator.SetBool("IsCleaning", true);
         }
-        else
+        else if(isHoldingMop)
         {
             MopCollider.enabled = false;
             MopAnimator.SetBool("IsCleaning", false);
@@ -112,6 +123,9 @@ public class MiniGameWipeFloor : MiniGameBaseState
 
         if (puddlesCleaned == puddlesToClean)
         {
+            MopCollider.enabled = false;
+            MopAnimator.SetBool("IsCleaning", false);
+            GameObject.Destroy(objectHeld);
             EndQuest();
         }
     }

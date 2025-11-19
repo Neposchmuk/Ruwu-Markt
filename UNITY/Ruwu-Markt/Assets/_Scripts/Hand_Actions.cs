@@ -48,7 +48,15 @@ public class Hand_Actions: MonoBehaviour
 
         return objectHolding;
     }
-    
+
+    public GameObject PickUpObject(int PickUp, Vector3 RotationOverride)
+    {
+        objectHolding = Instantiate(instanceObject[PickUp], transform.position, Quaternion.Euler(transform.eulerAngles + RotationOverride), gameObject.transform);
+        objectToPlace = instanceObject[PickUp];
+
+        return objectHolding;
+    }
+
     public void DestroyObjectInHand()
     {
         Destroy(objectHolding);
