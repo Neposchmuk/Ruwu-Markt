@@ -110,6 +110,7 @@ public class MiniGameShelf : MiniGameBaseState
                 isHoldingObject = true;
                 Debug.Log(isHoldingObject);
                 GameObject.Destroy(hit.collider.gameObject);
+                QM.shelfQuestText.text = "Restock the shelves (" + $"{objectsPlaced}" + "/" + $"{objectsToPlace}" + ")";
             }
 
 

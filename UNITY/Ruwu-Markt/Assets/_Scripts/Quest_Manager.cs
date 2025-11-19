@@ -24,7 +24,7 @@ public class Quest_Manager : MonoBehaviour
 
     public GameObject endDayText;
 
-    public string[] NextScene;
+    public string NextScene;
 
     private string defaultQuestText;
 
@@ -48,16 +48,12 @@ public class Quest_Manager : MonoBehaviour
     private void Update()
     {
         //Loads next Scene, depending on sanity value
-        if(endDayText.activeSelf && endDay.WasCompletedThisFrame() && SM.sanity >= 50)
+        if(endDayText.activeSelf && endDay.WasCompletedThisFrame())
         {
             ResetQuests();
-            SceneManager.LoadScene(NextScene[0]);
+            SceneManager.LoadScene(NextScene);
         }
-        else if(endDayText.activeSelf && endDay.WasCompletedThisFrame() && SM.sanity <= 50)
-        {
-            ResetQuests();
-            SceneManager.LoadScene(NextScene[1]);
-        }
+
     }
 
     //Completes Quests by setting bools and resets doingQuest bool, so other quests ca nbe started

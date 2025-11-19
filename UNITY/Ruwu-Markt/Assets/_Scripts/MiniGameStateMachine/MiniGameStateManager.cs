@@ -37,7 +37,7 @@ public class MiniGameStateManager : MonoBehaviour
     {
         QM = FindFirstObjectByType<Quest_Manager>();
 
-        attack = GameObject.Find("PlayerCapsule").GetComponent<PlayerInput>().actions.FindAction("Attack");
+        attack = GameObject.FindFirstObjectByType<PlayerInput>().actions.FindAction("Attack");
 
         interact = GameObject.FindFirstObjectByType<PlayerInput>().actions.FindAction("Interact");
     }

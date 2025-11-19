@@ -4,6 +4,8 @@ using TMPro;
 using Unity.VisualScripting;
 using System.Collections.Generic;
 using UnityEngine.Rendering;
+using NUnit.Framework.Constraints;
+using System;
 
 public class Interaction_MenuTest : MonoBehaviour
 {
@@ -24,7 +26,12 @@ public class Interaction_MenuTest : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        SM = GameObject.Find("Sanity_Manager").GetComponent<Sanity_Manager>();
+        SM = GameObject.FindFirstObjectByType<Sanity_Manager>();;
+
+        if(SM == null)
+        {
+            throw new NullReferenceException("Sanity Manager not found, start from Initialize Scene");
+        }
 
         aS = GetComponent<actionsScript>();
 

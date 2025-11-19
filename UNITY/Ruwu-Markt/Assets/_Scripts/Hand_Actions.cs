@@ -38,7 +38,7 @@ public class Hand_Actions: MonoBehaviour
 
     public void Place(RaycastHit hit)
     {
-        Instantiate(objectHolding, hit.point, transform.rotation);
+        Instantiate(objectHolding, hit.point, transform.localRotation);
     }
 
     public GameObject PickUpObject(int PickUp)
