@@ -170,7 +170,7 @@ public class Quest_Manager : MonoBehaviour
     //Checks if all quests have been completed to unlock Scene Change
     private void CheckDayCompletion()
     {
-        if (shelfQuestCompleted && floorQuestCompleted)
+        if (shelfQuestCompleted && floorQuestCompleted && !SM.isGameOver)
         {
             endDayText.SetActive(true);
         }

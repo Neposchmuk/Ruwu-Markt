@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7339754165511940065}
   - component: {fileID: 1489872974719020102}
   - component: {fileID: 3427594089090719701}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Handle
   m_TagString: Mop
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 2291607606589865452}
   - component: {fileID: 2559302022934473298}
   - component: {fileID: 1780954421080406679}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: MopHead
   m_TagString: Mop
   m_Icon: {fileID: 0}
@@ -254,8 +254,8 @@ GameObject:
   m_Component:
   - component: {fileID: 963908997100787752}
   - component: {fileID: 1185193648996692160}
-  m_Layer: 6
-  m_Name: Mop
+  m_Layer: 7
+  m_Name: Mop_HandObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
