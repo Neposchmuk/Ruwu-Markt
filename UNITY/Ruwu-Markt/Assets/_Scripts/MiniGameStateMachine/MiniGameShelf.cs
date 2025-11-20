@@ -68,6 +68,10 @@ public class MiniGameShelf : MiniGameBaseState
         QM.isDoingQuest = true;
 
         QM.shelfQuestText.text = "Grab the Products";
+
+        QuestSource.QuestMarkerBig.SetActive(false);
+
+        QuestSource.QuestMarkerSmall.SetActive(true);
     }
 
     public override void UpdateQuest()
@@ -92,6 +96,7 @@ public class MiniGameShelf : MiniGameBaseState
 
     public override void EndQuest()
     {
+        QuestSource.QuestMarkerBig.SetActive(false);
         QM.CompleteQuest(0, questVariant -1, QuestSource.gameObject);
     }
 
@@ -111,6 +116,7 @@ public class MiniGameShelf : MiniGameBaseState
                 Debug.Log(isHoldingObject);
                 GameObject.Destroy(hit.collider.gameObject);
                 QM.shelfQuestText.text = "Restock the shelves (" + $"{objectsPlaced}" + "/" + $"{objectsToPlace}" + ")";
+                QuestSource.QuestMarkerBig.SetActive(true);
             }
 
 
@@ -134,7 +140,7 @@ public class MiniGameShelf : MiniGameBaseState
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
 
 
-        if (isHoldingObject && buttonIsPressed)
+        if (isHoldingObject && buttonIsPressed && questVariant == 4)
         {
             HA.Pour();
             if (HA.Pour() <= 0)

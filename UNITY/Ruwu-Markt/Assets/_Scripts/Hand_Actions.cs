@@ -27,7 +27,7 @@ public class Hand_Actions: MonoBehaviour
             }
             else
             {
-                Instantiate(instanceObject[1], hit.point + new Vector3 (0,0.02f,0), Quaternion.Euler (new Vector3 (0, Random.Range(0, 359), 0)));
+                Instantiate(instanceObject[2], hit.point + new Vector3 (0,0.02f,0), Quaternion.Euler (new Vector3 (0, Random.Range(0, 359), 0)));
             }
 
             timeToPour -= 1 * Time.deltaTime;
@@ -38,7 +38,9 @@ public class Hand_Actions: MonoBehaviour
 
     public void Place(RaycastHit hit)
     {
-        Instantiate(objectHolding, hit.point, transform.localRotation);
+        GameObject instanceObject = Instantiate(objectHolding, hit.point, transform.localRotation);
+        instanceObject.layer = 0;
+
     }
 
     public GameObject PickUpObject(int PickUp)

@@ -12,6 +12,17 @@ public class MiniGame_Caller : MonoBehaviour
 
     public List<int> jobSecurityChange = new List<int>();
 
+    public GameObject QuestMarkerBig;
+
+    public GameObject QuestMarkerSmall;
+
+
+    private void Start()
+    {
+        QuestMarkerBig.SetActive(true);
+
+        QuestMarkerSmall.SetActive(false);
+    }
     public void CallStartQuest(int questVariant)
     {
         FindFirstObjectByType<MiniGameStateManager>().StartQuest(this, Quest, questVariant, sanityChange, jobSecurityChange);

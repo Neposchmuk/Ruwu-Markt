@@ -72,6 +72,10 @@ public class MiniGameWipeFloor : MiniGameBaseState
         QM.isDoingQuest = true;
 
         QM.floorQuestText.text = "Grab the Mop";
+
+        QuestSource.QuestMarkerBig.SetActive(false);
+
+        QuestSource.QuestMarkerSmall.SetActive(true);
     }
 
     public override void UpdateQuest()
@@ -104,6 +108,8 @@ public class MiniGameWipeFloor : MiniGameBaseState
                 Debug.Log(MopCollider.gameObject);
                 GameObject.Destroy(hit.collider.gameObject);
                 QM.floorQuestText.text = "Clean all puddles" + $"({puddlesCleaned}/{puddlesToClean}";
+
+                QuestSource.QuestMarkerSmall.SetActive(false);
             }
         }
     }

@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 3992290824335297274}
   - component: {fileID: 8617349142764918994}
   - component: {fileID: -2552519882335328147}
-  m_Layer: 6
-  m_Name: ProduceTest
+  m_Layer: 7
+  m_Name: Produce_HandObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
