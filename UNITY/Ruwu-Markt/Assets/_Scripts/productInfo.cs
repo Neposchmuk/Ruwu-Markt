@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Produce : MonoBehaviour
+public class productInfo : MonoBehaviour
 {
     //This Class stores information about products
 
@@ -11,4 +11,6 @@ public class Produce : MonoBehaviour
     public int PLU;
 
     public bool ageRestricted;
+
+    public bool hasBeenScanned;
 }
