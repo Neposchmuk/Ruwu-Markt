@@ -22,7 +22,7 @@ public class actionsScript : MonoBehaviour
 
     private Interaction_MenuTest IM;
 
-    private Pour_Out handRC;
+    private Hand_Raycast handRC;
 
     private Quest_Manager QM;
 
@@ -42,7 +42,7 @@ public class actionsScript : MonoBehaviour
         SM = GameObject.Find("Sanity_Manager").GetComponent<Sanity_Manager>();
         QM = GameObject.Find("Quest_Manager").GetComponent<Quest_Manager>();
         IM = GetComponent<Interaction_MenuTest>();
-        handRC = GameObject.Find("Hand").GetComponent<Pour_Out>();       
+        handRC = GameObject.Find("Hand").GetComponent<Hand_Raycast>();       
 
         switch (Quest)
         {
@@ -102,12 +102,13 @@ public class actionsScript : MonoBehaviour
 
         if(objectsPlaced == objectsToPlace)
         {
-            QM.CompleteQuest(currentQuest);
-            TriggerSanityChange(currentQuestVersion);
+            QM.CompleteQuest(currentQuest, currentQuestVersion, gameObject);
+            Destroy(handRC.GetComponentInChildren<Produce>().gameObject);
+            //TriggerSanityChange(currentQuestVersion);
         }
     }
     //Function for changing sanity and job security values
-    private void TriggerSanityChange(int i)
+    public void TriggerSanityChange(int i)
     {
         SM.ChangeSanity(sanityChange[i], jobSecChange[i]);
     }
@@ -136,12 +137,12 @@ public class actionsScript : MonoBehaviour
                 break;
             case 2:
                 QM.UpdateQuest(actionSelector, questVersion);
-                TriggerSanityChange(questVersion);
-                QM.CompleteQuest(actionSelector);
+                //TriggerSanityChange(questVersion);
+                QM.CompleteQuest(actionSelector,questVersion,gameObject);
                 break;
             case 3:
                 QM.UpdateQuest(actionSelector, questVersion);
-                handRC.enableRay(actionSelector);
+                handRC.UnlockPour(actionSelector, questVersion, gameObject);
                 break;
 
         }
