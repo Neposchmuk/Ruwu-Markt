@@ -12,6 +12,10 @@ TagManager:
   - Mop
   - Puddle
   - FloorQuest
+  - CashRegister
+  - Cash
+  - CheckOutProduct
+  - UI_Button
   layers:
   - Default
   - TransparentFX
