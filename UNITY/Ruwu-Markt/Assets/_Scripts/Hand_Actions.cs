@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,9 +9,11 @@ public class Hand_Actions: MonoBehaviour
 
     public Animator MopAnimator;
 
-    private float timeToPour = 5;
+    public GameObject objectHolding;
 
-    private GameObject objectHolding;
+    public float throwStrength;
+
+    private float timeToPour = 5; 
 
     private GameObject objectToPlace;
 
@@ -23,11 +26,11 @@ public class Hand_Actions: MonoBehaviour
         {
             if(hit.collider.tag == "PourPuddle")
             {
-                hit.collider.gameObject.transform.localScale *= 1 + 0.25f * Time.deltaTime;
+                hit.collider.gameObject.transform.localScale *= 1 + 0.5f * Time.deltaTime;
             }
             else
             {
-                Instantiate(instanceObject[2], hit.point + new Vector3 (0,0.02f,0), Quaternion.Euler (new Vector3 (0, Random.Range(0, 359), 0)));
+                Instantiate(instanceObject[2], hit.point + new Vector3 (0,0.02f,0), Quaternion.Euler (new Vector3 (0, UnityEngine.Random.Range(0, 359), 0)));
             }
 
             timeToPour -= 1 * Time.deltaTime;
@@ -39,6 +42,13 @@ public class Hand_Actions: MonoBehaviour
     public void Place(RaycastHit hit)
     {
         GameObject instanceObject = Instantiate(objectHolding, hit.point, transform.localRotation);
+        instanceObject.layer = 0;
+
+    }
+
+    public void Place(Vector3 positionOverride, Vector3 rotationOverride)
+    {
+        GameObject instanceObject = Instantiate(objectHolding, positionOverride, Quaternion.Euler(rotationOverride));
         instanceObject.layer = 0;
 
     }
@@ -57,6 +67,22 @@ public class Hand_Actions: MonoBehaviour
         objectToPlace = instanceObject[PickUp];
 
         return objectHolding;
+    }
+
+    public GameObject ThrowObject(int PickUp)
+    {
+        GameObject objectThrown = Instantiate(instanceObject[PickUp], transform.position, transform.rotation, gameObject.transform);
+        try
+        {
+            objectThrown.TryGetComponent<Rigidbody>(out Rigidbody thrownRB);
+            thrownRB.AddForce(Vector3.forward + new Vector3(0, 0.5f, 0) * throwStrength, ForceMode.Impulse);
+        }
+        catch (NullReferenceException)
+        {
+            Debug.Log("Thrown Object has no Rigidbody");
+        }
+
+        return objectThrown;
     }
 
     public void DestroyObjectInHand()
