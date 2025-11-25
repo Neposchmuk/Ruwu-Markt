@@ -46,9 +46,10 @@ public class Hand_Actions: MonoBehaviour
 
     }
 
-    public void Place(Vector3 positionOverride, Vector3 rotationOverride)
+    public void Place(Vector3 positionOverride, Vector3 rotationOverride, Vector3 scaleOverride)
     {
         GameObject instanceObject = Instantiate(objectHolding, positionOverride, Quaternion.Euler(rotationOverride));
+        instanceObject.transform.localScale = scaleOverride;
         instanceObject.layer = 0;
 
     }
@@ -71,11 +72,13 @@ public class Hand_Actions: MonoBehaviour
 
     public GameObject ThrowObject(int PickUp)
     {
-        GameObject objectThrown = Instantiate(instanceObject[PickUp], transform.position, transform.rotation, gameObject.transform);
+        Debug.Log("Called throw object");
+        GameObject objectThrown = Instantiate(instanceObject[PickUp], transform.position, transform.rotation);
         try
         {
+            Debug.Log("Trying to throw object");
             objectThrown.TryGetComponent<Rigidbody>(out Rigidbody thrownRB);
-            thrownRB.AddForce(Vector3.forward + new Vector3(0, 0.5f, 0) * throwStrength, ForceMode.Impulse);
+            thrownRB.AddForce(transform.forward * throwStrength, ForceMode.Impulse);
         }
         catch (NullReferenceException)
         {

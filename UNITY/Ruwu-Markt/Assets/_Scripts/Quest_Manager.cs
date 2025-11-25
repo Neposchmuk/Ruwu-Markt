@@ -188,6 +188,9 @@ public class Quest_Manager : MonoBehaviour
                 defaultQuestText = floorQuestText.text;
                 Debug.Log(defaultQuestText);
                 break;
+            case 2:
+                defaultQuestText = pfandQuestText.text;
+                break;
         }
         
     }
@@ -195,7 +198,7 @@ public class Quest_Manager : MonoBehaviour
     //Checks if all quests have been completed to unlock Scene Change
     private void CheckDayCompletion()
     {
-        if (shelfQuestCompleted && floorQuestCompleted && !SM.isGameOver)
+        if (shelfQuestCompleted && floorQuestCompleted && pfandQuestCompleted && !SM.isGameOver)
         {
             endDayText.SetActive(true);
         }

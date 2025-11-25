@@ -47,7 +47,7 @@ public class MiniGamePfand : MiniGameBaseState
         switch (questVariant)
         {
             case 1:
-                cratesToPlace = 18;
+                cratesToPlace = 9;
                 InitiateQuest();
                 break;
             case 2:
@@ -55,10 +55,12 @@ public class MiniGamePfand : MiniGameBaseState
                 InitiateQuest();
                 break;
             case 3:
-                //Something with throwing bottles? Maybe switch with Variant 4
+                InitiateQuest();
+                pyramidCratesToPlace = 5;
                 break;
             case 4:
-                //buildPyramid
+                InitiateQuest();
+                bottlesToThrow = 5;
                 break;
         }
     }
@@ -68,6 +70,10 @@ public class MiniGamePfand : MiniGameBaseState
         cratesPlaced = 0;
 
         bottlesPlaced = 0;
+
+        pyramidCratesPlaced = 0;
+
+        bottlesThrown = 0;
 
         QM.isDoingQuest = true;
 
@@ -120,28 +126,44 @@ public class MiniGamePfand : MiniGameBaseState
 
     public override void Interact()
     {
+        if (questVariant == 4 && isHoldingObject)
+        {
+            HA.ThrowObject(8);
+            HA.DestroyObjectInHand();
+            bottlesThrown++;
+            UpdateQuest();
+            isHoldingObject = false;
+            if (bottlesThrown == bottlesToThrow)
+            {
+                EndQuest();
+            }
+        }
+
         Debug.Log("Called Interact");
+        Debug.Log("QuestVariant: " + questVariant);
 
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
 
         if (Physics.Raycast(ray, out RaycastHit hit, 2, QuestSource.interactionLayer))
         {
+
+
             switch (questVariant)
             {
                 case 1:
-                    if(hit.collider.tag == "CrateBlue")
+                    if(hit.collider.tag == "CrateBlue" && !isHoldingObject)
                     {
                         HA.PickUpObject(5);
                         isHoldingObject = true;
                         GameObject.Destroy(hit.collider.gameObject);
                     }
-                    else if (hit.collider.tag == "CrateYellow")
+                    else if (hit.collider.tag == "CrateYellow" && !isHoldingObject)
                     {
                         HA.PickUpObject(6);
                         isHoldingObject = true;
                         GameObject.Destroy(hit.collider.gameObject);
                     }
-                    else if (hit.collider.tag == "CrateRed")
+                    else if (hit.collider.tag == "CrateRed" && !isHoldingObject)
                     {
                         HA.PickUpObject(7);
                         isHoldingObject = true;
@@ -154,6 +176,7 @@ public class MiniGamePfand : MiniGameBaseState
                         HA.DestroyObjectInHand();
                         cratesPlaced++;
                         UpdateQuest();
+                        isHoldingObject = false;
                         if(cratesPlaced == cratesToPlace)
                         {
                             EndQuest();
@@ -162,9 +185,10 @@ public class MiniGamePfand : MiniGameBaseState
                     else if (hit.collider.tag == "CrateAreaYellow" && HA.objectHolding.CompareTag("CrateYellow"))
                     {
                         HA.Place(hit);
-                        HA.DestroyObjectInHand();
-                        UpdateQuest();
+                        HA.DestroyObjectInHand();                       
                         cratesPlaced++;
+                        UpdateQuest();
+                        isHoldingObject = false;
                         if (cratesPlaced == cratesToPlace)
                         {
                             EndQuest();
@@ -174,8 +198,9 @@ public class MiniGamePfand : MiniGameBaseState
                     {
                         HA.Place(hit);
                         HA.DestroyObjectInHand();
-                        UpdateQuest();
                         cratesPlaced++;
+                        UpdateQuest();
+                        isHoldingObject = false;
                         if (cratesPlaced == cratesToPlace)
                         {
                             EndQuest();
@@ -183,7 +208,9 @@ public class MiniGamePfand : MiniGameBaseState
                     }
                     break;
                 case 2:
-                    if(hit.collider.tag == "Bottle")
+
+                    Debug.Log(hit.collider.name);
+                    if(hit.collider.tag == "Bottle" && !isHoldingObject)
                     {
                         HA.PickUpObject(4);
                         isHoldingObject = true;
@@ -193,6 +220,7 @@ public class MiniGamePfand : MiniGameBaseState
                     if(hit.collider.tag == "CrateFill" && isHoldingObject && bottlesPlaced < bottlesToPlace)
                     {
                         HA.DestroyObjectInHand();
+                        isHoldingObject = false;
                         bottlesPlaced++;
                         UpdateQuest();
                         if (bottlesPlaced == bottlesToPlace)
@@ -202,30 +230,32 @@ public class MiniGamePfand : MiniGameBaseState
                     }
                     break;
                 case 3:
-                    if (hit.collider.tag == "CrateBlue")
+                    if (hit.collider.tag == "CrateBlue" && !isHoldingObject)
                     {
                         HA.PickUpObject(5);
                         isHoldingObject = true;
                         GameObject.Destroy(hit.collider.gameObject);
                     }
-                    else if (hit.collider.tag == "CrateYellow")
+                    else if (hit.collider.tag == "CrateYellow" && !isHoldingObject)
                     {
                         HA.PickUpObject(6);
                         isHoldingObject = true;
                         GameObject.Destroy(hit.collider.gameObject);
                     }
-                    else if (hit.collider.tag == "CrateRed")
+                    else if (hit.collider.tag == "CrateRed" && !isHoldingObject)
                     {
                         HA.PickUpObject(7);
                         isHoldingObject = true;
                         GameObject.Destroy(hit.collider.gameObject);
                     }
 
-                    if (hit.collider.tag == "PyramidArea")
+                    if (hit.collider.tag == "PyramidArea" && isHoldingObject)
                     {
-                        HA.Place(PPO.pyramidCrates[pyramidCratesPlaced].transform.position, PPO.pyramidCrates[pyramidCratesPlaced].transform.localEulerAngles);
+                        HA.Place(PPO.pyramidCrates[pyramidCratesPlaced].transform.position, PPO.pyramidCrates[pyramidCratesPlaced].transform.localEulerAngles, new Vector3(1,1,1));
+                        HA.DestroyObjectInHand();
                         pyramidCratesPlaced++;
                         UpdateQuest();
+                        isHoldingObject = false;
                         if (pyramidCratesPlaced == pyramidCratesToPlace)
                         {
                             EndQuest();
@@ -239,21 +269,11 @@ public class MiniGamePfand : MiniGameBaseState
                         isHoldingObject = true;
                         GameObject.Destroy(hit.collider.gameObject);
                     }
-
-                    if (isHoldingObject)
-                    {
-                        HA.ThrowObject(4);
-                        HA.DestroyObjectInHand();
-                        bottlesThrown++;
-                        UpdateQuest();
-                        if (bottlesThrown == bottlesToThrow)
-                        {
-                            EndQuest();
-                        }
-                    }
                     break;
             }
         }
+
+        
     }
 
     public override void HoldingAttack(bool buttonIsPressed)

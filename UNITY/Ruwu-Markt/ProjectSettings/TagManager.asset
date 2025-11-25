@@ -16,6 +16,16 @@ TagManager:
   - Cash
   - CheckOutProduct
   - UI_Button
+  - CrateBlue
+  - CrateYellow
+  - CrateRed
+  - Bottle
+  - CrateAreaBlue
+  - CrateAreaYellow
+  - CrateAreaRed
+  - PyramidArea
+  - CrateFill
+  - PfandQuest
   layers:
   - Default
   - TransparentFX
