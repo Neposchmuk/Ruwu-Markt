@@ -16,11 +16,15 @@ public class Quest_Manager : MonoBehaviour
 
     public TMP_Text pfandQuestText;
 
+    public TMP_Text flowersQuestText;
+
     public bool shelfQuestCompleted;
 
     public bool floorQuestCompleted;
 
     public bool pfandQuestCompleted;
+
+    public bool flowersQuestCompleted;
 
     public int stepsDone;
 
@@ -122,6 +126,13 @@ public class Quest_Manager : MonoBehaviour
                         SM.ChangeSanity(MGC.sanityChange[questVariant], MGC.jobSecurityChange[questVariant]);
                         break;
                 }
+                break;
+            case 3:
+                flowersQuestCompleted = true;
+                flowersQuestText.text = defaultQuestText;
+                flowersQuestText.fontStyle = FontStyles.Strikethrough;
+                isDoingQuest = false;
+                SM.ChangeSanity(MGC.sanityChange[questVariant], MGC.jobSecurityChange[questVariant]);
                 break;
                 
         }

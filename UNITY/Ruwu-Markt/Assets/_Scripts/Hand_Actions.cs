@@ -39,6 +39,33 @@ public class Hand_Actions: MonoBehaviour
         return timeToPour;
     }
 
+    public bool FlowerPour(float timeToWater)
+    {
+        if(Physics.Raycast(transform.position + new Vector3(0,0.3f,0.3f), new Vector3(0,-1,1), out RaycastHit hit, 2))
+        {
+            if(hit.collider.tag == "Flowers")
+            {
+                timeToPour -= 1 * Time.deltaTime;
+                if(timeToPour <= 0)
+                {
+                    return true;
+                }              
+            }
+            else if (hit.collider.tag == "PourPuddle")
+            {
+                hit.collider.gameObject.transform.localScale *= 1 + 0.5f * Time.deltaTime;
+                return false;
+            }
+            else
+            {
+                Instantiate(instanceObject[2], hit.point + new Vector3(0, 0.02f, 0), Quaternion.Euler(new Vector3(0, UnityEngine.Random.Range(0, 359), 0)));
+                return false;
+            }
+        }
+
+        return false;
+    }
+
     public void Place(RaycastHit hit)
     {
         GameObject instanceObject = Instantiate(objectHolding, hit.point, transform.localRotation);

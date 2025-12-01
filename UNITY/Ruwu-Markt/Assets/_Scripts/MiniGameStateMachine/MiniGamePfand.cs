@@ -48,6 +48,10 @@ public class MiniGamePfand : MiniGameBaseState
         {
             case 1:
                 cratesToPlace = 9;
+                foreach (GameObject placeZone in PPO.placingZones)
+                {
+                    placeZone.SetActive(true);
+                }
                 InitiateQuest();
                 break;
             case 2:
@@ -55,8 +59,14 @@ public class MiniGamePfand : MiniGameBaseState
                 InitiateQuest();
                 break;
             case 3:
-                InitiateQuest();
+                PPO.pyramidZone.SetActive(true);
+                /*foreach(GameObject pyramidPlaceholder in PPO.pyramidCrates)
+                {
+                    pyramidPlaceholder.SetActive(true);
+                    pyramidPlaceholder.GetComponent<Renderer>().enabled = false;
+                }*/
                 pyramidCratesToPlace = 5;
+                InitiateQuest();
                 break;
             case 4:
                 InitiateQuest();
@@ -144,7 +154,7 @@ public class MiniGamePfand : MiniGameBaseState
 
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 2, QuestSource.interactionLayer))
+        if (Physics.Raycast(ray, out RaycastHit hit, 2.5f, QuestSource.interactionLayer))
         {
 
 

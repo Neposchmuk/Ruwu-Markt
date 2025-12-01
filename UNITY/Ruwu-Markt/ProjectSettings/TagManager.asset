@@ -26,6 +26,9 @@ TagManager:
   - PyramidArea
   - CrateFill
   - PfandQuest
+  - Flowers
+  - FlowersQuest
+  - WateringCan
   layers:
   - Default
   - TransparentFX
