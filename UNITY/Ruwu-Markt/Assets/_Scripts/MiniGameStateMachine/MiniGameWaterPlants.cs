@@ -7,9 +7,11 @@ public class MiniGameWaterPlants : MiniGameBaseState
 
     private MiniGame_Caller QuestSource;
 
-    private GameObject[] FlowerStaions;
+    private GameObject[] FlowerStations;
 
     private GameObject objectHeld;
+
+    private Hand_Actions HA;
 
     private int questVariant;
 
@@ -23,6 +25,8 @@ public class MiniGameWaterPlants : MiniGameBaseState
     public override void StartQuest(MiniGame_Caller Quest, int questVariant)
     {
         QM = GameObject.FindFirstObjectByType<Quest_Manager>();
+
+        HA = GameObject.FindFirstObjectByType<Hand_Actions>();
 
         QuestSource = Quest;
 
@@ -46,13 +50,17 @@ public class MiniGameWaterPlants : MiniGameBaseState
 
     public override void InitiateQuest()
     {
+        FlowerStations = GameObject.FindGameObjectsWithTag("Flowers");
+
         questStage = 1;
 
         flowersWatered = 0;
 
-        flowersToWater = 3;
+        flowersToWater = FlowerStations.Length;
 
         QM.isDoingQuest = true;
+
+        FlowersWatering.OnFlowerWatered += CountWateredFlowers;
 
         QM.flowersQuestText.text = "Grab the Watering Can";
     }
@@ -67,11 +75,16 @@ public class MiniGameWaterPlants : MiniGameBaseState
             case 3:
                 QM.flowersQuestText.text = "Water the plants (" + $"{flowersWatered}" + "/" + $"{flowersToWater}" + ")";
                 break;
+            case 4:
+                EndQuest();
+                break;
         }
     }
 
     public override void EndQuest()
     {
+        FlowersWatering.OnFlowerWatered -= CountWateredFlowers;
+        HA.DestroyObjectInHand();
         QM.CompleteQuest(3, questVariant - 1, QuestSource.gameObject);
     }
 
@@ -83,23 +96,43 @@ public class MiniGameWaterPlants : MiniGameBaseState
         {
             if(hit.collider.tag == "WateringCan")
             {
-                objectHeld = GameObject.FindFirstObjectByType<Hand_Actions>().PickUpObject(9);
+                objectHeld = HA.PickUpObject(9);
+                HA.SetPourTime(0);
                 isHoldingCan = true;
                 GameObject.Destroy(hit.collider.gameObject);
                 questStage = 2;
                 UpdateQuest();
             }
 
-            if(hit.collider.tag == "FlowersQuest" && isHoldingCan)
+            if(hit.collider.tag == "FlowersQuest" && isHoldingCan && questStage !=3)
             {
                 questStage = 3;
+                HA.SetPourTime(5);
                 UpdateQuest();
             }
+            else if(hit.collider.tag == "FlowersQuest" && isHoldingCan && questStage == 3)
+            {
+                HA.SetPourTime(5);
+            }
+
         }
     }
 
     public override void HoldingAttack(bool buttonIsPressed)
     {
-        throw new System.NotImplementedException();
+        if (buttonIsPressed && isHoldingCan && questStage == 3)
+        {
+            HA.FlowerPour();
+        }
+    }
+
+    private void CountWateredFlowers()
+    {
+        flowersWatered++;
+        if(flowersWatered == flowersToWater)
+        {
+            questStage = 4;
+        }
+        UpdateQuest();
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,7 +14,7 @@ public class Hand_Actions: MonoBehaviour
 
     public float throwStrength;
 
-    private float timeToPour = 5; 
+    private float timeToPour = Mathf.Clamp(5, 0, 5); 
 
     private GameObject objectToPlace;
 
@@ -30,7 +31,7 @@ public class Hand_Actions: MonoBehaviour
             }
             else
             {
-                Instantiate(instanceObject[2], hit.point + new Vector3 (0,0.02f,0), Quaternion.Euler (new Vector3 (0, UnityEngine.Random.Range(0, 359), 0)));
+                Instantiate(instanceObject[1], hit.point + new Vector3 (0,0.02f,0), Quaternion.Euler (new Vector3 (0, UnityEngine.Random.Range(0, 359), 0)));
             }
 
             timeToPour -= 1 * Time.deltaTime;
@@ -39,31 +40,39 @@ public class Hand_Actions: MonoBehaviour
         return timeToPour;
     }
 
-    public bool FlowerPour(float timeToWater)
-    {
-        if(Physics.Raycast(transform.position + new Vector3(0,0.3f,0.3f), new Vector3(0,-1,1), out RaycastHit hit, 2))
+    public void FlowerPour()
+    { 
+        if(Physics.Raycast(Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f)), out RaycastHit hit, 2))
         {
             if(hit.collider.tag == "Flowers")
             {
-                timeToPour -= 1 * Time.deltaTime;
-                if(timeToPour <= 0)
+                if(timeToPour >= 0)
                 {
-                    return true;
+                    hit.collider.gameObject.GetComponent<FlowersWatering>().AddWaterSaturation();
+                    timeToPour -= 1 * Time.deltaTime;
                 }              
             }
-            else if (hit.collider.tag == "PourPuddle")
+            else if (hit.collider.tag == "PourPuddle" && timeToPour >= 0)
             {
                 hit.collider.gameObject.transform.localScale *= 1 + 0.5f * Time.deltaTime;
-                return false;
+                timeToPour -= 1 * Time.deltaTime;
             }
-            else
+            else if (timeToPour >= 0)
             {
-                Instantiate(instanceObject[2], hit.point + new Vector3(0, 0.02f, 0), Quaternion.Euler(new Vector3(0, UnityEngine.Random.Range(0, 359), 0)));
-                return false;
+                Instantiate(instanceObject[1], hit.point + new Vector3(0, 0.02f, 0), Quaternion.Euler(new Vector3(0, UnityEngine.Random.Range(0, 359), 0)));
+                timeToPour -= 1 * Time.deltaTime;
             }
+
+            
         }
 
-        return false;
+        objectHolding.GetComponentInChildren<TMP_Text>().text = $"{Mathf.CeilToInt(timeToPour * 20f)}";
+    }
+
+    public void SetPourTime(float time)
+    {
+        timeToPour = time;
+        objectHolding.GetComponentInChildren<TMP_Text>().text = $"{Mathf.CeilToInt(timeToPour * 20f)}";
     }
 
     public void Place(RaycastHit hit)

@@ -202,6 +202,9 @@ public class Quest_Manager : MonoBehaviour
             case 2:
                 defaultQuestText = pfandQuestText.text;
                 break;
+            case 3:
+                defaultQuestText = flowersQuestText.text;
+                break;
         }
         
     }
@@ -209,7 +212,7 @@ public class Quest_Manager : MonoBehaviour
     //Checks if all quests have been completed to unlock Scene Change
     private void CheckDayCompletion()
     {
-        if (shelfQuestCompleted && floorQuestCompleted && pfandQuestCompleted && !SM.isGameOver)
+        if (shelfQuestCompleted && floorQuestCompleted && pfandQuestCompleted && flowersQuestCompleted && !SM.isGameOver)
         {
             endDayText.SetActive(true);
         }
