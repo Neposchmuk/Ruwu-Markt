@@ -14,6 +14,10 @@ public class Sanity_Manager : MonoBehaviour
 
     public TMP_Text jobSecCounter;
 
+    public MatchSanitySpriteFill sanityBar;
+
+    public MatchSanitySpriteFill jobSecBar;
+
     public SanitySpriteChanger SanitySprite;
 
     public GameObject GO_Insane;
@@ -24,9 +28,11 @@ public class Sanity_Manager : MonoBehaviour
 
     public int sanity;
 
+    public int jobSecurity;
+
     public bool isGameOver;
 
-    private int jobSecurity;
+    
 
 
 
@@ -48,6 +54,10 @@ public class Sanity_Manager : MonoBehaviour
         Restart.gameObject.SetActive(false);
 
         isGameOver = false;
+
+        sanityBar.AdjustSanityFill(sanity);
+
+        jobSecBar.AdjustSanityFill(jobSecurity);
     }
 
     private void Update()
@@ -69,6 +79,10 @@ public class Sanity_Manager : MonoBehaviour
         Cursor.visible = false;
 
         CheckGameOver();
+
+        sanityBar.AdjustSanityFill(sanity);
+
+        jobSecBar.AdjustSanityFill(jobSecurity);
 
     }
 
