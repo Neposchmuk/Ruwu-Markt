@@ -107,7 +107,7 @@ public class actionsScript : MonoBehaviour
         if(objectsPlaced == objectsToPlace)
         {
             QM.CompleteQuest(currentQuest, currentQuestVersion, gameObject);
-            Destroy(handRC.GetComponentInChildren<Produce>().gameObject);
+            Destroy(handRC.GetComponentInChildren<productInfo>().gameObject);
             //TriggerSanityChange(currentQuestVersion);
         }
     }

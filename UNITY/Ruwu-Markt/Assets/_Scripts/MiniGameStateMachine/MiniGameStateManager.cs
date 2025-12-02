@@ -32,6 +32,8 @@ public class MiniGameStateManager : MonoBehaviour
     MiniGameBaseState currentQuest;
     MiniGameShelf ShelfQuest = new MiniGameShelf();
     MiniGameWipeFloor FloorQuest = new MiniGameWipeFloor();
+    MiniGamePfand BottlesQuest = new MiniGamePfand();
+    MiniGameWaterPlants FlowersQuest = new MiniGameWaterPlants();
 
     private void Start()
     {
@@ -58,6 +60,16 @@ public class MiniGameStateManager : MonoBehaviour
                 currentQuest = FloorQuest;
                 QM.SetQuestText(1);
                 currentQuest.StartQuest(MGC, questVariant);              
+                break;
+            case QuestType.Bottles:
+                currentQuest = BottlesQuest;
+                QM.SetQuestText(2);
+                currentQuest.StartQuest(MGC, questVariant);
+                break;
+            case QuestType.Flowers:
+                currentQuest = FlowersQuest;
+                QM.SetQuestText(3);
+                currentQuest.StartQuest(MGC, questVariant);
                 break;
             
         }

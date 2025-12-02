@@ -14,9 +14,17 @@ public class Quest_Manager : MonoBehaviour
 
     public TMP_Text floorQuestText;
 
+    public TMP_Text pfandQuestText;
+
+    public TMP_Text flowersQuestText;
+
     public bool shelfQuestCompleted;
 
     public bool floorQuestCompleted;
+
+    public bool pfandQuestCompleted;
+
+    public bool flowersQuestCompleted;
 
     public int stepsDone;
 
@@ -98,6 +106,34 @@ public class Quest_Manager : MonoBehaviour
                         break;
                 }
                 break;
+            case 2:
+                pfandQuestCompleted = true;
+                pfandQuestText.text = defaultQuestText;
+                pfandQuestText.fontStyle = FontStyles.Strikethrough;
+                isDoingQuest = false;
+                switch(questVariant)
+                {
+                    case 0:
+                        SM.ChangeSanity(MGC.sanityChange[questVariant], MGC.jobSecurityChange[questVariant]);
+                        break;
+                    case 1:
+                        SM.ChangeSanity(MGC.sanityChange[questVariant], MGC.jobSecurityChange[questVariant]);
+                        break;
+                    case 2:
+                        SM.ChangeSanity(MGC.sanityChange[questVariant], MGC.jobSecurityChange[questVariant]);
+                        break;
+                    case 3:
+                        SM.ChangeSanity(MGC.sanityChange[questVariant], MGC.jobSecurityChange[questVariant]);
+                        break;
+                }
+                break;
+            case 3:
+                flowersQuestCompleted = true;
+                flowersQuestText.text = defaultQuestText;
+                flowersQuestText.fontStyle = FontStyles.Strikethrough;
+                isDoingQuest = false;
+                SM.ChangeSanity(MGC.sanityChange[questVariant], MGC.jobSecurityChange[questVariant]);
+                break;
                 
         }
 
@@ -163,6 +199,12 @@ public class Quest_Manager : MonoBehaviour
                 defaultQuestText = floorQuestText.text;
                 Debug.Log(defaultQuestText);
                 break;
+            case 2:
+                defaultQuestText = pfandQuestText.text;
+                break;
+            case 3:
+                defaultQuestText = flowersQuestText.text;
+                break;
         }
         
     }
@@ -170,7 +212,7 @@ public class Quest_Manager : MonoBehaviour
     //Checks if all quests have been completed to unlock Scene Change
     private void CheckDayCompletion()
     {
-        if (shelfQuestCompleted && floorQuestCompleted && !SM.isGameOver)
+        if (shelfQuestCompleted && floorQuestCompleted && pfandQuestCompleted && flowersQuestCompleted && !SM.isGameOver)
         {
             endDayText.SetActive(true);
         }

@@ -12,6 +12,23 @@ TagManager:
   - Mop
   - Puddle
   - FloorQuest
+  - CashRegister
+  - Cash
+  - CheckOutProduct
+  - UI_Button
+  - CrateBlue
+  - CrateYellow
+  - CrateRed
+  - Bottle
+  - CrateAreaBlue
+  - CrateAreaYellow
+  - CrateAreaRed
+  - PyramidArea
+  - CrateFill
+  - PfandQuest
+  - Flowers
+  - FlowersQuest
+  - WateringCan
   layers:
   - Default
   - TransparentFX
