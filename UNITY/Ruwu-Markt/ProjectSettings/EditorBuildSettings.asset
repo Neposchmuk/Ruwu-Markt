@@ -9,9 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
+    path: Assets/Scenes/Greyboxing.unity
+    guid: bda350ca75ab12d42b57080157ff5489
+  - enabled: 0
     path: Assets/Scenes/TestScene_Bad.unity
     guid: 868948c96808e5d49888ed2bba466b69
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TestScene_Good.unity
     guid: d269d59dd1e72bd4f969725623a8866b
   m_configObjects:

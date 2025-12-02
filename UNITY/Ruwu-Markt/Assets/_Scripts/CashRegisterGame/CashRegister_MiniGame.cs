@@ -265,7 +265,7 @@ public class CashRegister_MiniGame : MonoBehaviour
                 if (!productInfo.hasBeenScanned)
                 {
                     ScanProduct(productInfo);
-                    hit.collider.gameObject.transform.localPosition += new Vector3(0,0,1);
+                    hit.collider.gameObject.transform.localPosition += new Vector3(0,0,-2.5f);
                 }
                 
             }

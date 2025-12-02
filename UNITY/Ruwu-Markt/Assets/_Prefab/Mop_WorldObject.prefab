@@ -256,7 +256,7 @@ GameObject:
   - component: {fileID: 1185193648996692160}
   m_Layer: 6
   m_Name: Mop_WorldObject
-  m_TagString: Untagged
+  m_TagString: Mop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
