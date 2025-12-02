@@ -53,6 +53,7 @@ public class FlowersWatering : MonoBehaviour
             if (waterSaturation >= maxSaturation)
             {
                 isSaturated = true;
+                GetComponentInChildren<Canvas>().enabled = false;
                 TriggerWaterEvent();
             }
         }     

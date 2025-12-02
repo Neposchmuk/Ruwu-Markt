@@ -73,7 +73,7 @@ public class RayCast : MonoBehaviour
                 //Debug.Log(QM.isDoingQuest);
             }
 
-            if(hit.collider.tag == "FlowersQuest" && interact.WasPressedThisFrame() && !QM.isDoingQuest && !QM.floorQuestCompleted)
+            if(hit.collider.tag == "FlowersQuest" && interact.WasPressedThisFrame() && !QM.isDoingQuest && !QM.flowersQuestCompleted)
             {
                 hit.collider.gameObject.GetComponent<Interaction_MenuTest>().ToggleUI(true);
                 questObject = hit.collider.gameObject;

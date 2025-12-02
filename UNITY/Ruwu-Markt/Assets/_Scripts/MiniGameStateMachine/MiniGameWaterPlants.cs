@@ -63,6 +63,8 @@ public class MiniGameWaterPlants : MiniGameBaseState
         FlowersWatering.OnFlowerWatered += CountWateredFlowers;
 
         QM.flowersQuestText.text = "Grab the Watering Can";
+
+        ToggleQuestMarkers(questStage, true);
     }
 
     public override void UpdateQuest()
@@ -96,7 +98,7 @@ public class MiniGameWaterPlants : MiniGameBaseState
         {
             if(hit.collider.tag == "WateringCan")
             {
-                objectHeld = HA.PickUpObject(9);
+                objectHeld = HA.PickUpObject(7);
                 HA.SetPourTime(0);
                 isHoldingCan = true;
                 GameObject.Destroy(hit.collider.gameObject);
@@ -109,6 +111,7 @@ public class MiniGameWaterPlants : MiniGameBaseState
                 questStage = 3;
                 HA.SetPourTime(5);
                 UpdateQuest();
+                ToggleQuestMarkers(questStage, true);
             }
             else if(hit.collider.tag == "FlowersQuest" && isHoldingCan && questStage == 3)
             {
@@ -134,5 +137,28 @@ public class MiniGameWaterPlants : MiniGameBaseState
             questStage = 4;
         }
         UpdateQuest();
+    }
+
+    private void ToggleQuestMarkers(int questStage, bool isActive)
+    {
+        switch (questStage)
+        {
+            case 1:
+                GameObject.FindGameObjectWithTag("WateringCan").GetComponentInChildren<Canvas>().enabled = isActive;
+                break;
+            case 3:
+                foreach (GameObject flowerStation in FlowerStations)
+                {
+                    flowerStation.GetComponentInChildren<Canvas>().enabled = isActive;
+                }
+                break;
+            case 4:
+                foreach (GameObject flowerStation in FlowerStations)
+                {
+                    flowerStation.GetComponentInChildren<Canvas>().enabled = isActive;
+                }
+                break;
+        }
+        
     }
 }

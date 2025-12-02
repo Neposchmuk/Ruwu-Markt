@@ -8,6 +8,8 @@ public class Hand_Actions: MonoBehaviour
 {
     public GameObject[] instanceObject;
 
+    public GameObject[] placeObject;
+
     public Animator MopAnimator;
 
     public GameObject objectHolding;
@@ -77,23 +79,19 @@ public class Hand_Actions: MonoBehaviour
 
     public void Place(RaycastHit hit)
     {
-        GameObject instanceObject = Instantiate(objectHolding, hit.point, transform.localRotation);
-        instanceObject.layer = 0;
-
+        Instantiate(objectToPlace, hit.point, transform.localRotation);
     }
 
     public void Place(Vector3 positionOverride, Vector3 rotationOverride, Vector3 scaleOverride)
     {
-        GameObject instanceObject = Instantiate(objectHolding, positionOverride, Quaternion.Euler(rotationOverride));
+        GameObject instanceObject = Instantiate(objectToPlace, positionOverride, Quaternion.Euler(rotationOverride));
         instanceObject.transform.localScale = scaleOverride;
-        instanceObject.layer = 0;
-
     }
 
     public GameObject PickUpObject(int PickUp)
     {
         objectHolding = Instantiate(instanceObject[PickUp], transform.position, transform.rotation, gameObject.transform);
-        objectToPlace = instanceObject[PickUp];
+        objectToPlace = placeObject[PickUp];
 
         return objectHolding;
     }
@@ -101,7 +99,7 @@ public class Hand_Actions: MonoBehaviour
     public GameObject PickUpObject(int PickUp, Vector3 RotationOverride)
     {
         objectHolding = Instantiate(instanceObject[PickUp], transform.position, Quaternion.Euler(transform.eulerAngles + RotationOverride), gameObject.transform);
-        objectToPlace = instanceObject[PickUp];
+        objectToPlace = placeObject[PickUp];
 
         return objectHolding;
     }
@@ -109,7 +107,7 @@ public class Hand_Actions: MonoBehaviour
     public GameObject ThrowObject(int PickUp)
     {
         Debug.Log("Called throw object");
-        GameObject objectThrown = Instantiate(instanceObject[PickUp], transform.position, transform.rotation);
+        GameObject objectThrown = Instantiate(placeObject[PickUp], transform.position, transform.rotation);
         try
         {
             Debug.Log("Trying to throw object");

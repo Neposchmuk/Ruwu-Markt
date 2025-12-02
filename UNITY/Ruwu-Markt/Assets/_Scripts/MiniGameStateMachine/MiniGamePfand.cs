@@ -1,5 +1,7 @@
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class MiniGamePfand : MiniGameBaseState
 {
@@ -30,6 +32,16 @@ public class MiniGamePfand : MiniGameBaseState
     private Hand_Actions HA;
 
     private PfandPyramidObjects PPO;
+
+    private List<GameObject> crates = new List<GameObject>();
+
+    private List<GameObject> bottles = new List<GameObject>();
+
+    private List<GameObject> placeZones = new List<GameObject>();
+
+    private GameObject pyramidZone;
+
+    private GameObject crateFill;
     public override void StartQuest(MiniGame_Caller Quest, int questVariant)
     {
         QM = GameObject.FindFirstObjectByType<Quest_Manager>();
@@ -37,6 +49,8 @@ public class MiniGamePfand : MiniGameBaseState
         HA = GameObject.FindFirstObjectByType<Hand_Actions>();
 
         PPO = Quest.gameObject.GetComponent<PfandPyramidObjects>();
+
+        FillLists();
 
         this.questVariant = questVariant;
 
@@ -59,7 +73,7 @@ public class MiniGamePfand : MiniGameBaseState
                 InitiateQuest();
                 break;
             case 3:
-                PPO.pyramidZone.SetActive(true);
+                pyramidZone.SetActive(true);
                 /*foreach(GameObject pyramidPlaceholder in PPO.pyramidCrates)
                 {
                     pyramidPlaceholder.SetActive(true);
@@ -103,6 +117,8 @@ public class MiniGamePfand : MiniGameBaseState
                 break;
         }
 
+        ToggleQuestMarkers(questVariant, true);
+
         QuestSource.QuestMarkerBig.SetActive(false);
 
         QuestSource.QuestMarkerSmall.SetActive(true);
@@ -131,6 +147,7 @@ public class MiniGamePfand : MiniGameBaseState
     public override void EndQuest()
     {
         QuestSource.QuestMarkerBig.SetActive(false);
+        ToggleQuestMarkers(questVariant, false);
         QM.CompleteQuest(2, questVariant - 1, QuestSource.gameObject);
     }
 
@@ -138,7 +155,7 @@ public class MiniGamePfand : MiniGameBaseState
     {
         if (questVariant == 4 && isHoldingObject)
         {
-            HA.ThrowObject(8);
+            HA.ThrowObject(3);
             HA.DestroyObjectInHand();
             bottlesThrown++;
             UpdateQuest();
@@ -163,19 +180,19 @@ public class MiniGamePfand : MiniGameBaseState
                 case 1:
                     if(hit.collider.tag == "CrateBlue" && !isHoldingObject)
                     {
-                        HA.PickUpObject(5);
+                        HA.PickUpObject(4);
                         isHoldingObject = true;
                         GameObject.Destroy(hit.collider.gameObject);
                     }
                     else if (hit.collider.tag == "CrateYellow" && !isHoldingObject)
                     {
-                        HA.PickUpObject(6);
+                        HA.PickUpObject(5);
                         isHoldingObject = true;
                         GameObject.Destroy(hit.collider.gameObject);
                     }
                     else if (hit.collider.tag == "CrateRed" && !isHoldingObject)
                     {
-                        HA.PickUpObject(7);
+                        HA.PickUpObject(6);
                         isHoldingObject = true;
                         GameObject.Destroy(hit.collider.gameObject);
                     }
@@ -222,7 +239,7 @@ public class MiniGamePfand : MiniGameBaseState
                     Debug.Log(hit.collider.name);
                     if(hit.collider.tag == "Bottle" && !isHoldingObject)
                     {
-                        HA.PickUpObject(4);
+                        HA.PickUpObject(3);
                         isHoldingObject = true;
                         GameObject.Destroy(hit.collider.gameObject);
                     }
@@ -242,19 +259,19 @@ public class MiniGamePfand : MiniGameBaseState
                 case 3:
                     if (hit.collider.tag == "CrateBlue" && !isHoldingObject)
                     {
-                        HA.PickUpObject(5);
+                        HA.PickUpObject(4);
                         isHoldingObject = true;
                         GameObject.Destroy(hit.collider.gameObject);
                     }
                     else if (hit.collider.tag == "CrateYellow" && !isHoldingObject)
                     {
-                        HA.PickUpObject(6);
+                        HA.PickUpObject(5);
                         isHoldingObject = true;
                         GameObject.Destroy(hit.collider.gameObject);
                     }
                     else if (hit.collider.tag == "CrateRed" && !isHoldingObject)
                     {
-                        HA.PickUpObject(7);
+                        HA.PickUpObject(6);
                         isHoldingObject = true;
                         GameObject.Destroy(hit.collider.gameObject);
                     }
@@ -275,7 +292,7 @@ public class MiniGamePfand : MiniGameBaseState
                 case 4:
                     if (hit.collider.tag == "Bottle" && !isHoldingObject)
                     {
-                        HA.PickUpObject(4);
+                        HA.PickUpObject(3);
                         isHoldingObject = true;
                         GameObject.Destroy(hit.collider.gameObject);
                     }
@@ -289,5 +306,71 @@ public class MiniGamePfand : MiniGameBaseState
     public override void HoldingAttack(bool buttonIsPressed)
     {
         
+    }
+
+    private void FillLists()
+    {
+        crates.AddRange(GameObject.FindGameObjectsWithTag("CrateBlue"));
+        crates.AddRange(GameObject.FindGameObjectsWithTag("CrateYellow"));
+        crates.AddRange(GameObject.FindGameObjectsWithTag("CrateRed"));
+
+        bottles.AddRange(GameObject.FindGameObjectsWithTag("Bottle"));
+
+        placeZones.AddRange(GameObject.FindGameObjectsWithTag("CrateAreaBlue"));
+        placeZones.AddRange(GameObject.FindGameObjectsWithTag("CrateAreaYellow"));
+        placeZones.AddRange(GameObject.FindGameObjectsWithTag("CrateAreaRed"));
+
+        pyramidZone = PPO.pyramidZone;
+
+        crateFill = GameObject.FindGameObjectWithTag("CrateFill");
+    }
+
+    private void ToggleQuestMarkers(int questVariant, bool isActive)
+    {
+        switch(questVariant)
+        {
+            case 1:
+                foreach (GameObject crate in crates)
+                {
+                    if (crate != null)
+                    {
+                        crate.GetComponentInChildren<Canvas>().enabled = isActive;
+                    }
+                }
+                foreach (GameObject placeZone in placeZones)
+                {
+                    placeZone.GetComponentInChildren<Canvas>().enabled = isActive;
+                }
+                break;
+            case 2:
+                foreach (GameObject bottle in bottles)
+                {
+                    if (bottle != null)
+                    {
+                        bottle.GetComponentInChildren<Canvas>().enabled = isActive;
+                    }
+                }
+                crateFill.GetComponentInChildren<Canvas>().enabled = isActive;
+                break;
+            case 3:
+                 foreach (GameObject crate in crates)
+                 {
+                    if(crate != null)
+                    {
+                        crate.GetComponentInChildren<Canvas>().enabled = isActive;
+                    }    
+                 }
+                pyramidZone.GetComponentInChildren<Canvas>().enabled = isActive;
+                break;
+            case 4:
+                foreach (GameObject bottle in bottles)
+                {
+                    if (bottle != null)
+                    {
+                        bottle.GetComponentInChildren<Canvas>().enabled = isActive;
+                    }
+                }
+                break;
+        }
     }
 }
