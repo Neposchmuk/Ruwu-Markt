@@ -110,6 +110,10 @@ public class MiniGameWipeFloor : MiniGameBaseState
                 QM.floorQuestText.text = "Clean all puddles" + $"({puddlesCleaned}/{puddlesToClean}";
 
                 QuestSource.QuestMarkerSmall.SetActive(false);
+                foreach(GameObject puddle in Puddles)
+                {
+                    puddle.GetComponentInChildren<Canvas>().enabled = true;
+                }
             }
         }
     }
@@ -135,4 +139,5 @@ public class MiniGameWipeFloor : MiniGameBaseState
             EndQuest();
         }
     }
+
 }

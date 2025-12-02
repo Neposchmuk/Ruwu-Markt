@@ -65,6 +65,22 @@ public class RayCast : MonoBehaviour
                 //Debug.Log(QM.isDoingQuest);
             }
 
+            if (hit.collider.tag == "PfandQuest" && interact.WasPressedThisFrame() && !QM.isDoingQuest && !QM.pfandQuestCompleted)
+            {
+                hit.collider.gameObject.GetComponent<Interaction_MenuTest>().ToggleUI(true);
+                questObject = hit.collider.gameObject;
+                Debug.Log(questObject.name);
+                //Debug.Log(QM.isDoingQuest);
+            }
+
+            if(hit.collider.tag == "FlowersQuest" && interact.WasPressedThisFrame() && !QM.isDoingQuest && !QM.flowersQuestCompleted)
+            {
+                hit.collider.gameObject.GetComponent<Interaction_MenuTest>().ToggleUI(true);
+                questObject = hit.collider.gameObject;
+                Debug.Log(questObject.name);
+
+            }
+
             /*if(hit.collider.tag == "ProduceCan" && QM.isDoingQuest && !QM.shelfQuestCompleted)
             {
                 Debug.Log("RayCast Hit");
