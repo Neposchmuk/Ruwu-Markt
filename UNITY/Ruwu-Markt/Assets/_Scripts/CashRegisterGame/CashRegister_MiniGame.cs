@@ -67,6 +67,14 @@ public class CashRegister_MiniGame : MonoBehaviour
         ButtonListeners();
 
         cashRegisterDeficit = 0;
+
+        RegisterScannedProducts.text = "";
+        RegisterTotalPrice.text = "";
+        RegisterChangeToGive.text = "";
+        RegisterChangeGiven.text = "";
+        productsScanned = 0;
+        ButtonPayWithCard.interactable = false;
+        ButtonPayWithCash.interactable = false;
     }
 
     // Update is called once per frame
@@ -216,15 +224,15 @@ public class CashRegister_MiniGame : MonoBehaviour
         ButtonPayWithCash.interactable = false;   
         if (paidWithCard)
         {
-            SM.ChangeSanity(-10, 15);
+            SM.ChangeSanity(-5, 15);
         }
         else if(!paidWithCard && givenExactChange)
         {
-            SM.ChangeSanity(-15, 15);
+            SM.ChangeSanity(-10, 15);
         }
         else
         {
-            SM.ChangeSanity(-30, -20);
+            SM.ChangeSanity(-15, -20);
         }
 
         for (int i = 0; i < ChangeButtons.Count; i++)
