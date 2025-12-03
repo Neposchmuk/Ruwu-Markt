@@ -125,7 +125,7 @@ public class CashRegister_MiniGame : MonoBehaviour
 
     void CheckPaymentMethod()
     {
-        int payWithCard = UnityEngine.Random.Range(1, 6);
+        int payWithCard = UnityEngine.Random.Range(1, 7);
         if(payWithCard > 4)
         {
             Debug.Log("Pays with Card");

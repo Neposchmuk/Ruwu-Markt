@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 using TMPro;
 using Unity.VisualScripting;
 using System.Collections.Generic;
@@ -19,21 +20,21 @@ public class Interaction_MenuTest : MonoBehaviour
 
     private int[,] sanityRequirements;
 
-    private actionsScript aS;
-
     private Sanity_Manager SM;
+
+    private InputAction _escape;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        SM = GameObject.FindFirstObjectByType<Sanity_Manager>();;
+        SM = GameObject.FindFirstObjectByType<Sanity_Manager>();
+
+        _escape = GameObject.FindFirstObjectByType<PlayerInput>().actions.FindAction("Escape");
 
         if(SM == null)
         {
             throw new NullReferenceException("Sanity Manager not found, start from Initialize Scene");
         }
-
-        aS = GetComponent<actionsScript>();
 
         interactionUI.SetActive(false);
 
@@ -48,6 +49,14 @@ public class Interaction_MenuTest : MonoBehaviour
         }
 
         //AddListeners();
+    }
+
+    private void Update()
+    {
+        if(_escape.WasPressedThisFrame() && interactionUI.activeSelf)
+        {
+            ToggleUI(false);
+        }
     }
 
     /*public void Show_UI()

@@ -51,10 +51,10 @@ public class MiniGameShelf : MiniGameBaseState
                 break;
             case 3:
                 //Needs to be changed to require Animation first
-                EndQuest();
+                InitiateQuest();
                 break;
             case 4:
-                PourQuest();
+                InitiateQuest();
                 break;
         }
     }
@@ -97,6 +97,7 @@ public class MiniGameShelf : MiniGameBaseState
     public override void EndQuest()
     {
         QuestSource.QuestMarkerBig.SetActive(false);
+        GameObject.FindFirstObjectByType<Hand_Actions>().DestroyObjectInHand();
         QM.CompleteQuest(0, questVariant -1, QuestSource.gameObject);
     }
 
@@ -115,13 +116,13 @@ public class MiniGameShelf : MiniGameBaseState
                 isHoldingObject = true;
                 Debug.Log(isHoldingObject);
                 GameObject.Destroy(hit.collider.gameObject);
-                QM.shelfQuestText.text = "Restock the shelves (" + $"{objectsPlaced}" + "/" + $"{objectsToPlace}" + ")";
+                UpdateQuest();
                 QuestSource.QuestMarkerBig.SetActive(true);
             }
 
 
 
-            if (hit.collider.tag == "Shelf" && isHoldingObject && objectsPlaced < objectsToPlace)
+            if (hit.collider.tag == "Shelf" && isHoldingObject && objectsPlaced < objectsToPlace && (questVariant == 1 || questVariant == 2))
             {
                 GameObject.FindFirstObjectByType<Hand_Actions>().Place(hit);
                 objectsPlaced++;
@@ -129,7 +130,6 @@ public class MiniGameShelf : MiniGameBaseState
                 if (objectsPlaced == objectsToPlace)
                 {
                     EndQuest();
-                    GameObject.FindFirstObjectByType<Hand_Actions>().DestroyObjectInHand();
                 }
             }
         }
@@ -148,11 +148,11 @@ public class MiniGameShelf : MiniGameBaseState
                 EndQuest();
             }
         }
-    }
 
-    private void PourQuest()
-    {
-        
+        if (isHoldingObject && buttonIsPressed && questVariant == 3)
+        {
+            //Run animation -> Reduces counter, if counter == 0 EndQuest
+            EndQuest();
+        }
     }
-
 }

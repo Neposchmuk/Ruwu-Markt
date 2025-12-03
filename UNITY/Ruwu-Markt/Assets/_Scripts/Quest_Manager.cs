@@ -139,39 +139,6 @@ public class Quest_Manager : MonoBehaviour
 
         CheckDayCompletion();
     }
-    //Updates Quest Text descriptions depending on Quest Variant selected
-    public void UpdateQuest(int questType, int questVariant)
-    {       
-        switch (questType)
-        {
-            case 0:
-                if (!isDoingQuest)
-                {
-                    
-                    Debug.Log(defaultQuestText);
-                    isDoingQuest = true;
-                }
-
-                switch (questVariant)
-                {
-                    case 0:
-                        shelfQuestText.text = "Restock the shelves (" + $"{stepsDone}" + "/" + $"{stepsToDo}" + ")";
-                        break;
-                    case 1:
-                        shelfQuestText.text = "Restock the shelves (" + $"{stepsDone}" + "/" + $"{stepsToDo}" + ")";
-                        break;
-                    case 2:
-                        shelfQuestText.text = "Take a sip";
-                        break;
-                    case 3:
-                        shelfQuestText.text = "Chug it all out";
-                        break;               
-                }
-                break;
-            
-        }
-            
-    }
 
     //Resets Quest bools so quests need to be redone
     private void ResetQuests()

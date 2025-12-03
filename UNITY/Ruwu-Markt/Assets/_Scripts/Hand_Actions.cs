@@ -27,7 +27,7 @@ public class Hand_Actions: MonoBehaviour
     {
         if(Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 2))
         {
-            if(hit.collider.tag == "PourPuddle")
+            if(hit.collider.tag == "Puddle")
             {
                 hit.collider.gameObject.transform.localScale *= 1 + 0.5f * Time.deltaTime;
             }
@@ -54,7 +54,7 @@ public class Hand_Actions: MonoBehaviour
                     timeToPour -= 1 * Time.deltaTime;
                 }              
             }
-            else if (hit.collider.tag == "PourPuddle" && timeToPour >= 0)
+            else if (hit.collider.tag == "Puddle" && timeToPour >= 0)
             {
                 hit.collider.gameObject.transform.localScale *= 1 + 0.5f * Time.deltaTime;
                 timeToPour -= 1 * Time.deltaTime;

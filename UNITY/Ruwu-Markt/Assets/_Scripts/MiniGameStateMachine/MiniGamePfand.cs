@@ -83,8 +83,8 @@ public class MiniGamePfand : MiniGameBaseState
                 InitiateQuest();
                 break;
             case 4:
-                InitiateQuest();
-                bottlesToThrow = 5;
+                bottlesToThrow = 8;
+                InitiateQuest();                
                 break;
         }
     }
