@@ -3,6 +3,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.AI;
+using System;
+using static UnityEngine.ProBuilder.AutoUnwrapSettings;
 
 public class Agent_TestScript : MonoBehaviour
 {
@@ -14,7 +16,7 @@ public class Agent_TestScript : MonoBehaviour
 
     private int _currentTarget;
 
-    private bool _hasTarget;
+    private bool _gotFirstTarget = false;
 
     private bool _waitingForCoroutine;
 
@@ -27,48 +29,61 @@ public class Agent_TestScript : MonoBehaviour
 
         Debug.Log(_agent.gameObject);
 
-        _currentTarget = -1;
+        _currentTarget = 0;
+
+        StartCoroutine(SetFirstDestination());
     }
 
     private void Update()
     {
-        if (_agent.pathStatus != NavMeshPathStatus.PathComplete) return;
-        else if (_agent.pathStatus == NavMeshPathStatus.PathComplete && !_hasTarget)
+        if(_gotFirstTarget && !_agent.hasPath && !_agent.pathPending && !_waitingForCoroutine && _currentTarget<=Target.Count)
         {
             StartCoroutine(WaitForNewDestination());
+            FaceTarget(Target[_currentTarget - 1]);
         }
-        else if (_agent.pathStatus == NavMeshPathStatus.PathComplete && !_waitingForCoroutine)
-        {
-            _hasTarget = false;
-            Debug.Log("Called second else if: hasTarget =" + _hasTarget);
-        }
-        
+    }
+
+    IEnumerator SetFirstDestination()
+    {
+        yield return new WaitForSeconds(1);
+
+        SetNextDestination(_currentTarget);
+
+        _gotFirstTarget = true;
     }
 
     IEnumerator WaitForNewDestination()
     {
-        Debug.Log("Called Coroutine");
-        _hasTarget = true;
-
         _waitingForCoroutine = true;
 
         _currentTarget++;
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(5);
 
-        SetNextDestination(_currentTarget);
-
+        try
+        {
+            SetNextDestination(_currentTarget);
+        }
+        catch (IndexOutOfRangeException)
+        {
+            Debug.Log("End of Targets reached");
+        }
+        
         _waitingForCoroutine = false;
     }
 
     void SetNextDestination(int _targetIndex)
     {
         Debug.Log(_targetIndex);
-        _agent.SetDestination(Target[_targetIndex].position);
+        _agent.SetDestination(Target[_targetIndex].position);;
     }
 
-    void OnReachedDestination()
+    private void FaceTarget(Transform destination)
     {
-        _hasTarget = false;
-    } 
+        Vector3 lookRot = destination.forward - transform.forward;
+        lookRot.y = 0;
+        Quaternion rotation = Quaternion.LookRotation(lookRot);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 5);
+    }
+
 }
