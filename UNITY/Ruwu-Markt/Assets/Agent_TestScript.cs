@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine.AI;
 using System;
 using static UnityEngine.ProBuilder.AutoUnwrapSettings;
+using Unity.VisualScripting;
 
 public class Agent_TestScript : MonoBehaviour
 {
@@ -12,78 +13,37 @@ public class Agent_TestScript : MonoBehaviour
 
     public List<Transform> Target;
 
+    private NPC_State_Manager _stateManager;
+
     private NavMeshAgent _agent;
 
-    private int _currentTarget;
+    private bool _calledCoroutine;
 
-    private bool _gotFirstTarget = false;
-
-    private bool _waitingForCoroutine;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
-        //Target.AddRange(Targets.GetComponentsInChildren<Transform>());
+        _stateManager = GetComponent<NPC_State_Manager>();
 
         _agent = GetComponent<NavMeshAgent>();
 
-        Debug.Log(_agent.gameObject);
-
-        _currentTarget = 0;
-
-        StartCoroutine(SetFirstDestination());
+        StartCoroutine(SwitchToWalk());
     }
 
     private void Update()
     {
-        if(_gotFirstTarget && !_agent.hasPath && !_agent.pathPending && !_waitingForCoroutine && _currentTarget<=Target.Count)
-        {
-            StartCoroutine(WaitForNewDestination());
-            FaceTarget(Target[_currentTarget - 1]);
-        }
+        if (!_agent.isStopped) return;
+        else if (!_calledCoroutine) StartCoroutine(SwitchToWalk());
     }
 
-    IEnumerator SetFirstDestination()
+    IEnumerator SwitchToWalk()
     {
-        yield return new WaitForSeconds(1);
+        Debug.Log("Called Coroutine");
 
-        SetNextDestination(_currentTarget);
+        _calledCoroutine = true;
 
-        _gotFirstTarget = true;
+        yield return new WaitForSeconds(3);
+
+        _stateManager.SwitchState(_stateManager.Walking_State);
+
+        _calledCoroutine = false;
     }
-
-    IEnumerator WaitForNewDestination()
-    {
-        _waitingForCoroutine = true;
-
-        _currentTarget++;
-
-        yield return new WaitForSeconds(5);
-
-        try
-        {
-            SetNextDestination(_currentTarget);
-        }
-        catch (IndexOutOfRangeException)
-        {
-            Debug.Log("End of Targets reached");
-        }
-        
-        _waitingForCoroutine = false;
-    }
-
-    void SetNextDestination(int _targetIndex)
-    {
-        Debug.Log(_targetIndex);
-        _agent.SetDestination(Target[_targetIndex].position);;
-    }
-
-    private void FaceTarget(Transform destination)
-    {
-        Vector3 lookRot = destination.forward - transform.forward;
-        lookRot.y = 0;
-        Quaternion rotation = Quaternion.LookRotation(lookRot);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 5);
-    }
-
 }
