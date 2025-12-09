@@ -13,11 +13,17 @@ public class Agent_TestScript : MonoBehaviour
 
     public List<Transform> Target;
 
+    public Transform CheckoutTarget;
+
+    public Transform LeaveMarketTarget;
+
     private NPC_State_Manager _stateManager;
 
     private NavMeshAgent _agent;
 
     private bool _calledCoroutine;
+
+    private Coroutine _rotationCoroutine;
 
     private void Start()
     {
@@ -31,7 +37,7 @@ public class Agent_TestScript : MonoBehaviour
     private void Update()
     {
         if (!_agent.isStopped) return;
-        else if (!_calledCoroutine) StartCoroutine(SwitchToWalk());
+        else if (!_calledCoroutine && _stateManager._currentTarget < _stateManager._destinations.Count - 1) StartCoroutine(SwitchToWalk());
     }
 
     IEnumerator SwitchToWalk()
@@ -40,7 +46,14 @@ public class Agent_TestScript : MonoBehaviour
 
         _calledCoroutine = true;
 
-        yield return new WaitForSeconds(3);
+        yield return _rotationCoroutine = StartCoroutine(_stateManager.Idle_State.RotateAgent());
+
+        //yield return new WaitForSeconds(3);
+
+        if(_rotationCoroutine != null)
+        {
+            StopCoroutine(_rotationCoroutine);
+        }     
 
         _stateManager.SwitchState(_stateManager.Walking_State);
 

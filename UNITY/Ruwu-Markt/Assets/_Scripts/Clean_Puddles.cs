@@ -7,7 +7,7 @@ public class Clean_Puddles : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log("Colliderentered");
+        
         if (other.CompareTag("Mop"))
         {
             Debug.Log("Mop entered");

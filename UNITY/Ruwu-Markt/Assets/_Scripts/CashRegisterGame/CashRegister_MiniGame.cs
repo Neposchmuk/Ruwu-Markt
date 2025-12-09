@@ -37,6 +37,10 @@ public class CashRegister_MiniGame : MonoBehaviour
 
 
 
+    public static event Action OnPay;
+
+
+
     private List<GameObject> productsBought = new List<GameObject>();
 
     private InputAction interact;
@@ -86,13 +90,16 @@ public class CashRegister_MiniGame : MonoBehaviour
         }
     }
 
-    void InitializeQuest()
+    public void InitializeQuest()
     {
-        questIsRunning = true;
-        productsToScan = 0;
-        productsScanned = 0;
-        changeGiven = 0;
-        InstantiateProducts();
+        if (!questIsRunning)
+        {
+            questIsRunning = true;
+            productsToScan = 0;
+            productsScanned = 0;
+            changeGiven = 0;
+            InstantiateProducts();
+        }
     }
 
     void InstantiateProducts()
@@ -239,6 +246,8 @@ public class CashRegister_MiniGame : MonoBehaviour
         {
             ChangeButtons[i].interactable = false;
         }
+
+        OnPay?.Invoke();
 
         questIsRunning = false;
 

@@ -12,8 +12,9 @@ public class NPC_State_Manager : MonoBehaviour
     NPC_BaseState currentState;
     public NPC_Idle_State Idle_State = new NPC_Idle_State();
     public NPC_Walking_State Walking_State = new NPC_Walking_State();
+    public NPC_Checkout_State Checkout_State = new NPC_Checkout_State();
 
-    private void Start()
+    private void Awake()
     {
         _destinations = GetComponent<Agent_TestScript>().Target;
 
