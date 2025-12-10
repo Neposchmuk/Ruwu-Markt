@@ -29,6 +29,7 @@ TagManager:
   - Flowers
   - FlowersQuest
   - WateringCan
+  - NPC_Customer
   layers:
   - Default
   - TransparentFX

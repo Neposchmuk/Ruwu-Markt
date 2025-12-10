@@ -37,7 +37,7 @@ public class NPC_Checkout_State : NPC_BaseState
 
     public override void UpdateState()
     {
-        if(_agent.remainingDistance <= 0 && !_agent.isStopped  && !_startedMinigame && !_hasPaid)
+        /*if(_agent.remainingDistance <= 0 && !_agent.isStopped  && !_startedMinigame && !_hasPaid)
         {
             _agent.isStopped = true;
 
@@ -60,7 +60,7 @@ public class NPC_Checkout_State : NPC_BaseState
         else if (_agent.remainingDistance <= 0 && !_agent.isStopped && _hasPaid)
         {
             EndState();
-        }
+        }*/
     }
 
     public override void EndState()

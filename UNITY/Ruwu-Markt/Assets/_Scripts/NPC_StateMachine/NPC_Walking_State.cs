@@ -5,8 +5,6 @@ using UnityEngine.AI;
 
 public class NPC_Walking_State : NPC_BaseState
 {
-    public static Action OnDestinationReached;
-
     bool _switchedState;
 
     NPC_State_Manager _stateManager;
@@ -34,8 +32,6 @@ public class NPC_Walking_State : NPC_BaseState
         {
             _switchedState = true;    
             _stateManager.SwitchState(_stateManager.Idle_State);
-            OnDestinationReached?.Invoke();
-            Debug.Log("Sent Event");
         }
     }
 
