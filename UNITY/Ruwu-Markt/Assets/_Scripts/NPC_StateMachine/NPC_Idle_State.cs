@@ -11,15 +11,17 @@ public class NPC_Idle_State : NPC_BaseState
 
     NavMeshAgent _agent;
 
-
-
     public override void EnterState(NPC_State_Manager State_Manager)
     {
          _stateManager = State_Manager;
 
         _agent = State_Manager.gameObject.GetComponent<NavMeshAgent>();
 
-        if (_stateManager._currentTarget == _stateManager._destinations.Count - 1)
+        _agent.isStopped = true;
+
+        _agent.updateRotation = false;
+
+        /*if (_stateManager._currentTarget == _stateManager._destinations.Count - 1)
         {
             _stateManager.SwitchState(_stateManager.Checkout_State);
             return;
@@ -42,7 +44,7 @@ public class NPC_Idle_State : NPC_BaseState
             _agent.updateRotation = false;
         }
         
-        Debug.Log("Finished Idle EnterState");
+        Debug.Log("Finished Idle EnterState");*/
 
         //_stateManager.SwitchState(_stateManager.Walking_State);
         
@@ -103,7 +105,7 @@ public class NPC_Idle_State : NPC_BaseState
         Debug.LogError(-_stateManager.transform.rotation.y);
     }
 
-    public IEnumerator RotateAgent()
+    /*public IEnumerator RotateAgent()
     {
         if (_stateManager._currentTarget == 0) yield break;
 
@@ -124,6 +126,6 @@ public class NPC_Idle_State : NPC_BaseState
             yield return null;
         }
         
-    }
+    }*/
 
 }

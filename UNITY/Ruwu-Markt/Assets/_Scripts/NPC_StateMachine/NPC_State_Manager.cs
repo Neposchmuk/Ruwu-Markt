@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class NPC_State_Manager : MonoBehaviour
 {
-    public List<Transform> _destinations { get; private set; }
-
-    public int _currentTarget;
-
-
     NPC_BaseState currentState;
     public NPC_Idle_State Idle_State = new NPC_Idle_State();
     public NPC_Walking_State Walking_State = new NPC_Walking_State();
@@ -16,10 +11,6 @@ public class NPC_State_Manager : MonoBehaviour
 
     private void Awake()
     {
-        _destinations = GetComponent<Agent_TestScript>().Target;
-
-        _currentTarget = 0;
-
         SwitchState(Idle_State);
     }
 
@@ -35,5 +26,6 @@ public class NPC_State_Manager : MonoBehaviour
         currentState.EnterState(this);
     }
 
+    
     
 }

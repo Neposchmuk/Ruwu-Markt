@@ -31,16 +31,16 @@ public class Agent_TestScript : MonoBehaviour
 
         _agent = GetComponent<NavMeshAgent>();
 
-        StartCoroutine(SwitchToWalk());
+        //StartCoroutine(SwitchToWalk());
     }
 
     private void Update()
     {
         if (!_agent.isStopped) return;
-        else if (!_calledCoroutine && _stateManager._currentTarget < _stateManager._destinations.Count - 1) StartCoroutine(SwitchToWalk());
+        //else if (!_calledCoroutine && _stateManager._currentTarget < _stateManager._destinations.Count - 1) StartCoroutine(SwitchToWalk());
     }
 
-    IEnumerator SwitchToWalk()
+    /*IEnumerator SwitchToWalk()
     {
         Debug.Log("Called Coroutine");
 
@@ -58,5 +58,5 @@ public class Agent_TestScript : MonoBehaviour
         _stateManager.SwitchState(_stateManager.Walking_State);
 
         _calledCoroutine = false;
-    }
+    }*/
 }

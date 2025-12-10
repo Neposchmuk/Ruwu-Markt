@@ -1,8 +1,14 @@
+using Mono.Cecil;
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class NPC_Walking_State : NPC_BaseState
 {
+    public static Action OnDestinationReached;
+
+    bool _switchedState;
+
     NPC_State_Manager _stateManager;
 
     NavMeshAgent _agent;
@@ -17,15 +23,19 @@ public class NPC_Walking_State : NPC_BaseState
 
         _agent.updateRotation = true;
 
+        _switchedState = false;
+
         //walkingAnimation
     }
 
     public override void UpdateState()
     {
-        if(_agent.remainingDistance == 0)
+        if(_agent.remainingDistance == 0 && !_switchedState)
         {
-            _stateManager._currentTarget++;
+            _switchedState = true;    
             _stateManager.SwitchState(_stateManager.Idle_State);
+            OnDestinationReached?.Invoke();
+            Debug.Log("Sent Event");
         }
     }
 

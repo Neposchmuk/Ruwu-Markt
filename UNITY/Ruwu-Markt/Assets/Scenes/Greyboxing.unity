@@ -35690,6 +35690,7 @@ GameObject:
   - component: {fileID: 900825998}
   - component: {fileID: 900826003}
   - component: {fileID: 900826004}
+  - component: {fileID: 900826005}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -35720,7 +35721,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 900825996}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b87608084e4edc4e9f8072d791e41bd, type: 3}
   m_Name: 
@@ -35867,7 +35868,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20c18f299101e1b4cbc0f95dcb562e7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &900826005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900825996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1380ad35aba678438df301959332c69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _currentTarget: 0
+  Destinations:
+  - {fileID: 1148416477}
+  - {fileID: 218448555}
+  - {fileID: 325642900}
+  - {fileID: 1112185871}
+  - {fileID: 1200739804}
+  - {fileID: 1677701518}
+  CheckoutTarget: {fileID: 2124270044}
+  LeaveMarketTarget: {fileID: 889433914}
 --- !u!1001 &904576676
 PrefabInstance:
   m_ObjectHideFlags: 0
