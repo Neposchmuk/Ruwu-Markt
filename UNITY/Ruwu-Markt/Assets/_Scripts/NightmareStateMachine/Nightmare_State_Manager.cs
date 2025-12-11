@@ -6,6 +6,8 @@ public class Nightmare_State_Manager : MonoBehaviour
 {
     public GameObject JumpLevel;
 
+    public GameObject SmashLevel;
+
     public NightmareBaseState CurrentState;
     public Nightmare_Escape_State EscapeState = new Nightmare_Escape_State();
     public Nightmare_Checkout_State CheckoutState = new Nightmare_Checkout_State();

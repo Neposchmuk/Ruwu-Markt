@@ -30,6 +30,7 @@ TagManager:
   - FlowersQuest
   - WateringCan
   - NPC_Customer
+  - Destructible
   layers:
   - Default
   - TransparentFX
