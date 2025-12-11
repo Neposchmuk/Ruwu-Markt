@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -32,7 +33,15 @@ public class RayCast : MonoBehaviour
 
         interact = GameObject.Find("PlayerCapsule").GetComponent<PlayerInput>().actions.FindAction("Interact");
 
-        QM = GameObject.Find("Quest_Manager").GetComponent<Quest_Manager>();
+        try
+        {
+            QM = GameObject.Find("Quest_Manager").GetComponent<Quest_Manager>();
+        }
+        catch (NullReferenceException)
+        {
+            Debug.LogError("No QuestManager in scene, if NightScene ignore");
+        }
+        
 
         HandRC = gameObject.GetComponentInChildren<Hand_Actions>();
 

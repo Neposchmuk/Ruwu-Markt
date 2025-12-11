@@ -32,13 +32,15 @@ public class Quest_Manager : MonoBehaviour
 
     public GameObject endDayText;
 
-    public string NextScene;
+    //public string NextScene;
 
     private string defaultQuestText;
 
     private InputAction endDay;
 
     private Sanity_Manager SM;
+
+    private Day_Manager _dayManager;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -50,6 +52,8 @@ public class Quest_Manager : MonoBehaviour
 
         SM = GameObject.FindFirstObjectByType<Sanity_Manager>();
 
+        _dayManager = GameObject.FindFirstObjectByType<Day_Manager>();
+
         ResetQuests();
     }
 
@@ -59,7 +63,8 @@ public class Quest_Manager : MonoBehaviour
         if(endDayText.activeSelf && endDay.WasCompletedThisFrame())
         {
             ResetQuests();
-            SceneManager.LoadScene(NextScene);
+            _dayManager.AddDay();
+            //SceneManager.LoadScene(NextScene);
         }
 
     }

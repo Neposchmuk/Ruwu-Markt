@@ -60637,7 +60637,7 @@ MonoBehaviour:
   stepsDone: 0
   stepsToDo: 0
   endDayText: {fileID: 1251680202}
-  NextScene: Greyboxing
+  NextScene: Greyboxing_Night
 --- !u!1 &1474977881
 GameObject:
   m_ObjectHideFlags: 0
