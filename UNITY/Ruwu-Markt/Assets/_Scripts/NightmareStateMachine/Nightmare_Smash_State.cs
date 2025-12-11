@@ -4,16 +4,11 @@ using UnityEngine.InputSystem;
 
 public class Nightmare_Smash_State : NightmareBaseState
 {
-    public static Action OnAttack;
-
-    public static Action OnFinish;
-
-
-
     Nightmare_State_Manager _stateManager;
 
     int _objectsDestroyed;
 
+    SmashThings_Animation _batParent;
 
     InputAction Attack;
 
@@ -22,6 +17,8 @@ public class Nightmare_Smash_State : NightmareBaseState
         _stateManager = stateManager;
 
         Attack = GameObject.FindFirstObjectByType<PlayerInput>().actions.FindAction("Attack");
+
+        _batParent = GameObject.FindFirstObjectByType<SmashThings_Animation>();
 
         SmashThings.OnDestroy += CountDestroyedObjects;
 
@@ -32,14 +29,13 @@ public class Nightmare_Smash_State : NightmareBaseState
     {
         if (Attack.WasPressedThisFrame())
         {
-            OnAttack?.Invoke();
+            _batParent.StartAnimatorCoroutine();
+            
         }
     }
 
     public override void EndState()
     {
-        OnFinish?.Invoke();
-        
         _stateManager.EndNight(true, 10);
     }
 

@@ -10,23 +10,14 @@ public class SmashThings_Animation : MonoBehaviour
 
     Animator _animator;
 
+
     private void Start()
     {
         _animator = GetComponent<Animator>();
 
-        Nightmare_Smash_State.OnAttack += StartAnimatorCoroutine;
-
-        Nightmare_Smash_State.OnFinish += UnsubscribeEvents;
-
         Bat.SetActive(false);
     }
 
-    void UnsubscribeEvents()
-    {
-        Nightmare_Smash_State.OnAttack -= StartAnimatorCoroutine;
-
-        Nightmare_Smash_State.OnFinish -= UnsubscribeEvents;
-    }
 
     public void StartAnimatorCoroutine()
     {
