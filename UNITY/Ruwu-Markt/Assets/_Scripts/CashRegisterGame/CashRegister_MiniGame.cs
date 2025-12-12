@@ -51,11 +51,11 @@ public class CashRegister_MiniGame : MonoBehaviour
 
     private int productsScanned;
 
-    private float priceTotal;
+    private int _intPriceTotal;
 
-    private float changeToGive;
+    private float _floatChangeToGive;
 
-    private float changeGiven;
+    private float _floatChangeGiven;
 
     private float cashRegisterDeficit;
 
@@ -97,7 +97,7 @@ public class CashRegister_MiniGame : MonoBehaviour
             questIsRunning = true;
             productsToScan = 0;
             productsScanned = 0;
-            changeGiven = 0;
+            _floatChangeGiven = 0;
             InstantiateProducts();
         }
     }
@@ -118,12 +118,12 @@ public class CashRegister_MiniGame : MonoBehaviour
 
     void ScanProduct(productInfo productInfo)
     {
-        priceTotal += productInfo.price;
+        _intPriceTotal += (int)(productInfo.price * 100);
         productInfo.hasBeenScanned = true;
         productsScanned++;
         //playAnimation
         RegisterScannedProducts.text += productInfo.name + " - " +productInfo.price + "$\n";
-        RegisterTotalPrice.text ="Total: " + $"{priceTotal}$";
+        RegisterTotalPrice.text ="Total: " + $"{(float)_intPriceTotal / 100}$";
         if(productsScanned == productsToScan)
         {
             CheckPaymentMethod();
@@ -152,14 +152,14 @@ public class CashRegister_MiniGame : MonoBehaviour
 
         try
         {
-            ChangeButtons[0].onClick.AddListener(() => CountChange(0.01f));
-            ChangeButtons[1].onClick.AddListener(() => CountChange(0.02f));
-            ChangeButtons[2].onClick.AddListener(() => CountChange(0.05f));
-            ChangeButtons[3].onClick.AddListener(() => CountChange(0.1f));
-            ChangeButtons[4].onClick.AddListener(() => CountChange(0.2f));
-            ChangeButtons[5].onClick.AddListener(() => CountChange(0.5f));
-            ChangeButtons[6].onClick.AddListener(() => CountChange(1f));
-            ChangeButtons[7].onClick.AddListener(() => CountChange(2f));
+            ChangeButtons[0].onClick.AddListener(() => CountChange(1));
+            ChangeButtons[1].onClick.AddListener(() => CountChange(2));
+            ChangeButtons[2].onClick.AddListener(() => CountChange(5));
+            ChangeButtons[3].onClick.AddListener(() => CountChange(10));
+            ChangeButtons[4].onClick.AddListener(() => CountChange(20));
+            ChangeButtons[5].onClick.AddListener(() => CountChange(50));
+            ChangeButtons[6].onClick.AddListener(() => CountChange(100));
+            ChangeButtons[7].onClick.AddListener(() => CountChange(200));
         }
         catch (IndexOutOfRangeException)
         {
@@ -177,11 +177,13 @@ public class CashRegister_MiniGame : MonoBehaviour
 
     void PayCash()
     {
-        int moneyGiven = Mathf.CeilToInt(priceTotal / 5) * 5;
+        int moneyGiven = Mathf.CeilToInt((float)_intPriceTotal / 500) * 500;
+        Debug.Log((float)_intPriceTotal / 5);
+        Debug.Log(Mathf.CeilToInt((float)_intPriceTotal / 5));
         Debug.Log(moneyGiven);
-        changeToGive = (Mathf.Round((moneyGiven - priceTotal) * 100)) / 100;
+        _floatChangeToGive = (((float)moneyGiven / 100) - ((float)_intPriceTotal / 100));
 
-        RegisterChangeToGive.text = "Change to give: \n" + $"{changeToGive}$";
+        RegisterChangeToGive.text = "Change to give: \n" + $"{_floatChangeToGive}$";
 
         CashRegisterDrawer.SetActive(false);
 
@@ -198,18 +200,18 @@ public class CashRegister_MiniGame : MonoBehaviour
         Instantiate(moneyPrefab, moneySpawnPoint.transform.position, transform.rotation);
     }
 
-    void CountChange(float changeValue)
+    void CountChange(int changeValue)
     {
-        changeGiven += changeValue;
-        RegisterChangeGiven.text = "Change given:\n" + $"{changeGiven}$";
-        if(changeGiven == changeToGive)
+        _floatChangeGiven += (float)changeValue / 100;
+        RegisterChangeGiven.text = "Change given:\n" + $"{_floatChangeGiven}$";
+        if(_floatChangeGiven == _floatChangeToGive)
         {
             Debug.Log("Change given exactly!");
             CleanUp();
         }
-        else if(changeGiven > changeToGive)
+        else if(_floatChangeGiven > _floatChangeToGive)
         {
-            cashRegisterDeficit -= changeGiven - changeToGive;
+            cashRegisterDeficit -= _floatChangeGiven - _floatChangeToGive;
             Debug.Log("Given too much change!");
             CleanUp();
         }

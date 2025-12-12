@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
@@ -9,11 +10,11 @@ public class Customer_Behaviour : MonoBehaviour
 {
     public int _currentTarget;
 
-    public List<Transform> Destinations;
+    private List<Transform> Destinations = new List<Transform>();
 
-    public Transform[] CheckoutTargets;
+    private List<Transform> CheckoutTargets = new List<Transform>();
 
-    public Transform LeaveMarketTarget;
+    private Transform LeaveMarketTarget;
 
     public int _destinationsToReach { get; private set; }
 
@@ -26,6 +27,8 @@ public class Customer_Behaviour : MonoBehaviour
     private NPC_State_Manager _stateManager;
 
     private NavMeshAgent _agent;
+
+    private Customer_Spawner _spawner;
 
     private bool _headingToCheckout = false;
 
@@ -44,9 +47,22 @@ public class Customer_Behaviour : MonoBehaviour
 
         _agent = GetComponent<NavMeshAgent>();
 
-        _destinationsToReach = RandomizeDestinations();
+        _spawner = FindFirstObjectByType<Customer_Spawner>();
 
-        Debug.Log("Destinations: " + _destinationsToReach);
+        Destinations = _spawner.Destinations;
+
+        CheckoutTargets = _spawner.CheckoutTargets;
+
+        LeaveMarketTarget = _spawner.FinalDestination;
+
+        Debug.Log(CheckoutTargets[0]);
+
+        Debug.Log(CheckoutTargets.Count);
+
+        LeaveMarketTarget = GameObject.FindGameObjectWithTag("Final_Target").GetComponent<Transform>();
+
+
+        _destinationsToReach = RandomizeDestinations();
 
         _randomDestinations = SetRandomDestinations();
 
@@ -57,13 +73,11 @@ public class Customer_Behaviour : MonoBehaviour
             _destinationTriggers[i] = _randomDestinations[i].GetComponent<Trigger_NPC_Method>();
         }
 
-        Debug.Log("DestinationsLength: " + _randomDestinations.Length);
-
         _currentTarget = 0;
 
-        _checkoutTriggers = new Trigger_NPC_Method[CheckoutTargets.Length];
+        _checkoutTriggers = new Trigger_NPC_Method[CheckoutTargets.Count];
 
-        for (int i=0; i < CheckoutTargets.Length; i++)
+        for (int i=0; i < CheckoutTargets.Count; i++)
         {
             _checkoutTriggers[i] = CheckoutTargets[i].GetComponent<Trigger_NPC_Method>();
         }
