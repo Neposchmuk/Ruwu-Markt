@@ -9,7 +9,7 @@ public class RayCast : MonoBehaviour
 
     public LayerMask layerMask;
 
-    private Hand_Actions HandRC;
+    private Hand_Actions Hand;
 
     private Camera mainCamera;
 
@@ -19,7 +19,7 @@ public class RayCast : MonoBehaviour
 
     public GameObject questObject;
 
-
+    private bool _carryingCashtray;
     
 
     private void FindQM()
@@ -43,7 +43,7 @@ public class RayCast : MonoBehaviour
         }
         
 
-        HandRC = gameObject.GetComponentInChildren<Hand_Actions>();
+        Hand = gameObject.GetComponentInChildren<Hand_Actions>();
 
     }
 
@@ -88,6 +88,24 @@ public class RayCast : MonoBehaviour
                 questObject = hit.collider.gameObject;
                 Debug.Log(questObject.name);
 
+            }
+
+            if(hit.collider.tag == "Cashtray" && interact.WasPressedThisFrame() && QM.DayComplete)
+            {
+                GameObject[] castrayObjects = GameObject.FindGameObjectsWithTag("Cashtray");
+                foreach(GameObject _object in castrayObjects)
+                {
+                    _object.SetActive(false);
+                }
+                Hand.PickUpObject(8);
+                _carryingCashtray = true;
+                
+            }
+
+            if(hit.collider.tag == "Safe" && interact.WasPressedThisFrame() && _carryingCashtray)
+            {
+                Debug.Log("InteractSafe");
+                QM.CompleteDay();
             }
 
             /*if(hit.collider.tag == "ProduceCan" && QM.isDoingQuest && !QM.shelfQuestCompleted)

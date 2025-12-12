@@ -31,6 +31,8 @@ TagManager:
   - WateringCan
   - NPC_Customer
   - Destructible
+  - Cashtray
+  - Safe
   layers:
   - Default
   - TransparentFX

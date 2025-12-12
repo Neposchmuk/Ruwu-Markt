@@ -26,6 +26,10 @@ public class Quest_Manager : MonoBehaviour
 
     public bool flowersQuestCompleted;
 
+    public bool customersQuestCompleted;
+
+    public bool DayComplete;
+
     public int stepsDone;
 
     public int stepsToDo;
@@ -35,6 +39,8 @@ public class Quest_Manager : MonoBehaviour
     //public string NextScene;
 
     private string defaultQuestText;
+
+    private int customersServed;
 
     private InputAction endDay;
 
@@ -54,19 +60,15 @@ public class Quest_Manager : MonoBehaviour
 
         _dayManager = GameObject.FindFirstObjectByType<Day_Manager>();
 
+        CashRegister_MiniGame.OnPay += CheckCustomersServed;
+
         ResetQuests();
     }
 
-    private void Update()
+    public void CompleteDay()
     {
-        //Loads next Scene, depending on sanity value
-        if(endDayText.activeSelf && endDay.WasCompletedThisFrame())
-        {
-            ResetQuests();
-            _dayManager.AddDay();
-            //SceneManager.LoadScene(NextScene);
-        }
-
+        ResetQuests();
+        _dayManager.AddDay();
     }
 
     //Completes Quests by setting bools and resets doingQuest bool, so other quests ca nbe started
@@ -184,9 +186,20 @@ public class Quest_Manager : MonoBehaviour
     //Checks if all quests have been completed to unlock Scene Change
     private void CheckDayCompletion()
     {
-        if (shelfQuestCompleted && floorQuestCompleted && pfandQuestCompleted && flowersQuestCompleted && !SM.isGameOver)
+        if (shelfQuestCompleted && floorQuestCompleted && pfandQuestCompleted && flowersQuestCompleted && customersQuestCompleted && !SM.isGameOver)
         {
-            endDayText.SetActive(true);
+            DayComplete = true;
+        }
+    }
+
+    void CheckCustomersServed()
+    {
+        customersServed++;
+
+        if(customersServed == 3)
+        {
+            customersQuestCompleted = true;
+            CheckDayCompletion();
         }
     }
 }

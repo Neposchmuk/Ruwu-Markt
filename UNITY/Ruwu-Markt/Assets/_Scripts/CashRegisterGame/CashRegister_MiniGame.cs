@@ -171,7 +171,7 @@ public class CashRegister_MiniGame : MonoBehaviour
     void PayCard()
     {
         //playAnimationShowCard
-        CleanUp(true, true);
+        CleanUp();
 
     }
 
@@ -182,7 +182,9 @@ public class CashRegister_MiniGame : MonoBehaviour
         changeToGive = (Mathf.Round((moneyGiven - priceTotal) * 100)) / 100;
 
         RegisterChangeToGive.text = "Change to give: \n" + $"{changeToGive}$";
-        
+
+        CashRegisterDrawer.SetActive(false);
+
         for(int i = 0; i < ChangeButtons.Count; i++)
         {
             ChangeButtons[i].interactable = true;
@@ -203,18 +205,18 @@ public class CashRegister_MiniGame : MonoBehaviour
         if(changeGiven == changeToGive)
         {
             Debug.Log("Change given exactly!");
-            CleanUp(false, true);
+            CleanUp();
         }
         else if(changeGiven > changeToGive)
         {
             cashRegisterDeficit -= changeGiven - changeToGive;
             Debug.Log("Given too much change!");
-            CleanUp(false, false);
+            CleanUp();
         }
 
     }
 
-    void CleanUp(bool paidWithCard, bool givenExactChange)
+    void CleanUp()
     {
         Debug.Log(productsBought.Count);
         for (int i = 0; i < productsBought.Count; i++)
@@ -228,19 +230,10 @@ public class CashRegister_MiniGame : MonoBehaviour
         RegisterChangeGiven.text = "";
         productsScanned = 0;
         ButtonPayWithCard.interactable = false;
-        ButtonPayWithCash.interactable = false;   
-        if (paidWithCard)
-        {
-            SM.ChangeSanity(-5, 15);
-        }
-        else if(!paidWithCard && givenExactChange)
-        {
-            SM.ChangeSanity(-10, 15);
-        }
-        else
-        {
-            SM.ChangeSanity(-15, -20);
-        }
+        ButtonPayWithCash.interactable = false;
+
+        CashRegisterDrawer.SetActive(true);
+
 
         for (int i = 0; i < ChangeButtons.Count; i++)
         {
@@ -260,14 +253,6 @@ public class CashRegister_MiniGame : MonoBehaviour
 
         if(Physics.Raycast(ray, out RaycastHit hit, 2, RCLayerMask))
         {
-            //Debug.Log("CashRegister RayCastHit");
-            if (hit.collider.CompareTag("CashRegister") && !questIsRunning)
-            {
-                //Debug.Log("Interacted with Register");
-                InitializeQuest();
-            }
-
-
             if (hit.collider.CompareTag("CheckOutProduct"))
             {
                 productInfo productInfo = hit.collider.gameObject.GetComponent<productInfo>();

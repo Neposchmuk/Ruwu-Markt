@@ -92,8 +92,10 @@ public class Hand_Actions: MonoBehaviour
     {
         objectHolding = Instantiate(instanceObject[PickUp], transform.position, transform.rotation, gameObject.transform);
         objectToPlace = placeObject[PickUp];
+        Debug.Log(objectHolding);
 
         return objectHolding;
+        
     }
 
     public GameObject PickUpObject(int PickUp, Vector3 RotationOverride)

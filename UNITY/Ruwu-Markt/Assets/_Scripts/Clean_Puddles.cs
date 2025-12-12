@@ -10,7 +10,6 @@ public class Clean_Puddles : MonoBehaviour
         
         if (other.CompareTag("Mop"))
         {
-            Debug.Log("Mop entered");
             transform.localScale -= new Vector3(0.1f, 0.1f, 0.1f) * Time.deltaTime;
             if(transform.localScale.magnitude < 0.03f)
             {

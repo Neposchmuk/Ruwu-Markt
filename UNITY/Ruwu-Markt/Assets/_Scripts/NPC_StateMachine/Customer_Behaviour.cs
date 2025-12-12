@@ -31,6 +31,8 @@ public class Customer_Behaviour : MonoBehaviour
 
     private bool _isAtCheckout = false;
 
+    private bool _hasPaid = false;
+
     private int _currentCheckoutSlot;
 
     private Trigger_NPC_Method[] _checkoutTriggers;
@@ -183,13 +185,16 @@ public class Customer_Behaviour : MonoBehaviour
 
     public void FinalDestination()
     {
-        NavMeshPath path = new NavMeshPath();
+        if (_isAtCheckout)
+        {
+            NavMeshPath path = new NavMeshPath();
 
-        _agent.CalculatePath(LeaveMarketTarget.position, path);
+            _agent.CalculatePath(LeaveMarketTarget.position, path);
 
-        _agent.SetPath(path);
+            _agent.SetPath(path);
 
-        StartWalking();
+            StartWalking();
+        }
     }
 
     public void Kill()
