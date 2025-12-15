@@ -178,12 +178,11 @@ public class CashRegister_MiniGame : MonoBehaviour
     void PayCash()
     {
         int moneyGiven = Mathf.CeilToInt((float)_intPriceTotal / 500) * 500;
-        Debug.Log((float)_intPriceTotal / 5);
-        Debug.Log(Mathf.CeilToInt((float)_intPriceTotal / 5));
-        Debug.Log(moneyGiven);
         _floatChangeToGive = (((float)moneyGiven / 100) - ((float)_intPriceTotal / 100));
-
+        Debug.Log(_floatChangeToGive);
         RegisterChangeToGive.text = "Change to give: \n" + $"{_floatChangeToGive}$";
+
+        
 
         CashRegisterDrawer.SetActive(false);
 
@@ -203,13 +202,14 @@ public class CashRegister_MiniGame : MonoBehaviour
     void CountChange(int changeValue)
     {
         _floatChangeGiven += (float)changeValue / 100;
+        Debug.Log(_floatChangeGiven);
         RegisterChangeGiven.text = "Change given:\n" + $"{_floatChangeGiven}$";
-        if(_floatChangeGiven == _floatChangeToGive)
+        if((int)(_floatChangeGiven * 100) == (int)(_floatChangeToGive * 100))
         {
             Debug.Log("Change given exactly!");
             CleanUp();
         }
-        else if(_floatChangeGiven > _floatChangeToGive)
+        else if((int)(_floatChangeGiven * 100) > (int)(_floatChangeToGive *100))
         {
             cashRegisterDeficit -= _floatChangeGiven - _floatChangeToGive;
             Debug.Log("Given too much change!");

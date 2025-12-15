@@ -8,6 +8,8 @@ public class Nightmare_State_Manager : MonoBehaviour
 
     public GameObject SmashLevel;
 
+    public GameObject EscapeLevel;
+
     public NightmareBaseState CurrentState;
     public Nightmare_Escape_State EscapeState = new Nightmare_Escape_State();
     public Nightmare_Checkout_State CheckoutState = new Nightmare_Checkout_State();
@@ -27,23 +29,20 @@ public class Nightmare_State_Manager : MonoBehaviour
         _dayManager = FindFirstObjectByType<Day_Manager>();
 
         _sanityManager = FindFirstObjectByType<Sanity_Manager>();
-    }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
         switch (_dayManager.Night)
         {
             case 1:
-                CurrentState = JumpState;
+                /*CurrentState = JumpState;
                 _timeInSeconds = 90;
-                StartCoroutine(DelayTimer(5));
+                StartCoroutine(DelayTimer(5));*/
+                CurrentState = EscapeState;
                 break;
             case 2:
                 CurrentState = SmashState;
                 break;
             case 3:
-                CurrentState = CheckoutState;
+                CurrentState = EscapeState;
                 break;
             case 4:
                 CurrentState = EscapeState;
@@ -63,11 +62,11 @@ public class Nightmare_State_Manager : MonoBehaviour
     {
         if(TimerIsRunning) StopCoroutine(Timer());
 
-        if (survived)
+        if(_sanityManager.sanity + sanityChange <= 0)
         {
-            _sanityManager.ChangeSanity(sanityChange, 0);
+            sanityChange -= _sanityManager.sanity + sanityChange + 1;
         }
-        else _sanityManager.ChangeSanity(sanityChange, 0);
+        _sanityManager.ChangeSanity(sanityChange, 0);
 
         _dayManager.AddNight();
     }

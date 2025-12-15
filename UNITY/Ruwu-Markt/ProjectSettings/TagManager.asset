@@ -36,11 +36,14 @@ TagManager:
   - Agent_Target
   - Checkout_Target
   - Final_Target
+  - MarketDoor
+  - MarketKey
+  - PlayerFlashlight
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - Interactable

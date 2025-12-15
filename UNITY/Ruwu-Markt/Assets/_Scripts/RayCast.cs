@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class RayCast : MonoBehaviour
 {
+    public static Action OnMarketLeave;
+
     public float rayLength;
 
     public LayerMask layerMask;
@@ -20,8 +22,8 @@ public class RayCast : MonoBehaviour
     public GameObject questObject;
 
     private bool _carryingCashtray;
-    
 
+    private bool _hasMarketKey;
     private void FindQM()
     {
 
@@ -106,6 +108,24 @@ public class RayCast : MonoBehaviour
             {
                 Debug.Log("InteractSafe");
                 QM.CompleteDay();
+            }
+
+            if(hit.collider.tag == "MarketKey" && interact.WasPressedThisFrame())
+            {
+                _hasMarketKey = true;
+                Destroy(hit.collider.gameObject);
+            }
+
+            if(hit.collider.tag == "MarketDoor" && interact.WasPressedThisFrame())
+            {
+                if (_hasMarketKey)
+                {
+                    OnMarketLeave?.Invoke();
+                }
+                else
+                {
+                    //Message Need key
+                }
             }
 
             /*if(hit.collider.tag == "ProduceCan" && QM.isDoingQuest && !QM.shelfQuestCompleted)
