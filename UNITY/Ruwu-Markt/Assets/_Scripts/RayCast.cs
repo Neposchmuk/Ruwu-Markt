@@ -128,6 +128,15 @@ public class RayCast : MonoBehaviour
                 }
             }
 
+            if(hit.collider.tag == "AmmoStation" && interact.WasPressedThisFrame())
+            {
+                AmmoStation _ammoStation = hit.collider.GetComponent<AmmoStation>();
+                if (!_ammoStation.IsLocked)
+                {
+                    _ammoStation.AmmoPicked();
+                }     
+            }
+
             /*if(hit.collider.tag == "ProduceCan" && QM.isDoingQuest && !QM.shelfQuestCompleted)
             {
                 Debug.Log("RayCast Hit");

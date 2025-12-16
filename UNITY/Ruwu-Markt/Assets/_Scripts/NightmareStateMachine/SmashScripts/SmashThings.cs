@@ -17,5 +17,10 @@ public class SmashThings : MonoBehaviour
             Destroy(other.gameObject);
             OnDestroy?.Invoke();
         }
+        else if (other.CompareTag("Enemy"))
+        {
+            Instantiate(Particles, other.transform.position + new Vector3( 0,1,0), other.transform.rotation);
+            Destroy(other.gameObject);
+        }
     }
 }

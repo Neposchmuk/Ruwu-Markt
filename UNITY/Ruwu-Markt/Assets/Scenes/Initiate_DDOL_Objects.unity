@@ -1549,7 +1549,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2a00c0b64a36c948a90d78da2e80296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene: Greyboxing_Night
+  scene: Greyboxing_Day
 --- !u!4 &2035398598
 Transform:
   m_ObjectHideFlags: 0

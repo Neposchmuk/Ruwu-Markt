@@ -10,9 +10,11 @@ public class Nightmare_State_Manager : MonoBehaviour
 
     public GameObject EscapeLevel;
 
+    public GameObject DoomLevel;
+
     public NightmareBaseState CurrentState;
     public Nightmare_Escape_State EscapeState = new Nightmare_Escape_State();
-    public Nightmare_Checkout_State CheckoutState = new Nightmare_Checkout_State();
+    public Nightmare_Doom_State DoomState = new Nightmare_Doom_State();
     public Nightmare_Smash_State SmashState = new Nightmare_Smash_State();
     public Nightmare_Jump_State JumpState = new Nightmare_Jump_State();
 
@@ -41,7 +43,7 @@ public class Nightmare_State_Manager : MonoBehaviour
                 CurrentState = SmashState;
                 break;
             case 3:
-                CurrentState = EscapeState;
+                CurrentState = DoomState;
                 break;
             case 4:
                 CurrentState = EscapeState;
