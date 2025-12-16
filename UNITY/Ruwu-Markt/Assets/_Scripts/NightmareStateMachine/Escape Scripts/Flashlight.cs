@@ -1,8 +1,12 @@
 using UnityEngine;
+using VolumetricFogAndMist2;
+using VolumetricFogAndMist2.Demos;
 
 public class Flashlight : MonoBehaviour
 {
     public Collider FlashConeCollider;
+
+    public GameObject FogOfwar;
 
     Light _flashlight;
 
@@ -19,12 +23,14 @@ public class Flashlight : MonoBehaviour
         {
             _flashlight.enabled = true;
             FlashConeCollider.enabled = true;
+            FogOfwar.SetActive(true);
             gameObject.SetActive(true);
         }
         else
         {
             _flashlight.enabled = false;
             FlashConeCollider.enabled = false;
+            FogOfwar.SetActive(false);
             gameObject.SetActive(false);
         }
     }
