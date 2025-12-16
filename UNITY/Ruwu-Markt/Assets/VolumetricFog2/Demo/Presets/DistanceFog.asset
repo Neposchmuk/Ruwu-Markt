@@ -31,7 +31,7 @@ MonoBehaviour:
   detailScale: 0.35
   detailStrength: 0.5
   detailOffset: -0.5
-  density: 0.18
+  density: 0.3
   shape: 0
   scaleNoiseWithHeight: 0
   border: 0.061
@@ -119,7 +119,7 @@ MonoBehaviour:
   specularColor: {r: 0.15739588, g: 0.18561088, b: 0.254717, a: 1}
   specularThreshold: 0.637
   specularIntensity: 0.428
-  turbulence: 0.73
+  turbulence: 0
   windDirection: {x: -0.02, y: 0, z: 0}
   useCustomDetailNoiseWindDirection: 0
   detailNoiseWindDirection: {x: 0.02, y: 0, z: 0}

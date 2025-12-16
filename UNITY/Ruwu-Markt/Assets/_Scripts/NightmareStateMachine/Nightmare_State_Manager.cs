@@ -33,10 +33,9 @@ public class Nightmare_State_Manager : MonoBehaviour
         switch (_dayManager.Night)
         {
             case 1:
-                /*CurrentState = JumpState;
+                CurrentState = JumpState;
                 _timeInSeconds = 90;
-                StartCoroutine(DelayTimer(5));*/
-                CurrentState = EscapeState;
+                StartCoroutine(DelayTimer(5));
                 break;
             case 2:
                 CurrentState = SmashState;
