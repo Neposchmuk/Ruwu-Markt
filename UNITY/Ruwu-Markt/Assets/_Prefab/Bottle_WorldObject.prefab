@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 9035907009963644569}
   - component: {fileID: 3233326927241315537}
   - component: {fileID: 5636126652312969365}
+  - component: {fileID: -9146534984501666744}
   m_Layer: 6
   m_Name: Bottle_WorldObject
   m_TagString: Bottle
@@ -182,9 +183,36 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 1855923187887352656, guid: 13c8e46209b4b45499ffaafcd38324f7, type: 3}
+--- !u!54 &-9146534984501666744
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2648528847359911036}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &8179971446466651519
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,16 +29,29 @@ TagManager:
   - Flowers
   - FlowersQuest
   - WateringCan
+  - NPC_Customer
+  - Destructible
+  - Cashtray
+  - Safe
+  - Agent_Target
+  - Checkout_Target
+  - Final_Target
+  - MarketDoor
+  - MarketKey
+  - PlayerFlashlight
+  - AmmoStation
+  - Enemy
+  - Gun
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - Interactable
   - HandObject
-  - 
+  - NavMesh Surface
   - 
   - 
   - 

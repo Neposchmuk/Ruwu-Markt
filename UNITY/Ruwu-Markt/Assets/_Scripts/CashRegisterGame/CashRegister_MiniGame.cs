@@ -37,6 +37,10 @@ public class CashRegister_MiniGame : MonoBehaviour
 
 
 
+    public static event Action OnPay;
+
+
+
     private List<GameObject> productsBought = new List<GameObject>();
 
     private InputAction interact;
@@ -47,11 +51,11 @@ public class CashRegister_MiniGame : MonoBehaviour
 
     private int productsScanned;
 
-    private float priceTotal;
+    private int _intPriceTotal;
 
-    private float changeToGive;
+    private float _floatChangeToGive;
 
-    private float changeGiven;
+    private float _floatChangeGiven;
 
     private float cashRegisterDeficit;
 
@@ -86,13 +90,16 @@ public class CashRegister_MiniGame : MonoBehaviour
         }
     }
 
-    void InitializeQuest()
+    public void InitializeQuest()
     {
-        questIsRunning = true;
-        productsToScan = 0;
-        productsScanned = 0;
-        changeGiven = 0;
-        InstantiateProducts();
+        if (!questIsRunning)
+        {
+            questIsRunning = true;
+            productsToScan = 0;
+            productsScanned = 0;
+            _floatChangeGiven = 0;
+            InstantiateProducts();
+        }
     }
 
     void InstantiateProducts()
@@ -111,12 +118,12 @@ public class CashRegister_MiniGame : MonoBehaviour
 
     void ScanProduct(productInfo productInfo)
     {
-        priceTotal += productInfo.price;
+        _intPriceTotal += (int)(productInfo.price * 100);
         productInfo.hasBeenScanned = true;
         productsScanned++;
         //playAnimation
         RegisterScannedProducts.text += productInfo.name + " - " +productInfo.price + "$\n";
-        RegisterTotalPrice.text ="Total: " + $"{priceTotal}$";
+        RegisterTotalPrice.text ="Total: " + $"{(float)_intPriceTotal / 100}$";
         if(productsScanned == productsToScan)
         {
             CheckPaymentMethod();
@@ -125,7 +132,7 @@ public class CashRegister_MiniGame : MonoBehaviour
 
     void CheckPaymentMethod()
     {
-        int payWithCard = UnityEngine.Random.Range(1, 6);
+        int payWithCard = UnityEngine.Random.Range(1, 7);
         if(payWithCard > 4)
         {
             Debug.Log("Pays with Card");
@@ -145,14 +152,14 @@ public class CashRegister_MiniGame : MonoBehaviour
 
         try
         {
-            ChangeButtons[0].onClick.AddListener(() => CountChange(0.01f));
-            ChangeButtons[1].onClick.AddListener(() => CountChange(0.02f));
-            ChangeButtons[2].onClick.AddListener(() => CountChange(0.05f));
-            ChangeButtons[3].onClick.AddListener(() => CountChange(0.1f));
-            ChangeButtons[4].onClick.AddListener(() => CountChange(0.2f));
-            ChangeButtons[5].onClick.AddListener(() => CountChange(0.5f));
-            ChangeButtons[6].onClick.AddListener(() => CountChange(1f));
-            ChangeButtons[7].onClick.AddListener(() => CountChange(2f));
+            ChangeButtons[0].onClick.AddListener(() => CountChange(1));
+            ChangeButtons[1].onClick.AddListener(() => CountChange(2));
+            ChangeButtons[2].onClick.AddListener(() => CountChange(5));
+            ChangeButtons[3].onClick.AddListener(() => CountChange(10));
+            ChangeButtons[4].onClick.AddListener(() => CountChange(20));
+            ChangeButtons[5].onClick.AddListener(() => CountChange(50));
+            ChangeButtons[6].onClick.AddListener(() => CountChange(100));
+            ChangeButtons[7].onClick.AddListener(() => CountChange(200));
         }
         catch (IndexOutOfRangeException)
         {
@@ -164,18 +171,21 @@ public class CashRegister_MiniGame : MonoBehaviour
     void PayCard()
     {
         //playAnimationShowCard
-        CleanUp(true, true);
+        CleanUp();
 
     }
 
     void PayCash()
     {
-        int moneyGiven = Mathf.CeilToInt(priceTotal / 5) * 5;
-        Debug.Log(moneyGiven);
-        changeToGive = (Mathf.Round((moneyGiven - priceTotal) * 100)) / 100;
+        int moneyGiven = Mathf.CeilToInt((float)_intPriceTotal / 500) * 500;
+        _floatChangeToGive = (((float)moneyGiven / 100) - ((float)_intPriceTotal / 100));
+        Debug.Log(_floatChangeToGive);
+        RegisterChangeToGive.text = "Change to give: \n" + $"{_floatChangeToGive}$";
 
-        RegisterChangeToGive.text = "Change to give: \n" + $"{changeToGive}$";
         
+
+        CashRegisterDrawer.SetActive(false);
+
         for(int i = 0; i < ChangeButtons.Count; i++)
         {
             ChangeButtons[i].interactable = true;
@@ -189,25 +199,26 @@ public class CashRegister_MiniGame : MonoBehaviour
         Instantiate(moneyPrefab, moneySpawnPoint.transform.position, transform.rotation);
     }
 
-    void CountChange(float changeValue)
+    void CountChange(int changeValue)
     {
-        changeGiven += changeValue;
-        RegisterChangeGiven.text = "Change given:\n" + $"{changeGiven}$";
-        if(changeGiven == changeToGive)
+        _floatChangeGiven += (float)changeValue / 100;
+        Debug.Log(_floatChangeGiven);
+        RegisterChangeGiven.text = "Change given:\n" + $"{_floatChangeGiven}$";
+        if((int)(_floatChangeGiven * 100) == (int)(_floatChangeToGive * 100))
         {
             Debug.Log("Change given exactly!");
-            CleanUp(false, true);
+            CleanUp();
         }
-        else if(changeGiven > changeToGive)
+        else if((int)(_floatChangeGiven * 100) > (int)(_floatChangeToGive *100))
         {
-            cashRegisterDeficit -= changeGiven - changeToGive;
+            cashRegisterDeficit -= _floatChangeGiven - _floatChangeToGive;
             Debug.Log("Given too much change!");
-            CleanUp(false, false);
+            CleanUp();
         }
 
     }
 
-    void CleanUp(bool paidWithCard, bool givenExactChange)
+    void CleanUp()
     {
         Debug.Log(productsBought.Count);
         for (int i = 0; i < productsBought.Count; i++)
@@ -221,24 +232,17 @@ public class CashRegister_MiniGame : MonoBehaviour
         RegisterChangeGiven.text = "";
         productsScanned = 0;
         ButtonPayWithCard.interactable = false;
-        ButtonPayWithCash.interactable = false;   
-        if (paidWithCard)
-        {
-            SM.ChangeSanity(-5, 15);
-        }
-        else if(!paidWithCard && givenExactChange)
-        {
-            SM.ChangeSanity(-10, 15);
-        }
-        else
-        {
-            SM.ChangeSanity(-15, -20);
-        }
+        ButtonPayWithCash.interactable = false;
+
+        CashRegisterDrawer.SetActive(true);
+
 
         for (int i = 0; i < ChangeButtons.Count; i++)
         {
             ChangeButtons[i].interactable = false;
         }
+
+        OnPay?.Invoke();
 
         questIsRunning = false;
 
@@ -251,14 +255,6 @@ public class CashRegister_MiniGame : MonoBehaviour
 
         if(Physics.Raycast(ray, out RaycastHit hit, 2, RCLayerMask))
         {
-            //Debug.Log("CashRegister RayCastHit");
-            if (hit.collider.CompareTag("CashRegister") && !questIsRunning)
-            {
-                //Debug.Log("Interacted with Register");
-                InitializeQuest();
-            }
-
-
             if (hit.collider.CompareTag("CheckOutProduct"))
             {
                 productInfo productInfo = hit.collider.gameObject.GetComponent<productInfo>();

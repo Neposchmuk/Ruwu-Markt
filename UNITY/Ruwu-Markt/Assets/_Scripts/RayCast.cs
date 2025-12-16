@@ -1,14 +1,17 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class RayCast : MonoBehaviour
 {
+    public static Action OnMarketLeave;
+
     public float rayLength;
 
     public LayerMask layerMask;
 
-    private Hand_Actions HandRC;
+    private Hand_Actions Hand;
 
     private Camera mainCamera;
 
@@ -18,9 +21,9 @@ public class RayCast : MonoBehaviour
 
     public GameObject questObject;
 
+    private bool _carryingCashtray;
 
-    
-
+    private bool _hasMarketKey;
     private void FindQM()
     {
 
@@ -32,9 +35,17 @@ public class RayCast : MonoBehaviour
 
         interact = GameObject.Find("PlayerCapsule").GetComponent<PlayerInput>().actions.FindAction("Interact");
 
-        QM = GameObject.Find("Quest_Manager").GetComponent<Quest_Manager>();
+        try
+        {
+            QM = GameObject.Find("Quest_Manager").GetComponent<Quest_Manager>();
+        }
+        catch (NullReferenceException)
+        {
+            Debug.LogError("No QuestManager in scene, if NightScene ignore");
+        }
+        
 
-        HandRC = gameObject.GetComponentInChildren<Hand_Actions>();
+        Hand = gameObject.GetComponentInChildren<Hand_Actions>();
 
     }
 
@@ -79,6 +90,51 @@ public class RayCast : MonoBehaviour
                 questObject = hit.collider.gameObject;
                 Debug.Log(questObject.name);
 
+            }
+
+            if(hit.collider.tag == "Cashtray" && interact.WasPressedThisFrame() && QM.DayComplete)
+            {
+                GameObject[] castrayObjects = GameObject.FindGameObjectsWithTag("Cashtray");
+                foreach(GameObject _object in castrayObjects)
+                {
+                    _object.SetActive(false);
+                }
+                Hand.PickUpObject(8);
+                _carryingCashtray = true;
+                
+            }
+
+            if(hit.collider.tag == "Safe" && interact.WasPressedThisFrame() && _carryingCashtray)
+            {
+                Debug.Log("InteractSafe");
+                QM.CompleteDay();
+            }
+
+            if(hit.collider.tag == "MarketKey" && interact.WasPressedThisFrame())
+            {
+                _hasMarketKey = true;
+                Destroy(hit.collider.gameObject);
+            }
+
+            if(hit.collider.tag == "MarketDoor" && interact.WasPressedThisFrame())
+            {
+                if (_hasMarketKey)
+                {
+                    OnMarketLeave?.Invoke();
+                }
+                else
+                {
+                    //Message Need key
+                }
+            }
+
+            if(hit.collider.tag == "AmmoStation" && interact.WasPressedThisFrame())
+            {
+                AmmoStation _ammoStation = hit.collider.GetComponent<AmmoStation>();
+                if (!_ammoStation.IsLocked)
+                {
+                    _ammoStation.AmmoPicked();
+                }     
             }
 
             /*if(hit.collider.tag == "ProduceCan" && QM.isDoingQuest && !QM.shelfQuestCompleted)

@@ -26,19 +26,27 @@ public class Quest_Manager : MonoBehaviour
 
     public bool flowersQuestCompleted;
 
+    public bool customersQuestCompleted;
+
+    public bool DayComplete;
+
     public int stepsDone;
 
     public int stepsToDo;
 
     public GameObject endDayText;
 
-    public string NextScene;
+    //public string NextScene;
 
     private string defaultQuestText;
+
+    private int customersServed;
 
     private InputAction endDay;
 
     private Sanity_Manager SM;
+
+    private Day_Manager _dayManager;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -50,18 +58,17 @@ public class Quest_Manager : MonoBehaviour
 
         SM = GameObject.FindFirstObjectByType<Sanity_Manager>();
 
+        _dayManager = GameObject.FindFirstObjectByType<Day_Manager>();
+
+        CashRegister_MiniGame.OnPay += CheckCustomersServed;
+
         ResetQuests();
     }
 
-    private void Update()
+    public void CompleteDay()
     {
-        //Loads next Scene, depending on sanity value
-        if(endDayText.activeSelf && endDay.WasCompletedThisFrame())
-        {
-            ResetQuests();
-            SceneManager.LoadScene(NextScene);
-        }
-
+        ResetQuests();
+        _dayManager.AddDay();
     }
 
     //Completes Quests by setting bools and resets doingQuest bool, so other quests ca nbe started
@@ -139,39 +146,6 @@ public class Quest_Manager : MonoBehaviour
 
         CheckDayCompletion();
     }
-    //Updates Quest Text descriptions depending on Quest Variant selected
-    public void UpdateQuest(int questType, int questVariant)
-    {       
-        switch (questType)
-        {
-            case 0:
-                if (!isDoingQuest)
-                {
-                    
-                    Debug.Log(defaultQuestText);
-                    isDoingQuest = true;
-                }
-
-                switch (questVariant)
-                {
-                    case 0:
-                        shelfQuestText.text = "Restock the shelves (" + $"{stepsDone}" + "/" + $"{stepsToDo}" + ")";
-                        break;
-                    case 1:
-                        shelfQuestText.text = "Restock the shelves (" + $"{stepsDone}" + "/" + $"{stepsToDo}" + ")";
-                        break;
-                    case 2:
-                        shelfQuestText.text = "Take a sip";
-                        break;
-                    case 3:
-                        shelfQuestText.text = "Chug it all out";
-                        break;               
-                }
-                break;
-            
-        }
-            
-    }
 
     //Resets Quest bools so quests need to be redone
     private void ResetQuests()
@@ -212,9 +186,20 @@ public class Quest_Manager : MonoBehaviour
     //Checks if all quests have been completed to unlock Scene Change
     private void CheckDayCompletion()
     {
-        if (shelfQuestCompleted && floorQuestCompleted && pfandQuestCompleted && flowersQuestCompleted && !SM.isGameOver)
+        if (shelfQuestCompleted && floorQuestCompleted && pfandQuestCompleted && flowersQuestCompleted && customersQuestCompleted && !SM.isGameOver)
         {
-            endDayText.SetActive(true);
+            DayComplete = true;
+        }
+    }
+
+    void CheckCustomersServed()
+    {
+        customersServed++;
+
+        if(customersServed == 3)
+        {
+            customersQuestCompleted = true;
+            CheckDayCompletion();
         }
     }
 }

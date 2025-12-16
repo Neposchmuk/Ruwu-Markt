@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3070413845633344722}
   - component: {fileID: 6397940079344188988}
   - component: {fileID: 7710908926738977474}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 2292935270402086030}
   - component: {fileID: 4206476767404111992}
   - component: {fileID: 5472213672844688131}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}

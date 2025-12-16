@@ -86,6 +86,7 @@ public class MiniGameWaterPlants : MiniGameBaseState
     public override void EndQuest()
     {
         FlowersWatering.OnFlowerWatered -= CountWateredFlowers;
+        QuestSource.QuestMarkerBig.SetActive(false);
         HA.DestroyObjectInHand();
         QM.CompleteQuest(3, questVariant - 1, QuestSource.gameObject);
     }
