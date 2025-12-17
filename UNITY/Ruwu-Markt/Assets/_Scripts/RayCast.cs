@@ -7,6 +7,8 @@ public class RayCast : MonoBehaviour
 {
     public static Action OnMarketLeave;
 
+    public static Action OnKeyPickup;
+
     public float rayLength;
 
     public LayerMask layerMask;
@@ -112,6 +114,7 @@ public class RayCast : MonoBehaviour
 
             if(hit.collider.tag == "MarketKey" && interact.WasPressedThisFrame())
             {
+                OnKeyPickup?.Invoke();
                 _hasMarketKey = true;
                 Destroy(hit.collider.gameObject);
             }

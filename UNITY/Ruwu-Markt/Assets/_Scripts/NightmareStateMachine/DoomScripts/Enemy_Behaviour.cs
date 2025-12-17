@@ -28,7 +28,7 @@ public class Enemy_Behaviour : MonoBehaviour
 
         _player = FindFirstObjectByType<FirstPersonController>();
 
-        InvokeRepeating("SetPlayerDestination", 0, 1f);
+        InvokeRepeating("SetPlayerDestination", 0, 0.5f);
 
         
     }
