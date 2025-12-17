@@ -21,6 +21,8 @@ public class RayCast : MonoBehaviour
 
     private Quest_Manager QM;
 
+    private Day_Manager _dayManager;
+
     public GameObject questObject;
 
     private bool _carryingCashtray;
@@ -36,6 +38,8 @@ public class RayCast : MonoBehaviour
         mainCamera = Camera.main;
 
         interact = GameObject.Find("PlayerCapsule").GetComponent<PlayerInput>().actions.FindAction("Interact");
+
+        _dayManager = GameObject.FindFirstObjectByType<Day_Manager>();
 
         try
         {
@@ -138,6 +142,17 @@ public class RayCast : MonoBehaviour
                 {
                     _ammoStation.AmmoPicked();
                 }     
+            }
+
+            if(hit.collider.tag == "HomeDoor" && interact.WasPressedThisFrame() && _dayManager.IsDay)
+            {
+                SceneManager.LoadScene("Greyboxing_Day");
+            }
+
+            if(hit.collider.tag == "HomeMatress" && interact.WasPressedThisFrame() && !_dayManager.IsDay)
+            {
+                Debug.Log("Hit");
+                _dayManager.AddDay();
             }
 
             /*if(hit.collider.tag == "ProduceCan" && QM.isDoingQuest && !QM.shelfQuestCompleted)
