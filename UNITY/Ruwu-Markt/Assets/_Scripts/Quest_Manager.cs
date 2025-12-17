@@ -68,7 +68,8 @@ public class Quest_Manager : MonoBehaviour
     public void CompleteDay()
     {
         ResetQuests();
-        _dayManager.AddDay();
+        _dayManager.IsDay = false;
+        SceneManager.LoadScene("home");
     }
 
     //Completes Quests by setting bools and resets doingQuest bool, so other quests ca nbe started

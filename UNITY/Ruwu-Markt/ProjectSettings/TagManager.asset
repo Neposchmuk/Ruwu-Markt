@@ -46,6 +46,8 @@ TagManager:
   - DoomEnemyCounter
   - SmashThingsCounter
   - EscapeKeyImage
+  - HomeDoor
+  - HomeMatress
   layers:
   - Default
   - TransparentFX

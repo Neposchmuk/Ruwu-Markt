@@ -7,13 +7,21 @@ public class Day_Manager : MonoBehaviour
 
     public string nightScene;
 
+    public bool IsDay;
+
     public int Day {get; private set;} = 1; 
 
     public int Night {get; private set;} = 1;
 
+    private void Start()
+    {
+        IsDay = true;
+    }
+
     public void AddDay()
     {
         Day++;
+        IsDay = false;
         LoadNextScene(2);
     }
 
@@ -21,10 +29,11 @@ public class Day_Manager : MonoBehaviour
     {
         Debug.Log("End Night");
         Night++;
+        IsDay = true;
         LoadNextScene(1);
     }
 
-    void LoadNextScene(int setScene)
+    public void LoadNextScene(int setScene)
     {
         switch (setScene)
         {

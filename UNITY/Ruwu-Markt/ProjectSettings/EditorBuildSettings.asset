@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Initiate_DDOL_Objects.unity
     guid: b20a1f8845bb2bb4dac2b488cb0e0a46
   - enabled: 1
+    path: Assets/Scenes/home.unity
+    guid: 0e133af746ff14b488bf8ac33ab15ef0
+  - enabled: 1
     path: Assets/Scenes/Greyboxing_Day.unity
     guid: bda350ca75ab12d42b57080157ff5489
   - enabled: 1

@@ -40,7 +40,7 @@ public class Nightmare_State_Manager : MonoBehaviour
             case 1:
                 JumpLevel.SetActive(true);
                 CurrentState = JumpState;
-                TimeInSeconds = 90;
+                TimeInSeconds = 60;
                 StartCoroutine(DelayTimer(5));
                 break;
             case 2:
