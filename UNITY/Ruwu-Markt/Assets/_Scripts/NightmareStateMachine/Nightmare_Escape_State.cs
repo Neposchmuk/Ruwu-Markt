@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Nightmare_Escape_State : NightmareBaseState
 {
@@ -8,6 +9,8 @@ public class Nightmare_Escape_State : NightmareBaseState
     InputAction _flash;
 
     Flashlight _flashlight;
+
+    Image _keyImage;
 
     bool _flashActive = false;
 
@@ -19,9 +22,13 @@ public class Nightmare_Escape_State : NightmareBaseState
 
         _flashlight = GameObject.FindFirstObjectByType<Flashlight>();
 
+        _keyImage = GameObject.FindGameObjectWithTag("EscapeKeyImage").GetComponent<Image>();
+
         RayCast.OnMarketLeave += EndState;
 
-        _stateManager.EscapeLevel.SetActive(true);
+        RayCast.OnKeyPickup += ToggleKeyImage;
+
+        _keyImage.enabled = false;
     }
 
     public override void UpdateState()
@@ -47,5 +54,10 @@ public class Nightmare_Escape_State : NightmareBaseState
             _flashlight.ToggleFlashlight(true);
         }
         else _flashlight.ToggleFlashlight(false);   
+    }
+
+    void ToggleKeyImage()
+    {
+        _keyImage.enabled = true;
     }
 }

@@ -42,6 +42,10 @@ TagManager:
   - AmmoStation
   - Enemy
   - Gun
+  - JumpNightmareTimer
+  - DoomEnemyCounter
+  - SmashThingsCounter
+  - EscapeKeyImage
   layers:
   - Default
   - TransparentFX

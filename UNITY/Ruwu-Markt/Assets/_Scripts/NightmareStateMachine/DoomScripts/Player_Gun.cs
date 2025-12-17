@@ -29,13 +29,19 @@ public class Player_Gun : MonoBehaviour
 
     bool _weaponLoaded;
 
+    bool _isReloading;
+
     Animator _animator;
+
+    Nightmare_State_Manager _stateManager;
 
     private void Start()
     {
-        gameObject.SetActive(false);
-
         _animator = GetComponent<Animator>();
+
+        _stateManager = FindFirstObjectByType<Nightmare_State_Manager>();
+
+        if(_stateManager.CurrentState != _stateManager.DoomState) gameObject.SetActive(false);
 
         AmmoStation.OnAmmoPickup += PickUpAmmoStation;
 
@@ -107,7 +113,7 @@ public class Player_Gun : MonoBehaviour
 
     public void StartReload()
     {
-        StartCoroutine(Reload());
+        if(!_isReloading) StartCoroutine(Reload());
     }
 
     public void UnsubscribeEvents()
@@ -117,6 +123,8 @@ public class Player_Gun : MonoBehaviour
 
     IEnumerator Reload()
     {
+        Debug.Log("Starting Reload");
+        _isReloading = true;
         _animator.SetTrigger("Reloading");
         yield return new WaitForSeconds(ReloadAnimation.length + 0.25f);
         if (AmmoCarrying < 3)
@@ -128,5 +136,7 @@ public class Player_Gun : MonoBehaviour
         _animator.ResetTrigger("Reloading");
         AmmoText.text = $"{AmmoCarrying}" + "\n" + $"{_ammoInMagazine}";
         _weaponLoaded = true;
+        _isReloading = false;
+        Debug.Log("Finished Reload");
     }
 }

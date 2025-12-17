@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy_Spawner : MonoBehaviour
 {
-    public static Action OnEnemySpawned;
+    //public static Action OnEnemySpawned;
 
     public GameObject[] Enemies;
 
@@ -19,7 +19,7 @@ public class Enemy_Spawner : MonoBehaviour
 
         Nightmare_Doom_State.OnEndState += UnsubscribeEvents;
 
-        InvokeRepeating("SpawnEnemy", 5, 25);
+        InvokeRepeating("SpawnEnemy", 5, 18);
     }
 
     void SpawnEnemy()
@@ -32,7 +32,7 @@ public class Enemy_Spawner : MonoBehaviour
 
             Instantiate(Enemies[randomIndex], transform.position, transform.rotation);
 
-            OnEnemySpawned?.Invoke();
+            //OnEnemySpawned?.Invoke();
         }
     }
 

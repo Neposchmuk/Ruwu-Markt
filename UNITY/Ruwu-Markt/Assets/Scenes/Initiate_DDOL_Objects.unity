@@ -1518,7 +1518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d275fbd7167756f47b5f537b209d48a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayScene: Greyboxing_Day
+  dayScene: Greyboxing_Night
   nightScene: Greyboxing_Night
 --- !u!1 &2035398596
 GameObject:
@@ -1549,7 +1549,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2a00c0b64a36c948a90d78da2e80296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene: Greyboxing_Day
+  scene: Greyboxing_Night
 --- !u!4 &2035398598
 Transform:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using UnityEngine.InputSystem;
 using StarterAssets;
+using TMPro;
 
 public class Nightmare_Doom_State : NightmareBaseState
 {
@@ -25,6 +26,8 @@ public class Nightmare_Doom_State : NightmareBaseState
 
     InputAction _reload;
 
+    TMP_Text _enemyCounter;
+
     int _enemiesSpawned;
 
     int _enemiesToKill;
@@ -42,6 +45,8 @@ public class Nightmare_Doom_State : NightmareBaseState
         _batParent = GameObject.FindFirstObjectByType<SmashThings_Animation>();
 
         _playerInput = GameObject.FindFirstObjectByType<PlayerInput>();
+
+        _enemyCounter = GameObject.FindGameObjectWithTag("DoomEnemyCounter").GetComponent<TMP_Text>();
 
         _player = _playerInput.gameObject.GetComponent<FirstPersonController>();
 
@@ -62,10 +67,6 @@ public class Nightmare_Doom_State : NightmareBaseState
         _player.SprintSpeed = 10;
 
         _gun.gameObject.SetActive(true);
-
-        _stateManager.DoomLevel.SetActive(true);
-
-        Enemy_Spawner.OnEnemySpawned += CountEnemies;
 
         Enemy_Behaviour.OnEnemyKill += CountKilled;
 
@@ -96,8 +97,6 @@ public class Nightmare_Doom_State : NightmareBaseState
     {
         OnEndState?.Invoke();
 
-        Enemy_Spawner.OnEnemySpawned -= CountEnemies;
-
         Enemy_Behaviour.OnEnemyKill -= CountKilled;
 
         Enemy_Behaviour.OnKilledPlayer -= HitPlayer;
@@ -105,21 +104,10 @@ public class Nightmare_Doom_State : NightmareBaseState
         _stateManager.EndNight(true, 10);
     }
 
-    void CountEnemies()
-    {
-        _enemiesSpawned++;
-
-        if(_enemiesSpawned >= _enemiesToKill)
-        {
-            OnMaxEnemiesSpawned?.Invoke();
-            _enemiesToKill = _enemiesSpawned;
-        }
-    }
-
     void CountKilled()
     {
         _enemiesKilled++;
-        Debug.Log("Enemies Killed: " + _enemiesKilled + " | Enemies To Kill: " + _enemiesToKill);
+        _enemyCounter.text = $"{_enemiesKilled}" + "/" + $"{_enemiesToKill}";
         if(_enemiesKilled == _enemiesToKill)
         {
             EndState();
@@ -133,8 +121,6 @@ public class Nightmare_Doom_State : NightmareBaseState
         if(_playerHealth <= 0)
         {
             OnEndState?.Invoke();
-
-            Enemy_Spawner.OnEnemySpawned -= CountEnemies;
 
             Enemy_Behaviour.OnEnemyKill -= CountKilled;
 

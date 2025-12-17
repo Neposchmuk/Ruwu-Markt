@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem.XR.Haptics;
 
 public class Nightmare_State_Manager : MonoBehaviour
 {
+    public static Action OnTimerUpdate;
+
     public GameObject JumpLevel;
 
     public GameObject SmashLevel;
@@ -22,7 +25,7 @@ public class Nightmare_State_Manager : MonoBehaviour
 
     Sanity_Manager _sanityManager;
 
-    int _timeInSeconds;
+    public int TimeInSeconds { get; private set; }
 
     public bool TimerIsRunning { get; private set; }
 
@@ -35,17 +38,21 @@ public class Nightmare_State_Manager : MonoBehaviour
         switch (_dayManager.Night)
         {
             case 1:
+                JumpLevel.SetActive(true);
                 CurrentState = JumpState;
-                _timeInSeconds = 90;
+                TimeInSeconds = 90;
                 StartCoroutine(DelayTimer(5));
                 break;
             case 2:
+                SmashLevel.SetActive(true);
                 CurrentState = SmashState;
                 break;
             case 3:
+                DoomLevel.SetActive(true);
                 CurrentState = DoomState;
                 break;
             case 4:
+                EscapeLevel.SetActive(true);
                 CurrentState = EscapeState;
                 break;
         }
@@ -61,7 +68,7 @@ public class Nightmare_State_Manager : MonoBehaviour
 
     public void EndNight(bool survived, int sanityChange)
     {
-        if(TimerIsRunning) StopCoroutine(Timer());
+        if(TimerIsRunning) CancelInvoke("Timer");
 
         if(_sanityManager.sanity + sanityChange <= 0)
         {
@@ -76,21 +83,24 @@ public class Nightmare_State_Manager : MonoBehaviour
     {
         yield return new WaitForSeconds(timeToDelay);
 
-        StartCoroutine(Timer());
+        InvokeRepeating("Timer", 0, 1);
     }
 
-    IEnumerator Timer()
+    void Timer()
     {
         if(!TimerIsRunning)
         TimerIsRunning = true;
 
-        yield return new WaitForSeconds(1);
+        TimeInSeconds--;
 
-        _timeInSeconds--;
+        if(CurrentState == JumpState)
+        {
+            OnTimerUpdate?.Invoke();
+        }
 
-        if(_timeInSeconds == 0)
+        if(TimeInSeconds == 0)
         {
             EndNight(true, 10);
-        }
+        }  
     }
 }
