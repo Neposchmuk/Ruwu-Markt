@@ -9,6 +9,8 @@ public class Day_Manager : MonoBehaviour
 
     public bool IsDay;
 
+    public bool CheckedPC;
+
     public int Day {get; private set;} = 1; 
 
     public int Night {get; private set;} = 1;
@@ -16,6 +18,8 @@ public class Day_Manager : MonoBehaviour
     private void Start()
     {
         IsDay = true;
+
+        CheckedPC = false;
     }
 
     public void AddDay()
@@ -30,6 +34,7 @@ public class Day_Manager : MonoBehaviour
         Debug.Log("End Night");
         Night++;
         IsDay = true;
+        CheckedPC = false;
         LoadNextScene(1);
     }
 

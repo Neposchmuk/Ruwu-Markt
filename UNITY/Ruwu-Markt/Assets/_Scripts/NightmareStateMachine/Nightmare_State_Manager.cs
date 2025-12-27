@@ -58,6 +58,7 @@ public class Nightmare_State_Manager : MonoBehaviour
         }
 
         CurrentState.EnterState(this);
+        Debug.Log("StateManager EnterState");
     }
 
     // Update is called once per frame
@@ -68,6 +69,7 @@ public class Nightmare_State_Manager : MonoBehaviour
 
     public void EndNight(bool survived, int sanityChange)
     {
+        Debug.Log("Called EndNight");
         if(TimerIsRunning) CancelInvoke("Timer");
 
         if(_sanityManager.sanity + sanityChange <= 0)

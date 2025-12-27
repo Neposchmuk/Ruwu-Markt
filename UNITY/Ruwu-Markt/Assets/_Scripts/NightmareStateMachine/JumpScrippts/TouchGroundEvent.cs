@@ -19,6 +19,7 @@ public class TouchGroundEvent : MonoBehaviour
         Debug.Log("Entered Trigger");
         if (other.CompareTag("Player") && _stateManager.TimerIsRunning)
         {
+            Debug.Log("Sent event");
             OnTouchedGround?.Invoke();
         }
     }

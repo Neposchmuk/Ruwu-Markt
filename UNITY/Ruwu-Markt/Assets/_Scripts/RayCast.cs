@@ -28,6 +28,8 @@ public class RayCast : MonoBehaviour
     private bool _carryingCashtray;
 
     private bool _hasMarketKey;
+
+    private bool _checkedPC;
     private void FindQM()
     {
 
@@ -144,7 +146,7 @@ public class RayCast : MonoBehaviour
                 }     
             }
 
-            if(hit.collider.tag == "HomeDoor" && interact.WasPressedThisFrame() && _dayManager.IsDay)
+            if(hit.collider.tag == "HomeDoor" && interact.WasPressedThisFrame() && _dayManager.IsDay && _checkedPC)
             {
                 SceneManager.LoadScene("Greyboxing_Day");
             }
@@ -153,6 +155,12 @@ public class RayCast : MonoBehaviour
             {
                 Debug.Log("Hit");
                 _dayManager.AddDay();
+            }
+
+            if(hit.collider.tag == "Computer" && interact.WasPressedThisFrame() && !_dayManager.CheckedPC)
+            {
+                PC_Interaction _pcInteraction = hit.collider.GetComponent<PC_Interaction>();
+                _pcInteraction.PC_UI.SetActive(true);
             }
 
             /*if(hit.collider.tag == "ProduceCan" && QM.isDoingQuest && !QM.shelfQuestCompleted)

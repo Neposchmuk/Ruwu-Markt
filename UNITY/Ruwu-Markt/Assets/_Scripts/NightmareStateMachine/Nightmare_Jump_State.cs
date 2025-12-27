@@ -17,6 +17,7 @@ public class Nightmare_Jump_State : NightmareBaseState
 
     public override void EnterState(Nightmare_State_Manager stateManager)
     {
+        Debug.Log("Entered Jump State");
         _stateManager = stateManager;
 
         _timer = GameObject.FindGameObjectWithTag("JumpNightmareTimer").GetComponent<TMP_Text>();
@@ -33,6 +34,7 @@ public class Nightmare_Jump_State : NightmareBaseState
 
     public override void EndState()
     {
+        Debug.Log("Called EndState");
         TouchGroundEvent.OnTouchedGround -= EndState;
         Nightmare_State_Manager.OnTimerUpdate -= UpdateTimer;
         _stateManager.EndNight(false, -10);

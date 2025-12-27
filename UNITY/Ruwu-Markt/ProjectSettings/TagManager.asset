@@ -48,6 +48,7 @@ TagManager:
   - EscapeKeyImage
   - HomeDoor
   - HomeMatress
+  - Computer
   layers:
   - Default
   - TransparentFX
