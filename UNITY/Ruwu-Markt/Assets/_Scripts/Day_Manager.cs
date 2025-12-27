@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,12 +12,18 @@ public class Day_Manager : MonoBehaviour
 
     public bool CheckedPC;
 
+    public bool IsFinalDay;
+
+    public bool GetsGoodEnding;
+
     public int Day {get; private set;} = 1; 
 
     public int Night {get; private set;} = 1;
 
     private void Start()
     {
+        PC_Interaction.OnCloseUI += CheckPC;
+
         IsDay = true;
 
         CheckedPC = false;
@@ -35,6 +42,12 @@ public class Day_Manager : MonoBehaviour
         Night++;
         IsDay = true;
         CheckedPC = false;
+
+        if(Day == 5)
+        {
+            IsFinalDay = true;
+        }
+
         LoadNextScene(1);
     }
 
@@ -49,5 +62,10 @@ public class Day_Manager : MonoBehaviour
                 SceneManager.LoadScene(nightScene);
                 break;
         }
+    }
+
+    void CheckPC()
+    {
+        CheckedPC = true;
     }
 }

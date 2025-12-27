@@ -146,7 +146,7 @@ public class RayCast : MonoBehaviour
                 }     
             }
 
-            if(hit.collider.tag == "HomeDoor" && interact.WasPressedThisFrame() && _dayManager.IsDay && _checkedPC)
+            if(hit.collider.tag == "HomeDoor" && interact.WasPressedThisFrame() && _dayManager.IsDay && _dayManager.CheckedPC)
             {
                 SceneManager.LoadScene("Greyboxing_Day");
             }
@@ -160,7 +160,7 @@ public class RayCast : MonoBehaviour
             if(hit.collider.tag == "Computer" && interact.WasPressedThisFrame() && !_dayManager.CheckedPC)
             {
                 PC_Interaction _pcInteraction = hit.collider.GetComponent<PC_Interaction>();
-                _pcInteraction.PC_UI.SetActive(true);
+                _pcInteraction.OpenInbox();
             }
 
             /*if(hit.collider.tag == "ProduceCan" && QM.isDoingQuest && !QM.shelfQuestCompleted)
