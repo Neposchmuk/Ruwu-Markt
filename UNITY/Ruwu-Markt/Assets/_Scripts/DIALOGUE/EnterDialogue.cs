@@ -8,8 +8,9 @@ public class EnterDialogue : MonoBehaviour
 
     public void SendDialogueEvent()
     {
-        if (dialogueKnotName.Equals(""))
+        if (!dialogueKnotName.Equals(""))
         {
+            Debug.Log("Sent Dialogue Event");
             GameEventsManager.instance.dialogueEvents.EnterDialogue(dialogueKnotName);
         }
     }

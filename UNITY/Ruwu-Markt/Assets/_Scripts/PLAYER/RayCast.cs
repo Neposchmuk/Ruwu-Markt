@@ -29,10 +29,14 @@ public class RayCast : MonoBehaviour
 
     private bool _hasMarketKey;
 
-    private bool _checkedPC;
-    private void FindQM()
+    private void OnEnable()
     {
+        GameEventsManager.instance.playerEvents.onPressedInteract += Raycast;
+    }
 
+    private void OnDisable()
+    {
+        GameEventsManager.instance.playerEvents.onPressedInteract -= Raycast;
     }
 
     private void Start()
@@ -57,18 +61,15 @@ public class RayCast : MonoBehaviour
 
     }
 
-    private void Update()
+    private void Raycast(InputEventContext inputContext)
     {
-        Raycast();
-    }
+        if (inputContext != InputEventContext.DEFAULT) return;
 
-    private void Raycast()
-    {
         Ray ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
 
         if(Physics.Raycast(ray, out RaycastHit hit, rayLength, layerMask))
         {
-            if(hit.collider.tag == "Shelf" && interact.WasPressedThisFrame() && !QM.isDoingQuest && !QM.shelfQuestCompleted)
+            if(hit.collider.tag == "Shelf" && !QM.isDoingQuest && !QM.shelfQuestCompleted)
             {
                 hit.collider.gameObject.GetComponent<Interaction_MenuTest>().ToggleUI(true);
                 questObject = hit.collider.gameObject;
@@ -76,7 +77,7 @@ public class RayCast : MonoBehaviour
                 //Debug.Log(QM.isDoingQuest);
             }
 
-            if (hit.collider.tag == "FloorQuest" && interact.WasPressedThisFrame() && !QM.isDoingQuest && !QM.floorQuestCompleted)
+            if (hit.collider.tag == "FloorQuest" && !QM.isDoingQuest && !QM.floorQuestCompleted)
             {
                 hit.collider.gameObject.GetComponent<Interaction_MenuTest>().ToggleUI(true);
                 questObject = hit.collider.gameObject;
@@ -84,7 +85,7 @@ public class RayCast : MonoBehaviour
                 //Debug.Log(QM.isDoingQuest);
             }
 
-            if (hit.collider.tag == "PfandQuest" && interact.WasPressedThisFrame() && !QM.isDoingQuest && !QM.pfandQuestCompleted)
+            if (hit.collider.tag == "PfandQuest" && !QM.isDoingQuest && !QM.pfandQuestCompleted)
             {
                 hit.collider.gameObject.GetComponent<Interaction_MenuTest>().ToggleUI(true);
                 questObject = hit.collider.gameObject;
@@ -92,7 +93,7 @@ public class RayCast : MonoBehaviour
                 //Debug.Log(QM.isDoingQuest);
             }
 
-            if(hit.collider.tag == "FlowersQuest" && interact.WasPressedThisFrame() && !QM.isDoingQuest && !QM.flowersQuestCompleted)
+            if(hit.collider.tag == "FlowersQuest" && !QM.isDoingQuest && !QM.flowersQuestCompleted)
             {
                 hit.collider.gameObject.GetComponent<Interaction_MenuTest>().ToggleUI(true);
                 questObject = hit.collider.gameObject;
@@ -100,7 +101,7 @@ public class RayCast : MonoBehaviour
 
             }
 
-            if(hit.collider.tag == "Cashtray" && interact.WasPressedThisFrame() && QM.DayComplete)
+            if(hit.collider.tag == "Cashtray" && QM.DayComplete)
             {
                 GameObject[] castrayObjects = GameObject.FindGameObjectsWithTag("Cashtray");
                 foreach(GameObject _object in castrayObjects)
@@ -112,21 +113,21 @@ public class RayCast : MonoBehaviour
                 
             }
 
-            if(hit.collider.tag == "Safe" && interact.WasPressedThisFrame() && _carryingCashtray)
+            if(hit.collider.tag == "Safe" && _carryingCashtray)
             {
                 Debug.Log("InteractSafe");
                 Hand.DestroyObjectInHand();
                 QM.CompleteDay();
             }
 
-            if(hit.collider.tag == "MarketKey" && interact.WasPressedThisFrame())
+            if(hit.collider.tag == "MarketKey")
             {
                 OnKeyPickup?.Invoke();
                 _hasMarketKey = true;
                 Destroy(hit.collider.gameObject);
             }
 
-            if(hit.collider.tag == "MarketDoor" && interact.WasPressedThisFrame())
+            if(hit.collider.tag == "MarketDoor")
             {
                 if (_hasMarketKey)
                 {
@@ -138,7 +139,7 @@ public class RayCast : MonoBehaviour
                 }
             }
 
-            if(hit.collider.tag == "AmmoStation" && interact.WasPressedThisFrame())
+            if(hit.collider.tag == "AmmoStation")
             {
                 AmmoStation _ammoStation = hit.collider.GetComponent<AmmoStation>();
                 if (!_ammoStation.IsLocked)
@@ -147,21 +148,29 @@ public class RayCast : MonoBehaviour
                 }     
             }
 
-            if(hit.collider.tag == "HomeDoor" && interact.WasPressedThisFrame() && _dayManager.IsDay && _dayManager.CheckedPC)
+            if(hit.collider.tag == "HomeDoor" && _dayManager.IsDay && _dayManager.CheckedPC)
             {
                 SceneManager.LoadScene("Greyboxing_Day");
             }
 
-            if(hit.collider.tag == "HomeMatress" && interact.WasPressedThisFrame() && !_dayManager.IsDay)
+            if(hit.collider.tag == "HomeMatress" && !_dayManager.IsDay)
             {
                 Debug.Log("Hit");
                 _dayManager.AddDay();
             }
 
-            if(hit.collider.tag == "Computer" && interact.WasPressedThisFrame() && !_dayManager.CheckedPC)
+            if(hit.collider.tag == "Computer" && !_dayManager.CheckedPC)
             {
                 PC_Interaction _pcInteraction = hit.collider.GetComponent<PC_Interaction>();
                 _pcInteraction.OpenInbox();
+            }
+
+            if(hit.collider.tag == "NPC_Boss")
+            {
+                EnterDialogue _enterDialogue;
+                hit.collider.TryGetComponent<EnterDialogue>(out _enterDialogue);
+                if (_enterDialogue == null) Debug.LogWarning("NPC has no EnterDialogue Script!");
+                else _enterDialogue.SendDialogueEvent();
             }
 
             /*if(hit.collider.tag == "ProduceCan" && QM.isDoingQuest && !QM.shelfQuestCompleted)

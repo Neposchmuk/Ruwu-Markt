@@ -59,7 +59,7 @@ public class PC_Interaction : MonoBehaviour
     void CloseInbox()
     {
         Mail_UI.SetActive(false);
-        ToggleCursorLockmode(true);
+        ToggleCursorLockmode(false);
         OnCloseUI?.Invoke();
     }
 
@@ -71,7 +71,6 @@ public class PC_Interaction : MonoBehaviour
 
     void OpenMailWindow()
     {
-
         Mail.gameObject.SetActive(true);
     }
 
@@ -93,21 +92,23 @@ public class PC_Interaction : MonoBehaviour
 
     void ToggleCursorLockmode(bool lockCursor)
     {
-        if (lockCursor)
+        if (!lockCursor)
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+            GameEventsManager.instance.playerEvents.CameraLock(lockCursor);
         }
         else
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            GameEventsManager.instance.playerEvents.CameraLock(lockCursor);
         }
     }
 
     public void OpenInbox()
     {
         Mail_UI.SetActive(true);
-        ToggleCursorLockmode(false);
+        ToggleCursorLockmode(true);
     }
 }

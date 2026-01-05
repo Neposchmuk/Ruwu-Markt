@@ -103,6 +103,7 @@ public class Interaction_MenuTest : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             interactionUI.SetActive(false);
+            GameEventsManager.instance.playerEvents.CameraLock(Toggle);
         }
         else
         {
@@ -110,6 +111,7 @@ public class Interaction_MenuTest : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             interactionUI.SetActive(true);
+            GameEventsManager.instance.playerEvents.CameraLock(Toggle);
         }
     }
     

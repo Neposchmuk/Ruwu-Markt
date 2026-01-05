@@ -128,7 +128,6 @@ public class Customer_Behaviour : MonoBehaviour
             int _randomIndex = Random.Range(_lastIndex + 1, Destinations.Count - _destinationsToReach + i);
             _lastIndex = _randomIndex;
             _randomDestinations[i] = Destinations[_randomIndex];
-            Debug.Log(Destinations[_randomIndex].position);
         }
 
         return _randomDestinations;

@@ -8,6 +8,8 @@ public class GameEventsManager : MonoBehaviour
 
     public DialogueEvents dialogueEvents;
 
+    public PlayerEvents playerEvents;
+
     private void Awake()
     {
         if(instance != null) 
@@ -17,5 +19,7 @@ public class GameEventsManager : MonoBehaviour
         instance = this;
 
         dialogueEvents = new DialogueEvents();
+
+        playerEvents = new PlayerEvents();
     }
 }

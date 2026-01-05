@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -69,7 +70,7 @@ public class Quest_Manager : MonoBehaviour
     {
         if (_dayManager.IsFinalDay)
         {
-            StartFinalQuest();
+            //StartFinalQuest();
         }
         else
         {
@@ -206,13 +207,14 @@ public class Quest_Manager : MonoBehaviour
 
         if(customersServed == 3)
         {
-            customersQuestCompleted = true;
-            CheckDayCompletion();
+            StartCoroutine(DelayCustomersBool());
         }
     }
 
-    void StartFinalQuest()
+   IEnumerator DelayCustomersBool()
     {
-
+        yield return null;
+        customersQuestCompleted = true;
+        CheckDayCompletion();
     }
 }
