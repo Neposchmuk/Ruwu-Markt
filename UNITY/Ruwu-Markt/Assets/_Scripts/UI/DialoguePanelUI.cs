@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using System.Collections.Generic;
 using Ink.Runtime;
+using Ink.Parsed;
 
 public class DialoguePanelUI : MonoBehaviour
 {
@@ -40,7 +41,7 @@ public class DialoguePanelUI : MonoBehaviour
         contentParent.SetActive(false);
     }
 
-    private void DisplayDialogue(string dialogueLine, List<Choice> dialogueChoices)
+    private void DisplayDialogue(string dialogueLine, List<Ink.Runtime.Choice> dialogueChoices)
     {
         dialogueText.text = dialogueLine;
 
@@ -59,7 +60,7 @@ public class DialoguePanelUI : MonoBehaviour
         int choiceButtonIndex = dialogueChoices.Count - 1;
         for(int inkChoiceIndex = 0;  inkChoiceIndex < dialogueChoices.Count; inkChoiceIndex++)
         {
-            Choice dialogueChoice = dialogueChoices[inkChoiceIndex];
+            Ink.Runtime.Choice dialogueChoice = dialogueChoices[inkChoiceIndex];
             DialogueChoiceButton choiceButton = choiceButtons[choiceButtonIndex];
 
             choiceButton.gameObject.SetActive(true);
@@ -68,6 +69,9 @@ public class DialoguePanelUI : MonoBehaviour
 
             choiceButtonIndex--;
         }
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     private void ResetPanel()

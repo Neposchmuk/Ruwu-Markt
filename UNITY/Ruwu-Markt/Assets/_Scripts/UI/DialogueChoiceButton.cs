@@ -30,5 +30,8 @@ public class DialogueChoiceButton : MonoBehaviour
         GameEventsManager.instance.dialogueEvents.UpdateChoiceIndex(_choiceIndex);
 
         GameEventsManager.instance.dialogueEvents.PressedChoiceButton();
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 }
