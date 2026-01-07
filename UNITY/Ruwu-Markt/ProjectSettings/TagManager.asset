@@ -48,6 +48,8 @@ TagManager:
   - EscapeKeyImage
   - HomeDoor
   - HomeMatress
+  - Computer
+  - NPC_Boss
   layers:
   - Default
   - TransparentFX
