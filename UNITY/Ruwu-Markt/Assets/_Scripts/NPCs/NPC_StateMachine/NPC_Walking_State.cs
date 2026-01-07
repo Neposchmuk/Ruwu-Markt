@@ -1,6 +1,3 @@
-using Mono.Cecil;
-using System;
-using UnityEngine;
 using UnityEngine.AI;
 
 public class NPC_Walking_State : NPC_BaseState

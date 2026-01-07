@@ -1,7 +1,4 @@
-using System;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.DeviceSimulation;
 using UnityEngine;
 
 public class Nightmare_Jump_State : NightmareBaseState
