@@ -115,7 +115,6 @@ public class RayCast : MonoBehaviour
 
             if(hit.collider.tag == "Safe" && _carryingCashtray)
             {
-                Debug.Log("InteractSafe");
                 Hand.DestroyObjectInHand();
                 QM.CompleteDay();
             }

@@ -70,7 +70,7 @@ public class Quest_Manager : MonoBehaviour
     {
         if (_dayManager.IsFinalDay)
         {
-            //StartFinalQuest();
+            GameEventsManager.instance.questEvents.StartFinalQuest(_dayManager.GetsGoodEnding);
         }
         else
         {

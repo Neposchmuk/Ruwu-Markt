@@ -64,4 +64,14 @@ public class DialogueEvents
             onPressedChoiceButton();
         }
     }
+
+    public event Action<string, Ink.Runtime.Object> onUpdateInkDialoguevariable;
+
+    public void UpdateInkDialogueVariable(string name, Ink.Runtime.Object value)
+    {
+        if(onUpdateInkDialoguevariable != null)
+        {
+            onUpdateInkDialoguevariable(name, value);
+        }
+    }
 }

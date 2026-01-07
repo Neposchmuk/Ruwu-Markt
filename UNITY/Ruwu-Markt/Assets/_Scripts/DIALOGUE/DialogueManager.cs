@@ -12,6 +12,10 @@ public class DialogueManager : MonoBehaviour
 
     private Story _story;
 
+    private InkExternalFunctions inkExternalFunctions;
+
+    private InkDialogueVariables inkDialogueVariables;
+
     private int currentChoiceIndex = -1;
 
     private bool _dialoguePlaying = false;
@@ -24,6 +28,14 @@ public class DialogueManager : MonoBehaviour
     private void Awake()
     {
         _story = new Story(inkJson.text);
+        inkExternalFunctions = new InkExternalFunctions();
+        inkExternalFunctions.Bind(_story);
+        inkDialogueVariables = new InkDialogueVariables(_story);
+    }
+
+    private void OnDestroy()
+    {
+        inkExternalFunctions.Unbind(_story);
     }
 
     private void OnEnable()
@@ -32,6 +44,7 @@ public class DialogueManager : MonoBehaviour
         GameEventsManager.instance.playerEvents.onPressedInteract += PressedInteract;
         GameEventsManager.instance.dialogueEvents.onUpdateChoiceIndex += UpdateChoiceIndex;
         GameEventsManager.instance.dialogueEvents.onPressedChoiceButton += PressedButton;
+        GameEventsManager.instance.dialogueEvents.onUpdateInkDialoguevariable += UpdateInkDialogueVariable;
     }
 
     private void OnDisable()
@@ -40,6 +53,12 @@ public class DialogueManager : MonoBehaviour
         GameEventsManager.instance.playerEvents.onPressedInteract -= PressedInteract;
         GameEventsManager.instance.dialogueEvents.onUpdateChoiceIndex -= UpdateChoiceIndex;
         GameEventsManager.instance.dialogueEvents.onPressedChoiceButton -= PressedButton;
+        GameEventsManager.instance.dialogueEvents.onUpdateInkDialoguevariable -= UpdateInkDialogueVariable;
+    }
+
+    private void UpdateInkDialogueVariable(string name, Ink.Runtime.Object value)
+    {
+        inkDialogueVariables.UpdateVariableState(name, value);
     }
 
     private void UpdateChoiceIndex(int choiceIndex)
@@ -92,6 +111,8 @@ public class DialogueManager : MonoBehaviour
 
         GameEventsManager.instance.playerEvents.CameraLock(true);
 
+        inkDialogueVariables.SyncVariablesAndStartListening(_story);
+
         ContinueOrExitStory();
     }
 
@@ -108,21 +129,33 @@ public class DialogueManager : MonoBehaviour
         {
             string dialogueLine = _story.Continue();
 
-            GameEventsManager.instance.dialogueEvents.DisplayDialogue(dialogueLine, _story.currentChoices);
+            while (IsLineBlank(dialogueLine) && _story.canContinue)
+            {
+                dialogueLine = _story.Continue();
+            }
+
+            if(IsLineBlank(dialogueLine) && !_story.canContinue)
+            {
+                ExitDialogue();
+            }
+            else
+            {
+                GameEventsManager.instance.dialogueEvents.DisplayDialogue(dialogueLine, _story.currentChoices);
+            }     
         }
         else if(_story.currentChoices.Count == 0)
         {
-            StartCoroutine(ExitDialogue());
+            ExitDialogue();
         }
     }
 
-    private IEnumerator ExitDialogue()
+    private void ExitDialogue()
     {
-        yield return null;
-
         _dialoguePlaying = false;
 
         _waitForFirstLine = true;
+
+        inkDialogueVariables.StopListening(_story);
 
         _story.ResetState();
 
@@ -135,6 +168,11 @@ public class DialogueManager : MonoBehaviour
         GameEventsManager.instance.playerEvents.LockPlayerMovement(false);
 
         GameEventsManager.instance.playerEvents.CameraLock(false);
+    }
+
+    private bool IsLineBlank(string dialogueLine)
+    {
+        return dialogueLine.Trim().Equals("") || dialogueLine.Trim().Equals("\n");
     }
 
 }
