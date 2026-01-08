@@ -32,11 +32,13 @@ public class RayCast : MonoBehaviour
     private void OnEnable()
     {
         GameEventsManager.instance.playerEvents.onPressedInteract += Raycast;
+        Debug.Log("Added RC Listener");
     }
 
     private void OnDisable()
     {
         GameEventsManager.instance.playerEvents.onPressedInteract -= Raycast;
+        Debug.Log("Removed RC listener");
     }
 
     private void Start()
@@ -115,7 +117,6 @@ public class RayCast : MonoBehaviour
 
             if(hit.collider.tag == "Safe" && _carryingCashtray)
             {
-                Debug.Log("InteractSafe");
                 Hand.DestroyObjectInHand();
                 QM.CompleteDay();
             }
@@ -150,7 +151,7 @@ public class RayCast : MonoBehaviour
 
             if(hit.collider.tag == "HomeDoor" && _dayManager.IsDay && _dayManager.CheckedPC)
             {
-                SceneManager.LoadScene("Greyboxing_Day");
+                GameEventsManager.instance.gameEvents.ChangeScene("Greyboxing_Day");
             }
 
             if(hit.collider.tag == "HomeMatress" && !_dayManager.IsDay)

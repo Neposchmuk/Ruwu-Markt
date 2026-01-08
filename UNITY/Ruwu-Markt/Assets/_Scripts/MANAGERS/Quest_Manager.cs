@@ -11,14 +11,6 @@ public class Quest_Manager : MonoBehaviour
 
     public bool isDoingQuest;
 
-    public TMP_Text shelfQuestText;
-
-    public TMP_Text floorQuestText;
-
-    public TMP_Text pfandQuestText;
-
-    public TMP_Text flowersQuestText;
-
     public bool shelfQuestCompleted;
 
     public bool floorQuestCompleted;
@@ -39,6 +31,8 @@ public class Quest_Manager : MonoBehaviour
 
     //public string NextScene;
 
+    [SerializeField] private TMP_Text questText;
+
     private string defaultQuestText;
 
     private int customersServed;
@@ -48,11 +42,21 @@ public class Quest_Manager : MonoBehaviour
     private Sanity_Manager SM;
 
     private Day_Manager _dayManager;
+
+
+    private  void OnEnable()
+    {
+        GameEventsManager.instance.questEvents.onUpdateQuestText += UpdateQuestText;
+    }
+
+    private void OnDisable()
+    {
+        GameEventsManager.instance.questEvents.onUpdateQuestText -= UpdateQuestText;
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Debug.Log(shelfQuestText.text);
-
         endDayText.SetActive(false);
 
         endDay = GameObject.Find("PlayerCapsule").GetComponent<PlayerInput>().actions.FindAction("TriggerSceneChange");
@@ -66,17 +70,22 @@ public class Quest_Manager : MonoBehaviour
         ResetQuests();
     }
 
+    private void UpdateQuestText(string text)
+    {
+        questText.text = text;
+    }
+
     public void CompleteDay()
     {
         if (_dayManager.IsFinalDay)
         {
-            //StartFinalQuest();
+            GameEventsManager.instance.questEvents.StartFinalQuest(_dayManager.GetsGoodEnding);
         }
         else
         {
             ResetQuests();
             _dayManager.IsDay = false;
-            SceneManager.LoadScene("home");
+            GameEventsManager.instance.gameEvents.ChangeScene("home");
         }
     }
 
@@ -88,8 +97,6 @@ public class Quest_Manager : MonoBehaviour
         {
             case 0:
                 shelfQuestCompleted = true;
-                shelfQuestText.text = defaultQuestText;
-                shelfQuestText.fontStyle = FontStyles.Strikethrough;
                 isDoingQuest = false;
                 switch (questVariant)
                 {
@@ -109,8 +116,6 @@ public class Quest_Manager : MonoBehaviour
                 break;
             case 1:
                 floorQuestCompleted = true;
-                floorQuestText.text = defaultQuestText;
-                floorQuestText.fontStyle = FontStyles.Strikethrough;
                 isDoingQuest = false;
                 switch (questVariant)
                 {
@@ -124,8 +129,6 @@ public class Quest_Manager : MonoBehaviour
                 break;
             case 2:
                 pfandQuestCompleted = true;
-                pfandQuestText.text = defaultQuestText;
-                pfandQuestText.fontStyle = FontStyles.Strikethrough;
                 isDoingQuest = false;
                 switch(questVariant)
                 {
@@ -145,13 +148,13 @@ public class Quest_Manager : MonoBehaviour
                 break;
             case 3:
                 flowersQuestCompleted = true;
-                flowersQuestText.text = defaultQuestText;
-                flowersQuestText.fontStyle = FontStyles.Strikethrough;
                 isDoingQuest = false;
                 SM.ChangeSanity(MGC.sanityChange[questVariant], MGC.jobSecurityChange[questVariant]);
                 break;
                 
         }
+
+        GameEventsManager.instance.questEvents.UpdateQuestText("");
 
         CheckDayCompletion();
     }
@@ -164,32 +167,10 @@ public class Quest_Manager : MonoBehaviour
 
         shelfQuestCompleted = false;
         floorQuestCompleted = false;
-        shelfQuestText.fontStyle = FontStyles.Normal;
-        floorQuestText.fontStyle = FontStyles.Normal;
+        flowersQuestCompleted = false;
+        pfandQuestCompleted = false;
 
         endDayText.SetActive(false);
-    }
-
-    public void SetQuestText(int questType)
-    {
-        switch (questType)
-        {
-            case 0:
-                defaultQuestText = shelfQuestText.text;
-
-                break;
-            case 1:
-                defaultQuestText = floorQuestText.text;
-                Debug.Log(defaultQuestText);
-                break;
-            case 2:
-                defaultQuestText = pfandQuestText.text;
-                break;
-            case 3:
-                defaultQuestText = flowersQuestText.text;
-                break;
-        }
-        
     }
 
     //Checks if all quests have been completed to unlock Scene Change

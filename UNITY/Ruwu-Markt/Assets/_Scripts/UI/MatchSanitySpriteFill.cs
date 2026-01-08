@@ -7,7 +7,7 @@ public class MatchSanitySpriteFill : MonoBehaviour
 
     Sanity_Manager SM;
 
-    Image sprite;
+    [SerializeField]Image sprite;
 
     private float sanityFloat;
 
@@ -18,7 +18,7 @@ public class MatchSanitySpriteFill : MonoBehaviour
     private float jobSecPreChange;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    /*void Start()
     {
         SM = GameObject.FindFirstObjectByType<Sanity_Manager>();
 
@@ -31,6 +31,16 @@ public class MatchSanitySpriteFill : MonoBehaviour
         sanityPreChange = sanityFloat;
 
         jobSecPreChange = jobSecurityFloat;
+    }*/
+
+    private void OnEnable()
+    {
+        GameEventsManager.instance.gameEvents.onUpdateSanity += AdjustSanityFill;
+    }
+
+    private void OnDisable()
+    {
+        GameEventsManager.instance.gameEvents.onUpdateSanity -= AdjustSanityFill;
     }
 
     public void AdjustSanityFill(int givenValue)

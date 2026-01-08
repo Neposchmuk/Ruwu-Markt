@@ -45,7 +45,7 @@ public class Sanity_Manager : MonoBehaviour
 
         Restart.onClick.AddListener(() => RestartGame());
 
-        SanitySprite.CheckSanitySprite();
+        GameEventsManager.instance.gameEvents.UpdateSanity(sanity);
 
         GO_Insane.SetActive(false);
 
@@ -73,7 +73,7 @@ public class Sanity_Manager : MonoBehaviour
 
         jobSecurity = Mathf.Clamp(jobSecurity + addJobSecurity, 0, 100);
 
-        SanitySprite.CheckSanitySprite();
+        GameEventsManager.instance.gameEvents.UpdateSanity(sanity);
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
