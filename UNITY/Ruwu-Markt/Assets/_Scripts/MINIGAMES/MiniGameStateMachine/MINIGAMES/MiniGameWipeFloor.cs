@@ -71,7 +71,7 @@ public class MiniGameWipeFloor : MiniGameBaseState
 
         QM.isDoingQuest = true;
 
-        QM.floorQuestText.text = "Grab the Mop";
+        GameEventsManager.instance.questEvents.UpdateQuestText("Grab the Mop");
 
         QuestSource.QuestMarkerBig.SetActive(false);
 
@@ -81,7 +81,7 @@ public class MiniGameWipeFloor : MiniGameBaseState
     public override void UpdateQuest()
     {
         puddlesCleaned++;
-        QM.floorQuestText.text = "Clean all puddles" + $"({puddlesCleaned}/{puddlesToClean}";
+        GameEventsManager.instance.questEvents.UpdateQuestText("Clean all puddles" + $"({puddlesCleaned}/{puddlesToClean}");
     }
     public override void EndQuest()
     {
@@ -107,7 +107,7 @@ public class MiniGameWipeFloor : MiniGameBaseState
                 MopCollider.enabled = false;
                 Debug.Log(MopCollider.gameObject);
                 GameObject.Destroy(hit.collider.gameObject);
-                QM.floorQuestText.text = "Clean all puddles" + $"({puddlesCleaned}/{puddlesToClean}";
+                GameEventsManager.instance.questEvents.UpdateQuestText("Clean all puddles" + $"({puddlesCleaned}/{puddlesToClean}");
 
                 QuestSource.QuestMarkerSmall.SetActive(false);
                 foreach(GameObject puddle in Puddles)

@@ -62,7 +62,7 @@ public class MiniGameWaterPlants : MiniGameBaseState
 
         FlowersWatering.OnFlowerWatered += CountWateredFlowers;
 
-        QM.flowersQuestText.text = "Grab the Watering Can";
+        GameEventsManager.instance.questEvents.UpdateQuestText("Grab the Watering Can");
 
         ToggleQuestMarkers(questStage, true);
     }
@@ -72,10 +72,10 @@ public class MiniGameWaterPlants : MiniGameBaseState
         switch (questStage)
         {
             case 2:
-                QM.flowersQuestText.text = "Fill the Can at the sink";
+                GameEventsManager.instance.questEvents.UpdateQuestText("Fill the Can at the sink");
                 break;
             case 3:
-                QM.flowersQuestText.text = "Water the plants (" + $"{flowersWatered}" + "/" + $"{flowersToWater}" + ")";
+                GameEventsManager.instance.questEvents.UpdateQuestText("Water the plants (" + $"{flowersWatered}" + "/" + $"{flowersToWater}" + ")");
                 break;
             case 4:
                 EndQuest();

@@ -32,11 +32,13 @@ public class RayCast : MonoBehaviour
     private void OnEnable()
     {
         GameEventsManager.instance.playerEvents.onPressedInteract += Raycast;
+        Debug.Log("Added RC Listener");
     }
 
     private void OnDisable()
     {
         GameEventsManager.instance.playerEvents.onPressedInteract -= Raycast;
+        Debug.Log("Removed RC listener");
     }
 
     private void Start()

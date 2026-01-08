@@ -53,22 +53,18 @@ public class MiniGameStateManager : MonoBehaviour
         {
             case QuestType.Shelf:
                 currentQuest = ShelfQuest;
-                QM.SetQuestText(0);
                 currentQuest.StartQuest(MGC, questVariant);         
                 break;
             case QuestType.Floor:
                 currentQuest = FloorQuest;
-                QM.SetQuestText(1);
                 currentQuest.StartQuest(MGC, questVariant);              
                 break;
             case QuestType.Bottles:
                 currentQuest = BottlesQuest;
-                QM.SetQuestText(2);
                 currentQuest.StartQuest(MGC, questVariant);
                 break;
             case QuestType.Flowers:
                 currentQuest = FlowersQuest;
-                QM.SetQuestText(3);
                 currentQuest.StartQuest(MGC, questVariant);
                 break;
             

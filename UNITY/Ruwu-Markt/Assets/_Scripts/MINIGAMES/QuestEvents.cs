@@ -34,4 +34,14 @@ public class QuestEvents
             onEndFinalQuest();
         }
     }
+
+    public event Action<string> onUpdateQuestText;
+
+    public void UpdateQuestText(string text)
+    {
+        if(onUpdateQuestText != null)
+        {
+            onUpdateQuestText(text);
+        }
+    }
 }

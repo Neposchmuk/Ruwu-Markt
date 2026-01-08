@@ -63,11 +63,9 @@ public class MiniGameShelf : MiniGameBaseState
     {
         objectsPlaced = 0;
 
-        defaultQuestText = QM.shelfQuestText.text;
-
         QM.isDoingQuest = true;
 
-        QM.shelfQuestText.text = "Grab the Products";
+        GameEventsManager.instance.questEvents.UpdateQuestText("Grab the Products");
 
         QuestSource.QuestMarkerBig.SetActive(false);
 
@@ -79,16 +77,16 @@ public class MiniGameShelf : MiniGameBaseState
         switch (questVariant)
         {
             case 1:
-                QM.shelfQuestText.text = "Restock the shelves (" + $"{objectsPlaced}" + "/" + $"{objectsToPlace}" + ")";
+                GameEventsManager.instance.questEvents.UpdateQuestText("Restock the shelves (" + $"{objectsPlaced}" + "/" + $"{objectsToPlace}" + ")");
                 break;
             case 2:
-                QM.shelfQuestText.text = "Restock the shelves (" + $"{objectsPlaced}" + "/" + $"{objectsToPlace}" + ")";
+                GameEventsManager.instance.questEvents.UpdateQuestText("Restock the shelves (" + $"{objectsPlaced}" + "/" + $"{objectsToPlace}" + ")");
                 break;
             case 3:
-                QM.shelfQuestText.text = "Take a sip";
+                GameEventsManager.instance.questEvents.UpdateQuestText("Take a sip");
                 break;
             case 4:
-                QM.shelfQuestText.text = "Let it flow!!!";
+                GameEventsManager.instance.questEvents.UpdateQuestText("Let it flow!!!");
                 break;
         }
         

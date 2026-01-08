@@ -54,6 +54,15 @@ public class PC_Interaction : MonoBehaviour
         }
 
         Mail_UI.SetActive(false);
+
+        if (_dayManager.IsDay)
+        {
+            GameEventsManager.instance.questEvents.UpdateQuestText("Check your mails");
+        }
+        else
+        {
+            GameEventsManager.instance.questEvents.UpdateQuestText("Go to sleep");
+        }
     }
 
     void CloseInbox()
@@ -61,6 +70,8 @@ public class PC_Interaction : MonoBehaviour
         Mail_UI.SetActive(false);
         ToggleCursorLockmode(false);
         OnCloseUI?.Invoke();
+        GameEventsManager.instance.gameEvents.ToggleSanityWidget(true);
+        GameEventsManager.instance.questEvents.UpdateQuestText("Go to work");
     }
 
     void CloseMailWindow()
@@ -110,5 +121,7 @@ public class PC_Interaction : MonoBehaviour
     {
         Mail_UI.SetActive(true);
         ToggleCursorLockmode(true);
+
+        GameEventsManager.instance.gameEvents.ToggleSanityWidget(false);
     }
 }

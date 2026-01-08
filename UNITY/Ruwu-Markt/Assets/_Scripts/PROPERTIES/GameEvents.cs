@@ -26,13 +26,13 @@ public class GameEvents
     }
 
 
-    public event Action onEnableSanityWidget;
+    public event Action<bool> onToggleSanityWidget;
 
-    public void EnableSanityWidget()
+    public void ToggleSanityWidget(bool toggle)
     {
-        if(onEnableSanityWidget != null)
+        if(onToggleSanityWidget != null)
         {
-            onEnableSanityWidget();
+            onToggleSanityWidget(toggle);
         }
     }
 

@@ -33,7 +33,7 @@ public class FinalQuest : MonoBehaviour
         Debug.Log("Entered Start Quest");
         _hasGoodEnding = goodEnding;
 
-        //Event show 'Talk To Boss' Text
+        GameEventsManager.instance.questEvents.UpdateQuestText("Talk to your boss");
 
         if (_hasGoodEnding)
         {
@@ -47,6 +47,8 @@ public class FinalQuest : MonoBehaviour
 
     private void AdvanceQuest(int endingType)
     {
+        GameEventsManager.instance.questEvents.UpdateQuestText("Leave the market");
+
         _canEndGame = true;
 
         _endingType = endingType;

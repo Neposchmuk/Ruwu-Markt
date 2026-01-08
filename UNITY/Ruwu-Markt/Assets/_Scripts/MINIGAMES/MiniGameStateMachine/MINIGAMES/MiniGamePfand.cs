@@ -104,16 +104,16 @@ public class MiniGamePfand : MiniGameBaseState
         switch(questVariant)
         {
             case 1:
-                QM.pfandQuestText.text = "Sort the crates (" + $"{cratesPlaced}" + "/" + $"{cratesToPlace}" + ")";
+                GameEventsManager.instance.questEvents.UpdateQuestText("Sort the crates (" + $"{cratesPlaced}" + "/" + $"{cratesToPlace}" + ")");
                 break;
             case 2:
-                QM.pfandQuestText.text = "Fill the crate (" + $"{bottlesPlaced}" + "/" + $"{bottlesToPlace}" + ")";
+                GameEventsManager.instance.questEvents.UpdateQuestText("Fill the crate (" + $"{bottlesPlaced}" + "/" + $"{bottlesToPlace}" + ")");
                 break;
             case 3:
-                QM.pfandQuestText.text = "Build a pyramid";
+                GameEventsManager.instance.questEvents.UpdateQuestText("Build a pyramid");
                 break;
             case 4:
-                QM.pfandQuestText.text = "Throw some bottles";
+                GameEventsManager.instance.questEvents.UpdateQuestText("Throw some bottles");
                 break;
         }
 
@@ -130,16 +130,16 @@ public class MiniGamePfand : MiniGameBaseState
         switch (questVariant)
         {
             case 1:
-                QM.pfandQuestText.text = "Sort the crates (" + $"{cratesPlaced}" + "/" + $"{cratesToPlace}" + ")";
+                GameEventsManager.instance.questEvents.UpdateQuestText("Sort the crates (" + $"{cratesPlaced}" + "/" + $"{cratesToPlace}" + ")");
                 break;
             case 2:
-                QM.pfandQuestText.text = "Fill the crate (" + $"{bottlesPlaced}" + "/" + $"{bottlesToPlace}" + ")";
+                GameEventsManager.instance.questEvents.UpdateQuestText("Fill the crate (" + $"{bottlesPlaced}" + "/" + $"{bottlesToPlace}" + ")");
                 break;
             case 3:
-                QM.pfandQuestText.text = "Place crates (" + $"{pyramidCratesPlaced}" + "/" + $"{pyramidCratesToPlace}" + ")";
+                GameEventsManager.instance.questEvents.UpdateQuestText("Place crates (" + $"{pyramidCratesPlaced}" + "/" + $"{pyramidCratesToPlace}" + ")");
                 break;
             case 4:
-                QM.pfandQuestText.text = "Bottles thrown (" + $"{bottlesThrown}" + "/" + $"{bottlesToThrow}" + ")";
+                GameEventsManager.instance.questEvents.UpdateQuestText("Bottles thrown (" + $"{bottlesThrown}" + "/" + $"{bottlesToThrow}" + ")");
                 break;
         }
     }

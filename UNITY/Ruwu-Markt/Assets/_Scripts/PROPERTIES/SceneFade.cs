@@ -19,7 +19,7 @@ public class SceneFade : MonoBehaviour
 
     private void Start()
     {
-        GameEventsManager.instance.gameEvents.EnableSanityWidget();
+        GameEventsManager.instance.gameEvents.ToggleSanityWidget(true);
         LockPlayer(true);
 
         blackImage.gameObject.SetActive(true);
