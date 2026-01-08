@@ -56,10 +56,10 @@ public class Day_Manager : MonoBehaviour
         switch (setScene)
         {
             case 1:
-                SceneManager.LoadScene(dayScene);
+                GameEventsManager.instance.gameEvents.ChangeScene(dayScene);
                 break;
             case 2:
-                SceneManager.LoadScene(nightScene);
+                GameEventsManager.instance.gameEvents.ChangeScene(nightScene);
                 break;
         }
     }

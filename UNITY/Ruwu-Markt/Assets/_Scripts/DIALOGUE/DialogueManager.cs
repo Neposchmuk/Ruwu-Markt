@@ -109,7 +109,7 @@ public class DialogueManager : MonoBehaviour
 
         GameEventsManager.instance.playerEvents.LockPlayerMovement(true);
 
-        GameEventsManager.instance.playerEvents.CameraLock(true);
+        GameEventsManager.instance.playerEvents.LockCamera(true);
 
         inkDialogueVariables.SyncVariablesAndStartListening(_story);
 
@@ -167,7 +167,10 @@ public class DialogueManager : MonoBehaviour
 
         GameEventsManager.instance.playerEvents.LockPlayerMovement(false);
 
-        GameEventsManager.instance.playerEvents.CameraLock(false);
+        GameEventsManager.instance.playerEvents.LockCamera(false);
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private bool IsLineBlank(string dialogueLine)

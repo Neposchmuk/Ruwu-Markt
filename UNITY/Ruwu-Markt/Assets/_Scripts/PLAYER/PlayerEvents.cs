@@ -23,13 +23,13 @@ public class PlayerEvents
     }
 
 
-    public event Action<bool> onCameraLock;
+    public event Action<bool> onLockCamera;
 
-    public void CameraLock(bool toggle)
+    public void LockCamera(bool toggle)
     {
-        if(onCameraLock != null)
+        if(onLockCamera != null)
         {
-            onCameraLock(toggle);
+            onLockCamera(toggle);
         }
     }
 

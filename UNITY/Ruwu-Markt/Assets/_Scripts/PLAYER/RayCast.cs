@@ -149,7 +149,7 @@ public class RayCast : MonoBehaviour
 
             if(hit.collider.tag == "HomeDoor" && _dayManager.IsDay && _dayManager.CheckedPC)
             {
-                SceneManager.LoadScene("Greyboxing_Day");
+                GameEventsManager.instance.gameEvents.ChangeScene("Greyboxing_Day");
             }
 
             if(hit.collider.tag == "HomeMatress" && !_dayManager.IsDay)

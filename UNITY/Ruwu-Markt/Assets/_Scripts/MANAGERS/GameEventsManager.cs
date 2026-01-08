@@ -12,6 +12,8 @@ public class GameEventsManager : MonoBehaviour
 
     public QuestEvents questEvents;
 
+    public GameEvents gameEvents;
+
     private void Awake()
     {
         if(instance != null) 
@@ -25,5 +27,7 @@ public class GameEventsManager : MonoBehaviour
         playerEvents = new PlayerEvents();
 
         questEvents = new QuestEvents();
+
+        gameEvents = new GameEvents();
     }
 }

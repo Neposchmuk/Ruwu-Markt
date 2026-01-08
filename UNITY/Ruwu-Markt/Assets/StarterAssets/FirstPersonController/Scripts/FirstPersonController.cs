@@ -102,13 +102,13 @@ namespace StarterAssets
         private void OnEnable()
         {
 			GameEventsManager.instance.playerEvents.onMovementLock += TogglePlayerMovement;
-            GameEventsManager.instance.playerEvents.onCameraLock += LockCamera;
+            GameEventsManager.instance.playerEvents.onLockCamera += LockCamera;
         }
 
         private void OnDisable()
         {
             GameEventsManager.instance.playerEvents.onMovementLock -= TogglePlayerMovement;
-            GameEventsManager.instance.playerEvents.onCameraLock -= LockCamera;
+            GameEventsManager.instance.playerEvents.onLockCamera -= LockCamera;
         }
 
         private void Start()

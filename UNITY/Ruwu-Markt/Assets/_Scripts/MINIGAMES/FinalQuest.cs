@@ -5,7 +5,16 @@ using System.Collections;
 
 public class FinalQuest : MonoBehaviour
 {
+    [Header("Components")]
+    [SerializeField] Animator animator;
+    [SerializeField] AnimationClip[] animations;
+
+
     private bool _hasGoodEnding;
+
+    private bool _canEndGame;
+
+    private int _endingType;
 
     private void OnEnable()
     {
@@ -38,23 +47,35 @@ public class FinalQuest : MonoBehaviour
 
     private void AdvanceQuest(int endingType)
     {
-        switch (endingType)
-        {
-            case 1:
-                //Good Ending
-                break;
-            case 2:
-                //Bad Ending
-                break;
-            case 3:
-                //Neutral Ending
-                break;
-        }
-            
+        _canEndGame = true;
+
+        _endingType = endingType;
     }
 
     private void EndQuest()
     {
-        //Load MainMenu
+        GameEventsManager.instance.gameEvents.ChangeScene("End_Scene");
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!_canEndGame) return;
+
+        GameEventsManager.instance.playerEvents.LockPlayerMovement(true);
+        GameEventsManager.instance.playerEvents.LockCamera(true);
+
+        StartCoroutine(PlayEndingAnimation());
+    }
+
+    IEnumerator PlayEndingAnimation()
+    {
+        //Animator.Clip = animations[_endingType-1];
+        //Animator.Play();
+
+        //yield return new WaitForSeconds(animations[_endingType - 1].length);
+
+        yield return null;
+
+        EndQuest();
     }
 }

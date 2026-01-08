@@ -76,7 +76,7 @@ public class Quest_Manager : MonoBehaviour
         {
             ResetQuests();
             _dayManager.IsDay = false;
-            SceneManager.LoadScene("home");
+            GameEventsManager.instance.gameEvents.ChangeScene("home");
         }
     }
 

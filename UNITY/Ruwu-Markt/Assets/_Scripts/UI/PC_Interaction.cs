@@ -96,13 +96,13 @@ public class PC_Interaction : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            GameEventsManager.instance.playerEvents.CameraLock(lockCursor);
+            GameEventsManager.instance.playerEvents.LockCamera(lockCursor);
         }
         else
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            GameEventsManager.instance.playerEvents.CameraLock(lockCursor);
+            GameEventsManager.instance.playerEvents.LockCamera(lockCursor);
         }
     }
 
