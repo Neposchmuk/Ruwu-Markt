@@ -134,14 +134,16 @@ namespace StarterAssets
 		{
             if (!_movementLocked)
             {
-                JumpAndGravity();
-                GroundedCheck();
+                JumpAndGravity();  
                 Move();
             }
 
-			if (_interact.WasPressedThisDynamicUpdate())
+            GroundedCheck();
+
+            if (_interact.WasPressedThisDynamicUpdate())
 			{
 				GameEventsManager.instance.playerEvents.PressedInteract();
+				Debug.Log("Sent interaction event");
 			}
 		}
 

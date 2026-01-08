@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using UnityEditor.VersionControl;
 
 public class SceneFade : MonoBehaviour
 {
