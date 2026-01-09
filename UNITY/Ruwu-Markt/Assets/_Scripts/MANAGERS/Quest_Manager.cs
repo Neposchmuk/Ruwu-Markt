@@ -180,6 +180,11 @@ public class Quest_Manager : MonoBehaviour
         {
             DayComplete = true;
         }
+        else if(shelfQuestCompleted && floorQuestCompleted && pfandQuestCompleted && flowersQuestCompleted)
+        {
+            Debug.Log("Sending Event");
+            GameEventsManager.instance.questEvents.AllTasksCompleted();
+        }
     }
 
     void CheckCustomersServed()

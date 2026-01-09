@@ -122,6 +122,8 @@ public class MiniGamePfand : MiniGameBaseState
         QuestSource.QuestMarkerBig.SetActive(false);
 
         QuestSource.QuestMarkerSmall.SetActive(true);
+
+        GameEventsManager.instance.questEvents.ToggleQuestmarkers(false);
             
     }
 
@@ -148,6 +150,8 @@ public class MiniGamePfand : MiniGameBaseState
     {
         QuestSource.QuestMarkerBig.SetActive(false);
         ToggleQuestMarkers(questVariant, false);
+        GameEventsManager.instance.questEvents.QuestCompleted(QuestType.Bottles);
+        GameEventsManager.instance.questEvents.ToggleQuestmarkers(true);
         QM.CompleteQuest(2, questVariant - 1, QuestSource.gameObject);
     }
 

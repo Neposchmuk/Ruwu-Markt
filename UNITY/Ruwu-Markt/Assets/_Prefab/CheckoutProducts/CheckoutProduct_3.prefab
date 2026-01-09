@@ -366,7 +366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   productName: orangeCube
-  price: 7.45
+  price: 749
   PLU: 8888
   ageRestricted: 0
   hasBeenScanned: 0

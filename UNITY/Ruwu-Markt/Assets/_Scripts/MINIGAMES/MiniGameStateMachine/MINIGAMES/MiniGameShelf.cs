@@ -57,6 +57,8 @@ public class MiniGameShelf : MiniGameBaseState
                 InitiateQuest();
                 break;
         }
+
+        GameEventsManager.instance.questEvents.ToggleQuestmarkers(false);
     }
 
     public override void InitiateQuest()
@@ -96,6 +98,10 @@ public class MiniGameShelf : MiniGameBaseState
     {
         QuestSource.QuestMarkerBig.SetActive(false);
         GameObject.FindFirstObjectByType<Hand_Actions>().DestroyObjectInHand();
+
+        GameEventsManager.instance.questEvents.QuestCompleted(QuestType.Shelf);
+        GameEventsManager.instance.questEvents.ToggleQuestmarkers(true);
+
         QM.CompleteQuest(0, questVariant -1, QuestSource.gameObject);
     }
 

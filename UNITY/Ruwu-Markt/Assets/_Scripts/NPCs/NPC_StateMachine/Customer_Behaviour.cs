@@ -55,9 +55,9 @@ public class Customer_Behaviour : MonoBehaviour
 
         LeaveMarketTarget = _spawner.FinalDestination;
 
-        Debug.Log(CheckoutTargets[0]);
+        //Debug.Log(CheckoutTargets[0]);
 
-        Debug.Log(CheckoutTargets.Count);
+        //Debug.Log(CheckoutTargets.Count);
 
         LeaveMarketTarget = GameObject.FindGameObjectWithTag("Final_Target").GetComponent<Transform>();
 
@@ -81,6 +81,16 @@ public class Customer_Behaviour : MonoBehaviour
         {
             _checkoutTriggers[i] = CheckoutTargets[i].GetComponent<Trigger_NPC_Method>();
         }
+    }
+
+    private void OnEnable()
+    {
+        GameEventsManager.instance.questEvents.onAllTasksCompleted += EarlyCheckout;
+    }
+
+    private void OnDisable()
+    {
+        GameEventsManager.instance.questEvents.onAllTasksCompleted -= EarlyCheckout;
     }
 
     private void Start()
@@ -108,6 +118,11 @@ public class Customer_Behaviour : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void EarlyCheckout()
+    {
+        StartCoroutine(WaitForCheckout());
     }
 
     int RandomizeDestinations()
@@ -172,7 +187,7 @@ public class Customer_Behaviour : MonoBehaviour
         if (_headingToCheckout && _currentCheckoutSlot > 0)
         {
             _currentCheckoutSlot--;
-            Debug.Log(gameObject.name + " " + _currentCheckoutSlot);
+            //Debug.Log(gameObject.name + " " + _currentCheckoutSlot);
 
             //Debug.Log("Entered MoveUp");
 

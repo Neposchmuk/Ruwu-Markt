@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -172,6 +173,13 @@ public class RayCast : MonoBehaviour
                 hit.collider.TryGetComponent<EnterDialogue>(out _enterDialogue);
                 if (_enterDialogue == null) Debug.LogWarning("NPC has no EnterDialogue Script!");
                 else _enterDialogue.SendDialogueEvent();
+            }
+
+
+            //Possibly add the following interactions to different InputEventContext
+            if (hit.collider.CompareTag("UI_Button"))
+            {
+                GameEventsManager.instance.questEvents.UIButtonInteract(hit.collider.gameObject);
             }
 
             /*if(hit.collider.tag == "ProduceCan" && QM.isDoingQuest && !QM.shelfQuestCompleted)

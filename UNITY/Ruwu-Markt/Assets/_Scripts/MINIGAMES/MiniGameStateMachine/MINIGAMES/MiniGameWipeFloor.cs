@@ -56,7 +56,8 @@ public class MiniGameWipeFloor : MiniGameBaseState
                 EndQuest();
                 break;
         }
-    
+
+        GameEventsManager.instance.questEvents.ToggleQuestmarkers(false);
     }
 
     public override void InitiateQuest()
@@ -85,7 +86,12 @@ public class MiniGameWipeFloor : MiniGameBaseState
     }
     public override void EndQuest()
     {
+        QuestSource.QuestMarkerBig.SetActive(false);
         Clean_Puddles.OnPuddleDestroy -= UpdateQuest;
+
+        GameEventsManager.instance.questEvents.QuestCompleted(QuestType.Floor);
+        GameEventsManager.instance.questEvents.ToggleQuestmarkers(true);
+
         QM.CompleteQuest(1, questVariant - 1, QuestSource.gameObject);
     }
 

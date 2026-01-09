@@ -46,6 +46,8 @@ public class MiniGameWaterPlants : MiniGameBaseState
                 break;
 
         }
+
+        GameEventsManager.instance.questEvents.ToggleQuestmarkers(false);
     }
 
     public override void InitiateQuest()
@@ -88,6 +90,10 @@ public class MiniGameWaterPlants : MiniGameBaseState
         FlowersWatering.OnFlowerWatered -= CountWateredFlowers;
         QuestSource.QuestMarkerBig.SetActive(false);
         HA.DestroyObjectInHand();
+
+        GameEventsManager.instance.questEvents.QuestCompleted(QuestType.Flowers);
+        GameEventsManager.instance.questEvents.ToggleQuestmarkers(true);
+
         QM.CompleteQuest(3, questVariant - 1, QuestSource.gameObject);
     }
 

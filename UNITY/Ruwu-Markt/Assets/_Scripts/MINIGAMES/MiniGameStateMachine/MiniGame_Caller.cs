@@ -16,6 +16,21 @@ public class MiniGame_Caller : MonoBehaviour
 
     public GameObject QuestMarkerSmall;
 
+    private bool questComplete;
+
+
+    private void OnEnable()
+    {
+        GameEventsManager.instance.questEvents.onToggleQuestmarkers += ToggleQuestmarker;
+        GameEventsManager.instance.questEvents.onQuestCompleted += SetCompleteBool;
+    }
+
+    private void OnDisable()
+    {
+        GameEventsManager.instance.questEvents.onToggleQuestmarkers -= ToggleQuestmarker;
+        GameEventsManager.instance.questEvents.onQuestCompleted -= SetCompleteBool;
+    }
+
 
     private void Start()
     {
@@ -26,5 +41,20 @@ public class MiniGame_Caller : MonoBehaviour
     public void CallStartQuest(int questVariant)
     {
         FindFirstObjectByType<MiniGameStateManager>().StartQuest(this, Quest, questVariant, sanityChange, jobSecurityChange);
+    }
+
+    private void ToggleQuestmarker(bool toggle)
+    {
+        if (!questComplete)
+        {
+            QuestMarkerBig.SetActive(toggle);
+        }
+    }
+
+    private void SetCompleteBool(QuestType questType)
+    {
+        if(questType != Quest) return;
+
+        questComplete = true;
     }
 }
