@@ -124,4 +124,14 @@ public class QuestEvents
             onQuestCompleted(questType);
         }
     }
+
+    public event Action onHitEnemy;
+
+    public void HitEnemy()
+    {
+        if(onHitEnemy != null)
+        {
+            onHitEnemy();
+        }
+    }
 }

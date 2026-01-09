@@ -30,7 +30,7 @@ public class Nightmare_Smash_State : NightmareBaseState
 
     public override void UpdateState()
     {
-        if (Attack.WasPressedThisFrame())
+        if (Attack.WasPressedThisDynamicUpdate())
         {
             _batParent.StartAnimatorCoroutine();
             
@@ -48,7 +48,7 @@ public class Nightmare_Smash_State : NightmareBaseState
 
         _smashedCounter.text = $"{_objectsDestroyed}" + "/" + $"20";
 
-        if(_objectsDestroyed == 20)
+        if(_objectsDestroyed == 40)
         {
             SmashThings.OnDestroy -= CountDestroyedObjects;
             EndState();

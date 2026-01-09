@@ -85,12 +85,12 @@ public class Customer_Behaviour : MonoBehaviour
 
     private void OnEnable()
     {
-        GameEventsManager.instance.questEvents.onAllTasksCompleted += EarlyCheckout;
+        GameEventsManager.instance.questEvents.onAllTasksCompleted += StartCheckoutBehaviour;
     }
 
     private void OnDisable()
     {
-        GameEventsManager.instance.questEvents.onAllTasksCompleted -= EarlyCheckout;
+        GameEventsManager.instance.questEvents.onAllTasksCompleted -= StartCheckoutBehaviour;
     }
 
     private void Start()
@@ -118,11 +118,6 @@ public class Customer_Behaviour : MonoBehaviour
                 }
             }
         }
-    }
-
-    private void EarlyCheckout()
-    {
-        StartCoroutine(WaitForCheckout());
     }
 
     int RandomizeDestinations()
@@ -155,11 +150,32 @@ public class Customer_Behaviour : MonoBehaviour
 
     void SetDestination()
     {
+        if(_headingToCheckout) return;
+
         NavMeshPath path = new NavMeshPath();
 
         _agent.CalculatePath(_randomDestinations[_currentTarget].position, path);
 
         _agent.SetPath(path);
+
+        StartWalking();
+    }
+
+    private void StartCheckoutBehaviour()
+    {
+        NavMeshPath path = new NavMeshPath();
+
+        Trigger_NPC_Method.OnCheckoutLeave += MoveUpCheckout;
+
+        _agent.areaMask += 1 << NavMesh.GetAreaFromName("Checkout");    
+
+        _agent.CalculatePath(CheckoutTargets[3].position, path);
+
+        _agent.SetPath(path);
+
+        _headingToCheckout = true;
+
+        _currentCheckoutSlot = 3;
 
         StartWalking();
     }
@@ -246,20 +262,6 @@ public class Customer_Behaviour : MonoBehaviour
 
         yield return new WaitForSeconds(3);
 
-        NavMeshPath path = new NavMeshPath();
-
-        Trigger_NPC_Method.OnCheckoutLeave += MoveUpCheckout;
-
-        _agent.areaMask += 1 << NavMesh.GetAreaFromName("Checkout");    
-
-        _agent.CalculatePath(CheckoutTargets[3].position, path);
-
-        _agent.SetPath(path);
-
-        _headingToCheckout = true;
-
-        _currentCheckoutSlot = 3;
-
-        StartWalking();
+        StartCheckoutBehaviour();
     }
 }

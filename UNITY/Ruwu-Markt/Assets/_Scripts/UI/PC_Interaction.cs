@@ -28,7 +28,10 @@ public class PC_Interaction : MonoBehaviour
 
     Day_Manager _dayManager;
 
-    Sanity_Manager _sanityManager;
+    private void OnEnable()
+    {
+        GameEventsManager.instance.gameEvents.onSendSanityUpdate += SetMailSprites;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -41,15 +44,12 @@ public class PC_Interaction : MonoBehaviour
 
         _dayManager = FindFirstObjectByType<Day_Manager>();
 
-        _sanityManager = FindFirstObjectByType<Sanity_Manager>();
-
         Mail.gameObject.SetActive(false);
 
         OpenMail.gameObject.SetActive(false);
 
         if (_dayManager.IsFinalDay)
         {
-            SetMailSprites();
             CloseUI.interactable = false;
         }
 
@@ -85,9 +85,9 @@ public class PC_Interaction : MonoBehaviour
         Mail.gameObject.SetActive(true);
     }
 
-    void SetMailSprites()
+    void SetMailSprites(int sanity, int jobSecurity)
     {
-        if(_sanityManager.sanity >= 50)
+        if(sanity >= 50)
         {
             Inbox.sprite = Inboxes[1];
             Mail.sprite = Mails[0];

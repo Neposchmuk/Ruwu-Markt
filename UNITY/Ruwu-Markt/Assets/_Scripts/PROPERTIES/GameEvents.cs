@@ -45,4 +45,24 @@ public class GameEvents
             onDestroyDDOLObjects();
         }
     }
+
+    public event Action onRequestSanityUpdate;
+
+    public void RequestSanityUpdate()
+    {
+        if(onRequestSanityUpdate != null)
+        {
+            onRequestSanityUpdate();
+        }
+    }
+
+    public event Action<int, int> onSendSanityUpdate;
+
+    public void SendSanityUpdate(int sanity, int jobSecurity)
+    {
+        if(onSendSanityUpdate != null)
+        {
+            onSendSanityUpdate(sanity, jobSecurity);
+        }
+    }
 }
