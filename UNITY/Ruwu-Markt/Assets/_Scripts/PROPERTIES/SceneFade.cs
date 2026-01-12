@@ -9,11 +9,13 @@ public class SceneFade : MonoBehaviour
     private void OnEnable()
     {
         GameEventsManager.instance.gameEvents.onChangeScene += ChangeScene;
+        GameEventsManager.instance.gameEvents.onQuitGame += QuitGame;
     }
 
     private void OnDisable()
     {
         GameEventsManager.instance.gameEvents.onChangeScene -= ChangeScene;
+        GameEventsManager.instance.gameEvents.onQuitGame -= QuitGame;
     }
 
     private void Start()
@@ -40,6 +42,21 @@ public class SceneFade : MonoBehaviour
         SceneManager.LoadScene(scene);
     }
 
+    private IEnumerator FadeOutGame(float duration)
+    {
+        float t = 0f;
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            blackImage.alpha = Mathf.Clamp01(t / duration);
+            yield return null;
+
+        }
+        AudioListener.volume = 0f;
+        blackImage.alpha = 1f;
+        Application.Quit();
+    }
+
     private IEnumerator FadeInScene(float duration)
     {
         float t = 0f;
@@ -62,6 +79,12 @@ public class SceneFade : MonoBehaviour
 
         blackImage.gameObject.SetActive(true);
         StartCoroutine(FadeOutScene(1, scene));
+    }
+
+    private void QuitGame()
+    {
+        blackImage.gameObject.SetActive(true);
+        StartCoroutine(FadeOutGame(1));
     }
 
     private void LockPlayer(bool toggle)

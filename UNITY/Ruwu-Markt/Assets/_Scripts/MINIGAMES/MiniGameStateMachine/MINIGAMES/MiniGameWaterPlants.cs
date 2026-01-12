@@ -113,14 +113,14 @@ public class MiniGameWaterPlants : MiniGameBaseState
                 UpdateQuest();
             }
 
-            if(hit.collider.tag == "FlowersQuest" && isHoldingCan && questStage !=3)
+            if(hit.collider.tag == "Sink" && isHoldingCan && questStage !=3)
             {
                 questStage = 3;
                 HA.SetPourTime(5);
                 UpdateQuest();
                 ToggleQuestMarkers(questStage, true);
             }
-            else if(hit.collider.tag == "FlowersQuest" && isHoldingCan && questStage == 3)
+            else if(hit.collider.tag == "Sink" && isHoldingCan && questStage == 3)
             {
                 HA.SetPourTime(5);
             }

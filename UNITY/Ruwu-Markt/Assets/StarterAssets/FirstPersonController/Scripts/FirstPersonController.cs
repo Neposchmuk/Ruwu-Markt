@@ -78,6 +78,8 @@ namespace StarterAssets
 
 		private InputAction _interact;
 
+		private InputAction _escape;
+
         private const float _threshold = 0.01f;
 
 		private bool IsCurrentDeviceMouse
@@ -122,6 +124,7 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM
 			_playerInput = GetComponent<PlayerInput>();
 			_interact = _playerInput.actions.FindAction("Interact");
+			_escape = _playerInput.actions.FindAction("Escape");
 #else
 			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif
@@ -148,6 +151,12 @@ namespace StarterAssets
 			{
 				GameEventsManager.instance.playerEvents.PressedInteract();
 				Debug.Log("Sent interaction event");
+			}
+
+			if (_escape.WasPressedThisDynamicUpdate())
+			{
+				GameEventsManager.instance.playerEvents.PressedEscape();
+				Debug.Log("Pressed Escape");
 			}
 		}
 

@@ -50,6 +50,8 @@ TagManager:
   - HomeMatress
   - Computer
   - NPC_Boss
+  - ShelfQuest
+  - Sink
   layers:
   - Default
   - TransparentFX

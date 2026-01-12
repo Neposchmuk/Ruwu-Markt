@@ -72,7 +72,7 @@ public class RayCast : MonoBehaviour
 
         if(Physics.Raycast(ray, out RaycastHit hit, rayLength, layerMask))
         {
-            if(hit.collider.tag == "Shelf" && !QM.isDoingQuest && !QM.shelfQuestCompleted)
+            if(hit.collider.tag == "ShelfQuest" && !QM.isDoingQuest && !QM.shelfQuestCompleted)
             {
                 hit.collider.gameObject.GetComponent<Interaction_MenuTest>().ToggleUI(true);
                 questObject = hit.collider.gameObject;

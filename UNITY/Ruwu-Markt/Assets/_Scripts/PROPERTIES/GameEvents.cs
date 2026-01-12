@@ -65,4 +65,35 @@ public class GameEvents
             onSendSanityUpdate(sanity, jobSecurity);
         }
     }
+
+    public event Action onQuitGame;
+
+    public void QuitGame()
+    {
+        if(onQuitGame != null)
+        {
+            onQuitGame();
+        }
+    }
+
+    public event Action onReturnToPreviousMenu;
+
+    public void ReturnToPreviousMenu()
+    {
+        if(onReturnToPreviousMenu != null)
+        {
+            onReturnToPreviousMenu();
+        }
+    }
+
+    public event Action<bool> onShowSettings;
+
+    public void ShowSettings(bool toggle)
+    {
+        Debug.Log(onShowSettings);
+        if(onShowSettings != null)
+        {
+            onShowSettings(toggle);
+        }
+    }
 }

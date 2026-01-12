@@ -16,6 +16,8 @@ public class MiniGame_Caller : MonoBehaviour
 
     public GameObject QuestMarkerSmall;
 
+    [SerializeField] private Collider InteractionCollider;
+
     private bool questComplete;
 
 
@@ -41,6 +43,7 @@ public class MiniGame_Caller : MonoBehaviour
     public void CallStartQuest(int questVariant)
     {
         FindFirstObjectByType<MiniGameStateManager>().StartQuest(this, Quest, questVariant, sanityChange, jobSecurityChange);
+        InteractionCollider.enabled = false;
     }
 
     private void ToggleQuestmarker(bool toggle)

@@ -77,7 +77,7 @@ public class MiniGameStateManager : MonoBehaviour
     {
         if (QM.isDoingQuest)
         {
-            if (interact.WasPressedThisFrame())
+            if (interact.WasPressedThisDynamicUpdate())
             {
                 currentQuest.Interact();
             }
@@ -86,7 +86,7 @@ public class MiniGameStateManager : MonoBehaviour
             {
                 currentQuest.HoldingAttack(true);
             }
-            else if (attack.WasReleasedThisFrame())
+            else if (attack.WasReleasedThisDynamicUpdate())
             {
                 currentQuest.HoldingAttack(false);
             }
