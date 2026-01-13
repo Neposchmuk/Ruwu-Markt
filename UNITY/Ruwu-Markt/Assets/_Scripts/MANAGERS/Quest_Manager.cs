@@ -155,6 +155,8 @@ public class Quest_Manager : MonoBehaviour
         }
 
         GameEventsManager.instance.questEvents.UpdateQuestText("");
+        
+            GameEventsManager.instance.questEvents.ToggleQuestmarkers(true);
 
         CheckDayCompletion();
     }

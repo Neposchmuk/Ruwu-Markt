@@ -36,6 +36,8 @@ public class MiniGameWaterPlants : MiniGameBaseState
 
         questStage = 0;
 
+        GameEventsManager.instance.questEvents.ToggleQuestmarkers(false);
+
         switch(questVariant)
         {
             case 1:
@@ -46,8 +48,6 @@ public class MiniGameWaterPlants : MiniGameBaseState
                 break;
 
         }
-
-        GameEventsManager.instance.questEvents.ToggleQuestmarkers(false);
     }
 
     public override void InitiateQuest()

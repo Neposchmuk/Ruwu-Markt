@@ -50,6 +50,7 @@ public class MiniGame_Caller : MonoBehaviour
     {
         if (!questComplete)
         {
+            Debug.Log("Toggled Questmarker: " + toggle + " | " + Quest);
             QuestMarkerBig.SetActive(toggle);
         }
     }
@@ -57,6 +58,8 @@ public class MiniGame_Caller : MonoBehaviour
     private void SetCompleteBool(QuestType questType)
     {
         if(questType != Quest) return;
+
+        Debug.Log("Completed Quest: " + questType + " | " + Quest);
 
         questComplete = true;
     }

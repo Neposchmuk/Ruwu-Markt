@@ -47,6 +47,8 @@ public class MiniGameWipeFloor : MiniGameBaseState
 
         Quest.gameObject.GetComponent<Interaction_MenuTest>().ToggleUI(false);
 
+        GameEventsManager.instance.questEvents.ToggleQuestmarkers(false);
+
         switch (questVariant)
         {
             case 1:
@@ -56,8 +58,6 @@ public class MiniGameWipeFloor : MiniGameBaseState
                 EndQuest();
                 break;
         }
-
-        GameEventsManager.instance.questEvents.ToggleQuestmarkers(false);
     }
 
     public override void InitiateQuest()
