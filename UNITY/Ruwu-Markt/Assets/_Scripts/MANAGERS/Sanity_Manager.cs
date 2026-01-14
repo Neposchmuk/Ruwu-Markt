@@ -129,6 +129,6 @@ public class Sanity_Manager : MonoBehaviour
             Destroy(DDOL_Objects[i].gameObject);
         }
 
-        SceneManager.LoadScene("Initiate_DDOL_Objects");
+        SceneManager.LoadScene("MAIN_MENU");
     }
 }
