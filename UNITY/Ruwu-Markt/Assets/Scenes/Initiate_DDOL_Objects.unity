@@ -177,7 +177,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 441a4e27a8ecd42498bb176c87d58ac1, type: 3}
   - {fileID: 21300000, guid: e5183750faa70a2408b4b13960788ee3, type: 3}
   widgetParent: {fileID: 1198711522}
-  animator: {fileID: 0}
+  animator: {fileID: 230316862}
 --- !u!114 &230316860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1684,7 +1684,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1259643935
 RectTransform:
   m_ObjectHideFlags: 0

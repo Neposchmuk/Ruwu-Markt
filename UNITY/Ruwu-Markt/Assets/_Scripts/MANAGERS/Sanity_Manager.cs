@@ -58,8 +58,6 @@ public class Sanity_Manager : MonoBehaviour
         sanityBar.AdjustSanityFill(sanity);
 
         jobSecBar.AdjustSanityFill(jobSecurity);
-
-        GameEventsManager.instance.gameEvents.UpdateSanity(sanity);
     }
 
     private void Update()
