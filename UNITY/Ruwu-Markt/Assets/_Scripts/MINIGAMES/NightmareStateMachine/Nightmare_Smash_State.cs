@@ -46,7 +46,7 @@ public class Nightmare_Smash_State : NightmareBaseState
     {
         _objectsDestroyed++;
 
-        _smashedCounter.text = $"{_objectsDestroyed}" + "/" + $"20";
+        _smashedCounter.text = $"{_objectsDestroyed}" + "/" + $"40";
 
         if(_objectsDestroyed == 40)
         {

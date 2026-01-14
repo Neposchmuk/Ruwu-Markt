@@ -161,7 +161,7 @@ public class RayCast : MonoBehaviour
                 _dayManager.AddDay();
             }
 
-            if(hit.collider.tag == "Computer" && !_dayManager.CheckedPC)
+            if(hit.collider.tag == "Computer")
             {
                 PC_Interaction _pcInteraction = hit.collider.GetComponent<PC_Interaction>();
                 _pcInteraction.OpenInbox();

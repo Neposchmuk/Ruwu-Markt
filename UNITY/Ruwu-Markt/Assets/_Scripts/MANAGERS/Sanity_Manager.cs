@@ -32,7 +32,14 @@ public class Sanity_Manager : MonoBehaviour
 
     public bool isGameOver;
 
-    
+    void Awake()
+    {
+        GameEventsManager.instance.gameEvents.onRequestSanityUpdate += SendSanityUpdate;
+    }
+    void Oestroy()
+    {
+        GameEventsManager.instance.gameEvents.onRequestSanityUpdate -= SendSanityUpdate;
+    }
 
 
 
@@ -67,13 +74,18 @@ public class Sanity_Manager : MonoBehaviour
         jobSecCounter.text = $"{jobSecurity}";
     }
 
+    private void SendSanityUpdate()
+    {
+        GameEventsManager.instance.gameEvents.SendSanityUpdate(sanity, jobSecurity);
+    }
+
     public void ChangeSanity(int addSanity, int addJobSecurity)
     {
         sanity = Mathf.Clamp(sanity + addSanity, 0, 100);
 
         jobSecurity = Mathf.Clamp(jobSecurity + addJobSecurity, 0, 100);
 
-        GameEventsManager.instance.gameEvents.UpdateSanity(sanity);
+        SendSanityUpdate();
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
