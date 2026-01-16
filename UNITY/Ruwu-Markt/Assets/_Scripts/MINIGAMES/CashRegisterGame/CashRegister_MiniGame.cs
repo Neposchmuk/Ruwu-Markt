@@ -30,11 +30,6 @@ public class CashRegister_MiniGame : MonoBehaviour
     public GameObject CashRegisterDrawer;
 
 
-
-    public static event Action OnPay;
-
-
-
     private List<GameObject> productsBought = new List<GameObject>();
 
     private InputAction interact;
@@ -55,6 +50,8 @@ public class CashRegister_MiniGame : MonoBehaviour
 
     private bool questIsRunning;
 
+    private GameObject agent;
+
 
     private void OnEnable()
     {
@@ -62,6 +59,7 @@ public class CashRegister_MiniGame : MonoBehaviour
         GameEventsManager.instance.questEvents.onPayCard += PayCard;
         GameEventsManager.instance.questEvents.onPayCash += PlayCashAnimation;
         GameEventsManager.instance.playerEvents.onPressedInteract += Interact;
+        GameEventsManager.instance.checkoutEvents.onStartCheckoutGame += InitializeQuest;
     }
 
     private void OnDisable()
@@ -70,6 +68,7 @@ public class CashRegister_MiniGame : MonoBehaviour
         GameEventsManager.instance.questEvents.onPayCard -= PayCard;
         GameEventsManager.instance.questEvents.onPayCash -= PlayCashAnimation;
         GameEventsManager.instance.playerEvents.onPressedInteract += Interact;
+        GameEventsManager.instance.checkoutEvents.onStartCheckoutGame -= InitializeQuest;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -88,10 +87,13 @@ public class CashRegister_MiniGame : MonoBehaviour
         GameEventsManager.instance.questEvents.ToggleButtonInteractable(UIButtonType.PAYCASH, false);
     }
 
-    public void InitializeQuest()
+    public void InitializeQuest(GameObject agent)
     {
+        Debug.Log(questIsRunning);
         if (!questIsRunning)
         {
+            this.agent = agent;
+
             questIsRunning = true;
             productsToScan = 0;
             productsScanned = 0;
@@ -218,7 +220,7 @@ public class CashRegister_MiniGame : MonoBehaviour
         GameEventsManager.instance.questEvents.ToggleButtonInteractable(UIButtonType.PAYCARD, false);
         GameEventsManager.instance.questEvents.ToggleButtonInteractable(UIButtonType.PAYCASH, false);
 
-        OnPay?.Invoke();
+        GameEventsManager.instance.checkoutEvents.Pay(agent);
 
         questIsRunning = false;
 

@@ -79,7 +79,7 @@ public class MiniGamePfand : MiniGameBaseState
                     pyramidPlaceholder.SetActive(true);
                     pyramidPlaceholder.GetComponent<Renderer>().enabled = false;
                 }*/
-                pyramidCratesToPlace = 5;
+                pyramidCratesToPlace = 6;
                 InitiateQuest();
                 break;
             case 4:
@@ -282,7 +282,7 @@ public class MiniGamePfand : MiniGameBaseState
 
                     if (hit.collider.tag == "PyramidArea" && isHoldingObject)
                     {
-                        HA.Place(PPO.pyramidCrates[pyramidCratesPlaced].transform.position, PPO.pyramidCrates[pyramidCratesPlaced].transform.localEulerAngles, new Vector3(1,1,1));
+                        HA.Place(PPO.pyramidCrates[pyramidCratesPlaced].transform.position, PPO.pyramidCrates[pyramidCratesPlaced].transform.eulerAngles, new Vector3(0.6f,0.6f,0.6f));
                         HA.DestroyObjectInHand();
                         pyramidCratesPlaced++;
                         UpdateQuest();

@@ -46,9 +46,9 @@ public class Sanity_Manager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        sanity = Mathf.Clamp(50, 0, 100);
+        sanity = Mathf.Clamp(100, 0, 100);
 
-        jobSecurity = Mathf.Clamp(50, 0, 100);
+        jobSecurity = Mathf.Clamp(100, 0, 100);
 
         Restart.onClick.AddListener(() => RestartGame());
 
@@ -77,6 +77,7 @@ public class Sanity_Manager : MonoBehaviour
     private void SendSanityUpdate()
     {
         GameEventsManager.instance.gameEvents.SendSanityUpdate(sanity, jobSecurity);
+        GameEventsManager.instance.gameEvents.UpdateSanity(sanity);
     }
 
     public void ChangeSanity(int addSanity, int addJobSecurity)

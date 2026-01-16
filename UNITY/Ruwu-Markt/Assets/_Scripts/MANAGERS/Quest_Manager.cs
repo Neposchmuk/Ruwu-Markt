@@ -65,7 +65,7 @@ public class Quest_Manager : MonoBehaviour
 
         _dayManager = GameObject.FindFirstObjectByType<Day_Manager>();
 
-        CashRegister_MiniGame.OnPay += CheckCustomersServed;
+        GameEventsManager.instance.checkoutEvents.onPay += CheckCustomersServed;
 
         ResetQuests();
     }
@@ -189,7 +189,7 @@ public class Quest_Manager : MonoBehaviour
         }
     }
 
-    void CheckCustomersServed()
+    void CheckCustomersServed(GameObject agent)
     {
         customersServed++;
 
