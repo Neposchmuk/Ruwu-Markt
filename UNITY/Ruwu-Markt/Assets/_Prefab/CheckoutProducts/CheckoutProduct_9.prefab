@@ -687,7 +687,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   productName: redCylinder
-  price: 699
+  price: 6.69
   PLU: 4202
   ageRestricted: 0
   hasBeenScanned: 0

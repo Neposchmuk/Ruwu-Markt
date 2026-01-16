@@ -12,7 +12,7 @@ public class Enemy_Behaviour : MonoBehaviour
 
     public ParticleSystem KillParticles;
 
-    bool _canCollide = true;
+    bool _canCollide;
 
     NavMeshAgent _agent;
 
@@ -39,7 +39,6 @@ public class Enemy_Behaviour : MonoBehaviour
         {
             StartCoroutine(CollisionResetTimer());
             OnKilledPlayer?.Invoke();
-            Debug.Log("Collided with Player");
         }
     }
 

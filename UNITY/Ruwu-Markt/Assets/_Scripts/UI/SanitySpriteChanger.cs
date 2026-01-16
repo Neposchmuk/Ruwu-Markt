@@ -7,8 +7,6 @@ public class SanitySpriteChanger : MonoBehaviour
 
     [SerializeField] private GameObject widgetParent;
 
-    [SerializeField] private Animator animator;
-
     private Image Image;
 
 
@@ -42,22 +40,18 @@ public class SanitySpriteChanger : MonoBehaviour
         if(sanity >= 75)
         {
             Image.sprite = sprites[0];
-            animator.SetBool("blinks", true);
         }
         else if(sanity >=50 && sanity < 75)
         {
             Image.sprite = sprites[1];
-            animator.SetBool("blinks", true);
         }
         else if (sanity >= 25 && sanity < 50)
         {
             Image.sprite = sprites[2];
-            animator.SetBool("blinks", false);
         }
         else
         {
             Image.sprite = sprites[3];
-            animator.SetBool("blinks", false);
         }
     }
 

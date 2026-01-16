@@ -687,7 +687,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   productName: greenCylinder
-  price: 333
+  price: 3.33
   PLU: 4848
   ageRestricted: 0
   hasBeenScanned: 0

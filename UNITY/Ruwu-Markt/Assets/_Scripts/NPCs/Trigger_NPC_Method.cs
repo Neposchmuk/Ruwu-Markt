@@ -3,48 +3,21 @@ using UnityEngine;
 
 public class Trigger_NPC_Method : MonoBehaviour
 {
+    public static Action OnCheckoutLeave;
+
     public bool CheckoutLine;
 
-    public bool CheckoutSlot;
+    public bool FinalSlot;
 
     public bool FinalDestination;
 
-    [SerializeField] bool IsFinalSlot;
-
-    public bool IsOccupied; //{ get; private set; }
+    public bool IsOccupied { get; private set; }
 
     private Customer_Behaviour _agent;
 
-    private void OnEnable()
+    private void Start()
     {
-        if(!CheckoutLine) return;
-
-        GameEventsManager.instance.checkoutEvents.onRequestSlotUpdate += SendSlotUpdate;
-        GameEventsManager.instance.checkoutEvents.onReserveSlot += ReserveSlot;
-    }
-
-    private void OnDisable()
-    {
-        if(!CheckoutLine) return;
-
-        GameEventsManager.instance.checkoutEvents.onRequestSlotUpdate -= SendSlotUpdate;
-        GameEventsManager.instance.checkoutEvents.onReserveSlot -= ReserveSlot;
-    }
-
-    private void SendSlotUpdate(GameObject slot, GameObject agent)
-    {
-        if(slot != this.gameObject) return;
-
-        GameEventsManager.instance.checkoutEvents.SendSlotUpdate(this.gameObject, IsOccupied, agent);
-
-        Debug.Log(gameObject + " is Occupied: " + IsOccupied + " / parameter: " + slot);
-    }
-
-    private void ReserveSlot(GameObject slot)
-    {
-        if(slot != this.gameObject) return;
-
-        IsOccupied = true;
+        CashRegister_MiniGame.OnPay += SetAgentFinalDestination;
     }
 
     void GetAgent(Collider other)
@@ -52,30 +25,40 @@ public class Trigger_NPC_Method : MonoBehaviour
         _agent = other.gameObject.GetComponent<Customer_Behaviour>();
     }
 
+    void SetAgentFinalDestination()
+    {
+        Debug.Log(_agent);
+        if (_agent != null) _agent.FinalDestination();  
+    }
+
     private void OnTriggerEnter(Collider other)
     {
+
         if (other.CompareTag("NPC_Customer"))
         {
-            if (CheckoutLine && CheckoutSlot)
+            IsOccupied = true;
+
+            other.GetComponent<Customer_Behaviour>().IsInTrigger = true;
+
+            GetAgent(other);
+
+            Debug.Log(_agent);
+
+            if (CheckoutLine && FinalSlot)
             {
-                GameEventsManager.instance.checkoutEvents.StartCheckoutGame(other.gameObject);
-                Debug.Log("Sent Checkout event");
+                other.GetComponent<Customer_Behaviour>().StartCheckoutGame();
             }
-            else if(CheckoutLine && IsFinalSlot)
+            else if (CheckoutLine)
             {
-                GameEventsManager.instance.checkoutEvents.EnteredCheckoutLine(other.gameObject);
+                other.GetComponent<Customer_Behaviour>().CheckSlotAhead();
             }
             else if (FinalDestination)
             {
-                GameEventsManager.instance.checkoutEvents.KillAgent(other.gameObject);
-                Debug.Log("Sent kill event");
+                other.GetComponent<Customer_Behaviour>().Kill();
             }
-            else if (!CheckoutLine)
+            else
             {
-                IsOccupied = true;
-
-                GameEventsManager.instance.checkoutEvents.SetNPCTrigger(other.gameObject, true);
-                GameEventsManager.instance.checkoutEvents.ArrivedAtTarget(other.gameObject);
+                other.GetComponent<Customer_Behaviour>().CheckFinalDestination();
             }
         }   
     }
@@ -86,11 +69,11 @@ public class Trigger_NPC_Method : MonoBehaviour
         {
             IsOccupied = false;
 
-            GameEventsManager.instance.checkoutEvents.SetNPCTrigger(other.gameObject, false);
+            other.GetComponent<Customer_Behaviour>().IsInTrigger = false;
 
-            if (CheckoutLine && CheckoutSlot)
+            if (CheckoutLine && FinalSlot)
             {
-                GameEventsManager.instance.checkoutEvents.MoveUpNPCs();
+                OnCheckoutLeave?.Invoke();
             }
         }
         

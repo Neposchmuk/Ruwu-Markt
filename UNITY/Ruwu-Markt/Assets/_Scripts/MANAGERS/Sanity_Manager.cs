@@ -32,23 +32,16 @@ public class Sanity_Manager : MonoBehaviour
 
     public bool isGameOver;
 
-    void Awake()
-    {
-        GameEventsManager.instance.gameEvents.onRequestSanityUpdate += SendSanityUpdate;
-    }
-    void Oestroy()
-    {
-        GameEventsManager.instance.gameEvents.onRequestSanityUpdate -= SendSanityUpdate;
-    }
+    
 
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        sanity = Mathf.Clamp(100, 0, 100);
+        sanity = Mathf.Clamp(50, 0, 100);
 
-        jobSecurity = Mathf.Clamp(100, 0, 100);
+        jobSecurity = Mathf.Clamp(50, 0, 100);
 
         Restart.onClick.AddListener(() => RestartGame());
 
@@ -74,19 +67,13 @@ public class Sanity_Manager : MonoBehaviour
         jobSecCounter.text = $"{jobSecurity}";
     }
 
-    private void SendSanityUpdate()
-    {
-        GameEventsManager.instance.gameEvents.SendSanityUpdate(sanity, jobSecurity);
-        GameEventsManager.instance.gameEvents.UpdateSanity(sanity);
-    }
-
     public void ChangeSanity(int addSanity, int addJobSecurity)
     {
         sanity = Mathf.Clamp(sanity + addSanity, 0, 100);
 
         jobSecurity = Mathf.Clamp(jobSecurity + addJobSecurity, 0, 100);
 
-        SendSanityUpdate();
+        GameEventsManager.instance.gameEvents.UpdateSanity(sanity);
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -142,6 +129,6 @@ public class Sanity_Manager : MonoBehaviour
             Destroy(DDOL_Objects[i].gameObject);
         }
 
-        SceneManager.LoadScene("MAIN_MENU");
+        SceneManager.LoadScene("Initiate_DDOL_Objects");
     }
 }

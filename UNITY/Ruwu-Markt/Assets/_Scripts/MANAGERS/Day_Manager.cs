@@ -20,11 +20,6 @@ public class Day_Manager : MonoBehaviour
 
     public int Night {get; private set;} = 1;
 
-    private void Awake()
-    {
-        GameEventsManager.instance.gameEvents.onSendSanityUpdate += UpdateEndingBool;
-    }
-
     private void Start()
     {
         PC_Interaction.OnCloseUI += CheckPC;
@@ -51,9 +46,6 @@ public class Day_Manager : MonoBehaviour
         if(Day == 5)
         {
             IsFinalDay = true;
-            GameEventsManager.instance.gameEvents.RequestSanityUpdate();
-            Debug.Log("Gets good ending : " + GetsGoodEnding);
-            GameEventsManager.instance.gameEvents.onSendSanityUpdate -= UpdateEndingBool;
         }
 
         LoadNextScene(1);
@@ -75,15 +67,5 @@ public class Day_Manager : MonoBehaviour
     void CheckPC()
     {
         CheckedPC = true;
-    }
-
-    private void UpdateEndingBool(int sanity, int jobSecurity)
-    {
-        if(sanity >= 50)
-        {
-            GetsGoodEnding = true;
-        }
-        else GetsGoodEnding = false;
-        
     }
 }

@@ -75,19 +75,19 @@ public class Nightmare_Doom_State : NightmareBaseState
 
     public override void UpdateState()
     {
-        if (_attack.WasPressedThisDynamicUpdate())
+        if (_attack.WasPressedThisFrame())
         {
             _gun.Fire();
         }
 
-        if (_melee.WasPressedThisDynamicUpdate())
+        if (_melee.WasPressedThisFrame())
         {
             _gun.gameObject.SetActive(false);
             _batParent.StartAnimatorCoroutine();
             _gun.gameObject.SetActive(true);
         }
 
-        if (_reload.WasPressedThisDynamicUpdate())
+        if (_reload.WasPressedThisFrame())
         {
             _gun.StartReload();
         }

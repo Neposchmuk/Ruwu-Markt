@@ -9,9 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/Scenes/MAIN_MENU.unity
-    guid: 16a7fefb6eb240f4996f44e2c6bdd3bc
-  - enabled: 1
     path: Assets/Scenes/Initiate_DDOL_Objects.unity
     guid: b20a1f8845bb2bb4dac2b488cb0e0a46
   - enabled: 1

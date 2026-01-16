@@ -66,8 +66,6 @@ namespace StarterAssets
 
 		private bool _movementLocked = false;
 		private bool _cameraLocked = false;
-
-		private bool _canJump = true;
 	
 #if ENABLE_INPUT_SYSTEM
 		private PlayerInput _playerInput;
@@ -77,8 +75,6 @@ namespace StarterAssets
 		private GameObject _mainCamera;
 
 		private InputAction _interact;
-
-		private InputAction _escape;
 
         private const float _threshold = 0.01f;
 
@@ -107,14 +103,12 @@ namespace StarterAssets
         {
 			GameEventsManager.instance.playerEvents.onMovementLock += TogglePlayerMovement;
             GameEventsManager.instance.playerEvents.onLockCamera += LockCamera;
-			GameEventsManager.instance.playerEvents.onToggleJump += ToggleJump;
         }
 
         private void OnDisable()
         {
             GameEventsManager.instance.playerEvents.onMovementLock -= TogglePlayerMovement;
             GameEventsManager.instance.playerEvents.onLockCamera -= LockCamera;
-			GameEventsManager.instance.playerEvents.onToggleJump -= ToggleJump;
         }
 
         private void Start()
@@ -124,7 +118,6 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM
 			_playerInput = GetComponent<PlayerInput>();
 			_interact = _playerInput.actions.FindAction("Interact");
-			_escape = _playerInput.actions.FindAction("Escape");
 #else
 			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif
@@ -141,22 +134,14 @@ namespace StarterAssets
 		{
             if (!_movementLocked)
             {
-                JumpAndGravity();  
+                JumpAndGravity();
+                GroundedCheck();
                 Move();
             }
 
-            GroundedCheck();
-
-            if (_interact.WasPressedThisDynamicUpdate())
+			if (_interact.WasPressedThisDynamicUpdate())
 			{
 				GameEventsManager.instance.playerEvents.PressedInteract();
-				Debug.Log("Sent interaction event");
-			}
-
-			if (_escape.WasPressedThisDynamicUpdate())
-			{
-				GameEventsManager.instance.playerEvents.PressedEscape();
-				Debug.Log("Pressed Escape");
 			}
 		}
 
@@ -177,11 +162,6 @@ namespace StarterAssets
 		private void LockCamera(bool toggle)
 		{
 			_cameraLocked = toggle;
-		}
-
-		private void ToggleJump(bool toggle)
-		{
-			_canJump = toggle;
 		}
 
 		private void GroundedCheck()
@@ -262,9 +242,6 @@ namespace StarterAssets
 
 		private void JumpAndGravity()
 		{
-			if(!_canJump) return;
-
-
 			if (Grounded)
 			{
 				// reset the fall timeout timer

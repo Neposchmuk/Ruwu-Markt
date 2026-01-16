@@ -79,7 +79,7 @@ public class MiniGamePfand : MiniGameBaseState
                     pyramidPlaceholder.SetActive(true);
                     pyramidPlaceholder.GetComponent<Renderer>().enabled = false;
                 }*/
-                pyramidCratesToPlace = 6;
+                pyramidCratesToPlace = 5;
                 InitiateQuest();
                 break;
             case 4:
@@ -122,8 +122,6 @@ public class MiniGamePfand : MiniGameBaseState
         QuestSource.QuestMarkerBig.SetActive(false);
 
         QuestSource.QuestMarkerSmall.SetActive(true);
-
-        GameEventsManager.instance.questEvents.ToggleQuestmarkers(false);
             
     }
 
@@ -150,8 +148,6 @@ public class MiniGamePfand : MiniGameBaseState
     {
         QuestSource.QuestMarkerBig.SetActive(false);
         ToggleQuestMarkers(questVariant, false);
-        GameEventsManager.instance.questEvents.QuestCompleted(QuestType.Bottles);
-        GameEventsManager.instance.questEvents.ToggleQuestmarkers(true);
         QM.CompleteQuest(2, questVariant - 1, QuestSource.gameObject);
     }
 
@@ -282,7 +278,7 @@ public class MiniGamePfand : MiniGameBaseState
 
                     if (hit.collider.tag == "PyramidArea" && isHoldingObject)
                     {
-                        HA.Place(PPO.pyramidCrates[pyramidCratesPlaced].transform.position, PPO.pyramidCrates[pyramidCratesPlaced].transform.eulerAngles, new Vector3(0.6f,0.6f,0.6f));
+                        HA.Place(PPO.pyramidCrates[pyramidCratesPlaced].transform.position, PPO.pyramidCrates[pyramidCratesPlaced].transform.localEulerAngles, new Vector3(1,1,1));
                         HA.DestroyObjectInHand();
                         pyramidCratesPlaced++;
                         UpdateQuest();

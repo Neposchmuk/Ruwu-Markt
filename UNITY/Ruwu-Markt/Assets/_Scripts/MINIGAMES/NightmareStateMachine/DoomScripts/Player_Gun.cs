@@ -35,11 +35,6 @@ public class Player_Gun : MonoBehaviour
 
     Nightmare_State_Manager _stateManager;
 
-    private void OnDisable()
-    {
-        UnsubscribeEvents();
-    }
-
     private void Start()
     {
         _animator = GetComponent<Animator>();

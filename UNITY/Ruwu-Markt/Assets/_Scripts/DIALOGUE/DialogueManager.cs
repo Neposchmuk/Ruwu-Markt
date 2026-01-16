@@ -20,6 +20,8 @@ public class DialogueManager : MonoBehaviour
 
     private bool _dialoguePlaying = false;
 
+    private bool _waitForFirstLine = true;
+
     private InputAction _interact;
 
 
@@ -150,6 +152,8 @@ public class DialogueManager : MonoBehaviour
     private void ExitDialogue()
     {
         _dialoguePlaying = false;
+
+        _waitForFirstLine = true;
 
         inkDialogueVariables.StopListening(_story);
 

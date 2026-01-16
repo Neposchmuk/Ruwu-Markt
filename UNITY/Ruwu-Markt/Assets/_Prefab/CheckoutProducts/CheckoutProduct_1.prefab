@@ -366,7 +366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   productName: blueCube
-  price: 249
+  price: 2.59
   PLU: 1450
   ageRestricted: 0
   hasBeenScanned: 0

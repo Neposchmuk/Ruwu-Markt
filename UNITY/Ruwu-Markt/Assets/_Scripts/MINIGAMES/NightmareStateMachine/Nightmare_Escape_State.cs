@@ -29,13 +29,11 @@ public class Nightmare_Escape_State : NightmareBaseState
         RayCast.OnKeyPickup += ToggleKeyImage;
 
         _keyImage.enabled = false;
-
-        GameEventsManager.instance.playerEvents.ToggleJump(false);
     }
 
     public override void UpdateState()
     {
-        if (_flash.WasPressedThisDynamicUpdate())
+        if (_flash.WasPressedThisFrame())
         {
             ToggleFlashlight();
         }
@@ -45,7 +43,6 @@ public class Nightmare_Escape_State : NightmareBaseState
     {
         RayCast.OnMarketLeave -= EndState;
         _stateManager.EndNight(true, 10);
-        GameEventsManager.instance.playerEvents.ToggleJump(true);
     }
 
     void ToggleFlashlight()
