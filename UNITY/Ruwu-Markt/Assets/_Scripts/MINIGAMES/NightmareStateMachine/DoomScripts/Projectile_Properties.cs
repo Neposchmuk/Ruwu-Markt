@@ -8,7 +8,7 @@ public class Projectile_Properties : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            collision.gameObject.GetComponent<Enemy_Behaviour>().KillEnemy();
+            GameEventsManager.instance.questEvents.HitEnemy();
         }
         else if (!collision.gameObject.CompareTag("Gun"))
         {

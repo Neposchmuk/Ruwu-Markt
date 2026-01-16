@@ -20,7 +20,7 @@ public class NPC_Checkout_State : NPC_BaseState
 
         _agent = State_Manager.gameObject.GetComponent<NavMeshAgent>();
 
-        CashRegister_MiniGame.OnPay += SwitchPaidBool;
+        GameEventsManager.instance.checkoutEvents.onPay += SwitchPaidBool;
 
         _agent.areaMask += 1 << NavMesh.GetAreaFromName("Checkout");
 
@@ -65,12 +65,12 @@ public class NPC_Checkout_State : NPC_BaseState
 
     public override void EndState()
     {
-        CashRegister_MiniGame.OnPay -= SwitchPaidBool;
+        GameEventsManager.instance.checkoutEvents.onPay -= SwitchPaidBool;
 
         GameObject.Destroy(_stateManager.gameObject);
     }
 
-    void SwitchPaidBool()
+    void SwitchPaidBool(GameObject agent)
     {
         _hasPaid = !_hasPaid;
     }

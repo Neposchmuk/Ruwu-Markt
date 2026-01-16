@@ -13,7 +13,7 @@ public class PC_Interaction : MonoBehaviour
 
     public Sprite[] Mails;
 
-    public GameObject Mail_UI;
+    public GameObject[] Mail_UI_Groups;
 
     public Image Inbox;
 
@@ -23,12 +23,17 @@ public class PC_Interaction : MonoBehaviour
 
     public Button CloseMail;
 
-    public Button OpenMail;
+    [SerializeField] private GameObject PC_UI_Parent;
+
+    private GameObject Mail_UI;
 
 
     Day_Manager _dayManager;
 
-    Sanity_Manager _sanityManager;
+    private void OnEnable()
+    {
+        GameEventsManager.instance.gameEvents.onSendSanityUpdate += SetInboxGroups;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -37,19 +42,17 @@ public class PC_Interaction : MonoBehaviour
 
         CloseMail.onClick.AddListener(() => CloseMailWindow());
 
-        OpenMail.onClick.AddListener(() => OpenMailWindow());
-
         _dayManager = FindFirstObjectByType<Day_Manager>();
 
-        _sanityManager = FindFirstObjectByType<Sanity_Manager>();
+        PC_UI_Parent.SetActive(false);
 
         Mail.gameObject.SetActive(false);
 
-        OpenMail.gameObject.SetActive(false);
+        Mail_UI = Mail_UI_Groups[0];
 
         if (_dayManager.IsFinalDay)
         {
-            SetMailSprites();
+            GameEventsManager.instance.gameEvents.RequestSanityUpdate();
             CloseUI.interactable = false;
         }
 
@@ -67,6 +70,7 @@ public class PC_Interaction : MonoBehaviour
 
     void CloseInbox()
     {
+        PC_UI_Parent.SetActive(false);
         Mail_UI.SetActive(false);
         ToggleCursorLockmode(false);
         OnCloseUI?.Invoke();
@@ -80,25 +84,34 @@ public class PC_Interaction : MonoBehaviour
         CloseUI.interactable = true;
     }
 
-    void OpenMailWindow()
+    public void OpenMailWindow(int mailType)
     {
+        SetMailSprites(mailType);
+
         Mail.gameObject.SetActive(true);
     }
 
-    void SetMailSprites()
+    void SetInboxGroups(int sanity, int jobSecurity)
     {
-        if(_sanityManager.sanity >= 50)
+        if (!_dayManager.IsFinalDay)
         {
-            Inbox.sprite = Inboxes[1];
-            Mail.sprite = Mails[0];
+            Mail_UI = Mail_UI_Groups[0];
+            return;
+        }
+
+        if(sanity >= 50)
+        {
+            Mail_UI = Mail_UI_Groups[1];
         }
         else
         {
-            Inbox.sprite = Inboxes[2];
-            Mail.sprite = Mails[1];
+            Mail_UI = Mail_UI_Groups[2];
         }
+    }
 
-        OpenMail.gameObject.SetActive(true);
+    void SetMailSprites(int spriteIndex)
+    {
+        Mail.sprite = Mails[spriteIndex];
     }
 
     void ToggleCursorLockmode(bool lockCursor)
@@ -119,6 +132,7 @@ public class PC_Interaction : MonoBehaviour
 
     public void OpenInbox()
     {
+        PC_UI_Parent.SetActive(true);
         Mail_UI.SetActive(true);
         ToggleCursorLockmode(true);
 

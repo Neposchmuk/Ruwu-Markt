@@ -36,6 +36,8 @@ public class MiniGameWaterPlants : MiniGameBaseState
 
         questStage = 0;
 
+        GameEventsManager.instance.questEvents.ToggleQuestmarkers(false);
+
         switch(questVariant)
         {
             case 1:
@@ -88,6 +90,10 @@ public class MiniGameWaterPlants : MiniGameBaseState
         FlowersWatering.OnFlowerWatered -= CountWateredFlowers;
         QuestSource.QuestMarkerBig.SetActive(false);
         HA.DestroyObjectInHand();
+
+        GameEventsManager.instance.questEvents.QuestCompleted(QuestType.Flowers);
+        GameEventsManager.instance.questEvents.ToggleQuestmarkers(true);
+
         QM.CompleteQuest(3, questVariant - 1, QuestSource.gameObject);
     }
 
@@ -107,14 +113,14 @@ public class MiniGameWaterPlants : MiniGameBaseState
                 UpdateQuest();
             }
 
-            if(hit.collider.tag == "FlowersQuest" && isHoldingCan && questStage !=3)
+            if(hit.collider.tag == "Sink" && isHoldingCan && questStage !=3)
             {
                 questStage = 3;
                 HA.SetPourTime(5);
                 UpdateQuest();
                 ToggleQuestMarkers(questStage, true);
             }
-            else if(hit.collider.tag == "FlowersQuest" && isHoldingCan && questStage == 3)
+            else if(hit.collider.tag == "Sink" && isHoldingCan && questStage == 3)
             {
                 HA.SetPourTime(5);
             }

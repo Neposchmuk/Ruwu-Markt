@@ -366,7 +366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   productName: greenCube
-  price: 1.39
+  price: 199
   PLU: 1564
   ageRestricted: 0
   hasBeenScanned: 0

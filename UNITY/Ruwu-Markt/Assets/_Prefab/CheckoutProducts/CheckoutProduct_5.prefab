@@ -366,7 +366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   productName: yellowCube
-  price: 2.55
+  price: 239
   PLU: 5464
   ageRestricted: 0
   hasBeenScanned: 0

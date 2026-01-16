@@ -45,4 +45,55 @@ public class GameEvents
             onDestroyDDOLObjects();
         }
     }
+
+    public event Action onRequestSanityUpdate;
+
+    public void RequestSanityUpdate()
+    {
+        if(onRequestSanityUpdate != null)
+        {
+            onRequestSanityUpdate();
+        }
+    }
+
+    public event Action<int, int> onSendSanityUpdate;
+
+    public void SendSanityUpdate(int sanity, int jobSecurity)
+    {
+        if(onSendSanityUpdate != null)
+        {
+            onSendSanityUpdate(sanity, jobSecurity);
+        }
+    }
+
+    public event Action onQuitGame;
+
+    public void QuitGame()
+    {
+        if(onQuitGame != null)
+        {
+            onQuitGame();
+        }
+    }
+
+    public event Action onReturnToPreviousMenu;
+
+    public void ReturnToPreviousMenu()
+    {
+        if(onReturnToPreviousMenu != null)
+        {
+            onReturnToPreviousMenu();
+        }
+    }
+
+    public event Action<bool> onShowSettings;
+
+    public void ShowSettings(bool toggle)
+    {
+        Debug.Log(onShowSettings);
+        if(onShowSettings != null)
+        {
+            onShowSettings(toggle);
+        }
+    }
 }

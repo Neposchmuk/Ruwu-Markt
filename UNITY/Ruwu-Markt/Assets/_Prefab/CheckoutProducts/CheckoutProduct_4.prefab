@@ -366,7 +366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   productName: redCube
-  price: 2.99
+  price: 259
   PLU: 5632
   ageRestricted: 0
   hasBeenScanned: 0
