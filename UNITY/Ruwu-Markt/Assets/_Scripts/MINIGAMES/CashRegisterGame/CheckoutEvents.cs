@@ -101,5 +101,15 @@ public class CheckoutEvents
             onEnteredCheckoutLine(agent);
         }
     }
+
+    public event Action<GameObject> onRecalculateCheckoutSlot;
+
+    public void RecalculateCheckoutSlot(GameObject agent)
+    {
+        if(onRecalculateCheckoutSlot != null)
+        {
+            onRecalculateCheckoutSlot(agent);
+        }
+    }
 }
 

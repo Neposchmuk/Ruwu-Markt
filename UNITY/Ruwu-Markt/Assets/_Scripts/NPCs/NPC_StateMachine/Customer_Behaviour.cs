@@ -35,6 +35,8 @@ public class Customer_Behaviour : MonoBehaviour
 
     private bool _waitingForCoroutine;
 
+    private bool subscribedToMoveUp;
+
     private bool _isAtCheckout = false;
 
     private bool _hasPaid = false;
@@ -95,7 +97,6 @@ public class Customer_Behaviour : MonoBehaviour
         GameEventsManager.instance.checkoutEvents.onKillAgent += Kill;
         GameEventsManager.instance.checkoutEvents.onPay += FinalDestination;
         GameEventsManager.instance.checkoutEvents.onSetNPCTrigger += SetTriggerMethod;
-        GameEventsManager.instance.checkoutEvents.onEnteredCheckoutLine += CheckCheckoutLine;
         
     }
 
@@ -204,7 +205,9 @@ public class Customer_Behaviour : MonoBehaviour
 
         GameEventsManager.instance.questEvents.onAllTasksCompleted -= StartCheckoutBehaviour;
 
-        GameEventsManager.instance.checkoutEvents.onSendSlotUpdate += CheckSlotOccupation;
+        GameEventsManager.instance.checkoutEvents.onRecalculateCheckoutSlot += RecalculateCheckoutSlot;
+
+        GameEventsManager.instance.checkoutEvents.onEnteredCheckoutLine += CheckCheckoutLine;
 
         NavMeshPath path = new NavMeshPath();
 
@@ -220,6 +223,14 @@ public class Customer_Behaviour : MonoBehaviour
     private void CheckCheckoutLine(GameObject agent)
     {
         if(agent != this.gameObject) return;
+
+        if (!subscribedToMoveUp)
+        {
+            GameEventsManager.instance.checkoutEvents.onPay += MoveUpCheckout;
+            subscribedToMoveUp = true;
+        }
+
+        GameEventsManager.instance.checkoutEvents.onSendSlotUpdate += CheckSlotOccupation;
 
         RequestSlotUpdate(0);
     }
@@ -256,13 +267,20 @@ public class Customer_Behaviour : MonoBehaviour
         }
     }
 
+    private void RecalculateCheckoutSlot(GameObject agent)
+    {
+        if(agent == this.gameObject) return;
+
+        if(_currentCheckoutSlot == 0)
+        {
+            RequestSlotUpdate(0);
+        }
+        
+    }
+
     private void SetCheckoutPath(GameObject slot)
     {
-        GameEventsManager.instance.checkoutEvents.onSendSlotUpdate -= CheckSlotOccupation;
-
         NavMeshPath path = new NavMeshPath();
-
-        GameEventsManager.instance.checkoutEvents.onMoveUpNPCs += MoveUpCheckout;
 
         _agent.areaMask += 1 << NavMesh.GetAreaFromName("Checkout");    
 
@@ -271,6 +289,8 @@ public class Customer_Behaviour : MonoBehaviour
         _agent.SetPath(path);
 
         StartWalking();
+
+        GameEventsManager.instance.checkoutEvents.onSendSlotUpdate -= CheckSlotOccupation;
     }
 
     public void CheckFinalDestination()
@@ -285,11 +305,15 @@ public class Customer_Behaviour : MonoBehaviour
         }
     }
 
-    public void MoveUpCheckout()
+    public void MoveUpCheckout(GameObject agent)
     {
+        if(agent == this.gameObject) return;
+
         if (_headingToCheckout && _currentCheckoutSlot > 0)
         {
             _currentCheckoutSlot--;
+
+            Debug.Log(gameObject + ": Moving up to Slot " + _currentCheckoutSlot);
             //Debug.Log(gameObject.name + " " + _currentCheckoutSlot);
 
             //Debug.Log("Entered MoveUp");
@@ -304,18 +328,6 @@ public class Customer_Behaviour : MonoBehaviour
         }     
     }
 
-    public void CheckSlotAhead()
-    {
-        //Debug.Log("Entered CheckSlots");
-        //Debug.Log(!_checkoutTriggers[_currentCheckoutSlot - 1].IsOccupied);
-        if(_currentCheckoutSlot == 0) return;
-
-        if (!_checkoutTriggers[_currentCheckoutSlot - 1].IsOccupied)
-        {
-            MoveUpCheckout();
-        }
-    }
-
     public void FinalDestination(GameObject agent)
     {
         if(agent != this.gameObject) return;
@@ -328,7 +340,9 @@ public class Customer_Behaviour : MonoBehaviour
 
         StartWalking();
 
-        GameEventsManager.instance.checkoutEvents.onMoveUpNPCs -= MoveUpCheckout;
+        GameEventsManager.instance.checkoutEvents.onRecalculateCheckoutSlot -= RecalculateCheckoutSlot;
+
+        GameEventsManager.instance.checkoutEvents.onPay -= MoveUpCheckout;
     }
 
     public void Kill(GameObject agent)

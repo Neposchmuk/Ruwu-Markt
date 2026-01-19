@@ -59,6 +59,7 @@ public class Trigger_NPC_Method : MonoBehaviour
             if (CheckoutLine && CheckoutSlot)
             {
                 GameEventsManager.instance.checkoutEvents.StartCheckoutGame(other.gameObject);
+                GameEventsManager.instance.checkoutEvents.RecalculateCheckoutSlot(other.gameObject);
                 Debug.Log("Sent Checkout event");
             }
             else if(CheckoutLine && IsFinalSlot)
