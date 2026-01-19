@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -32,11 +33,17 @@ public class Customer_Behaviour : MonoBehaviour
 
     private bool _headingToCheckout = false;
 
+    private bool _waitingForCoroutine;
+
+    private bool subscribedToMoveUp;
+
     private bool _isAtCheckout = false;
 
     private bool _hasPaid = false;
 
     private int _currentCheckoutSlot;
+
+    private float SpawnTime;
 
     private Trigger_NPC_Method[] _checkoutTriggers;
 
@@ -55,9 +62,9 @@ public class Customer_Behaviour : MonoBehaviour
 
         LeaveMarketTarget = _spawner.FinalDestination;
 
-        Debug.Log(CheckoutTargets[0]);
+        //Debug.Log(CheckoutTargets[0]);
 
-        Debug.Log(CheckoutTargets.Count);
+        //Debug.Log(CheckoutTargets.Count);
 
         LeaveMarketTarget = GameObject.FindGameObjectWithTag("Final_Target").GetComponent<Transform>();
 
@@ -83,9 +90,32 @@ public class Customer_Behaviour : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        GameEventsManager.instance.questEvents.onAllTasksCompleted += StartCheckoutBehaviour;
+        GameEventsManager.instance.checkoutEvents.onArrivedAtTarget += NextTargetBehaviour;
+        GameEventsManager.instance.checkoutEvents.onKillAgent += Kill;
+        GameEventsManager.instance.checkoutEvents.onPay += FinalDestination;
+        GameEventsManager.instance.checkoutEvents.onSetNPCTrigger += SetTriggerMethod;
+        
+    }
+
+    private void OnDisable()
+    {
+        
+        GameEventsManager.instance.checkoutEvents.onArrivedAtTarget -= NextTargetBehaviour;
+        GameEventsManager.instance.checkoutEvents.onKillAgent -= Kill;
+        GameEventsManager.instance.checkoutEvents.onPay -= FinalDestination;
+        GameEventsManager.instance.checkoutEvents.onSetNPCTrigger -= SetTriggerMethod;
+        GameEventsManager.instance.checkoutEvents.onEnteredCheckoutLine -= CheckCheckoutLine;
+        
+    }
+
     private void Start()
     {
         SetDestination();
+
+        SpawnTime = Time.time;
 
         //StartWalking();
     }
@@ -102,17 +132,35 @@ public class Customer_Behaviour : MonoBehaviour
 
                     SetDestination();
                 }
-                else if(_currentTarget == _randomDestinations.Length - 1)
+                else if(_currentTarget == _randomDestinations.Length - 1 && !_waitingForCoroutine)
                 {
+                    _waitingForCoroutine = true;
                     StartCoroutine(WaitForCheckout());
+                    Debug.Log("Called Coroutine from Update: " + gameObject);
                 }
             }
         }
     }
 
+    private void SetTriggerMethod(GameObject agent, bool inTrigger)
+    {
+        if(agent != this.gameObject) return;
+
+        IsInTrigger = inTrigger;
+    }
+
+    private void NextTargetBehaviour(GameObject agent)
+    {
+        if(agent != this.gameObject) return;
+
+        Debug.Log("Entered Next Target: " + gameObject);
+
+        CheckFinalDestination();
+    }
+
     int RandomizeDestinations()
     {
-        int _destinationsToReach = Random.Range(2, Destinations.Count + 1);
+        int _destinationsToReach = UnityEngine.Random.Range(2, Destinations.Count + 1);
 
         return _destinationsToReach;
     }
@@ -125,7 +173,7 @@ public class Customer_Behaviour : MonoBehaviour
 
         for (int i = 0; i < _destinationsToReach; i++)
         {
-            int _randomIndex = Random.Range(_lastIndex + 1, Destinations.Count - _destinationsToReach + i);
+            int _randomIndex = UnityEngine.Random.Range(_lastIndex + 1, Destinations.Count - _destinationsToReach + i);
             _lastIndex = _randomIndex;
             _randomDestinations[i] = Destinations[_randomIndex];
         }
@@ -140,6 +188,8 @@ public class Customer_Behaviour : MonoBehaviour
 
     void SetDestination()
     {
+        if(_headingToCheckout) return;
+
         NavMeshPath path = new NavMeshPath();
 
         _agent.CalculatePath(_randomDestinations[_currentTarget].position, path);
@@ -147,6 +197,100 @@ public class Customer_Behaviour : MonoBehaviour
         _agent.SetPath(path);
 
         StartWalking();
+    }
+
+    private void StartCheckoutBehaviour()
+    {
+        if(_headingToCheckout) return;
+
+        GameEventsManager.instance.questEvents.onAllTasksCompleted -= StartCheckoutBehaviour;
+
+        GameEventsManager.instance.checkoutEvents.onRecalculateCheckoutSlot += RecalculateCheckoutSlot;
+
+        GameEventsManager.instance.checkoutEvents.onEnteredCheckoutLine += CheckCheckoutLine;
+
+        NavMeshPath path = new NavMeshPath();
+
+        _agent.CalculatePath(CheckoutTargets[CheckoutTargets.Count - 1].position, path);
+
+        _agent.SetPath(path);
+
+        StartWalking();
+
+        _headingToCheckout = true;
+    }
+
+    private void CheckCheckoutLine(GameObject agent)
+    {
+        if(agent != this.gameObject) return;
+
+        if (!subscribedToMoveUp)
+        {
+            GameEventsManager.instance.checkoutEvents.onPay += MoveUpCheckout;
+            subscribedToMoveUp = true;
+        }
+
+        GameEventsManager.instance.checkoutEvents.onSendSlotUpdate += CheckSlotOccupation;
+
+        RequestSlotUpdate(0);
+    }
+
+    private void RequestSlotUpdate(int slotIndex)
+    {
+        _currentCheckoutSlot = slotIndex;
+
+        try
+        {
+            GameEventsManager.instance.checkoutEvents.RequestSlotUpdate(CheckoutTargets[slotIndex].gameObject, this.gameObject);
+        }
+        catch (ArgumentOutOfRangeException)
+        {
+            Debug.LogError("ArgumentException: " + slotIndex);
+        }
+        
+    }
+
+    private void CheckSlotOccupation(GameObject slot, bool occupied, GameObject agent)
+    {
+        if(agent != this.gameObject) return;
+
+        if (occupied)
+        {
+            _currentCheckoutSlot++;
+
+            RequestSlotUpdate(_currentCheckoutSlot);
+        }
+        else
+        {
+            GameEventsManager.instance.checkoutEvents.ReserveSlot(slot);
+            SetCheckoutPath(slot);
+        }
+    }
+
+    private void RecalculateCheckoutSlot(GameObject agent)
+    {
+        if(agent == this.gameObject) return;
+
+        if(_currentCheckoutSlot == 0)
+        {
+            RequestSlotUpdate(0);
+        }
+        
+    }
+
+    private void SetCheckoutPath(GameObject slot)
+    {
+        NavMeshPath path = new NavMeshPath();
+
+        _agent.areaMask += 1 << NavMesh.GetAreaFromName("Checkout");    
+
+        _agent.CalculatePath(slot.transform.position, path);
+
+        _agent.SetPath(path);
+
+        StartWalking();
+
+        GameEventsManager.instance.checkoutEvents.onSendSlotUpdate -= CheckSlotOccupation;
     }
 
     public void CheckFinalDestination()
@@ -161,18 +305,16 @@ public class Customer_Behaviour : MonoBehaviour
         }
     }
 
-    public void StartCheckoutGame()
+    public void MoveUpCheckout(GameObject agent)
     {
-        _isAtCheckout = true;
-        GameObject.FindFirstObjectByType<CashRegister_MiniGame>().InitializeQuest();
-    }
+        if(agent == this.gameObject) return;
 
-    public void MoveUpCheckout()
-    {
         if (_headingToCheckout && _currentCheckoutSlot > 0)
         {
             _currentCheckoutSlot--;
-            Debug.Log(gameObject.name + " " + _currentCheckoutSlot);
+
+            Debug.Log(gameObject + ": Moving up to Slot " + _currentCheckoutSlot);
+            //Debug.Log(gameObject.name + " " + _currentCheckoutSlot);
 
             //Debug.Log("Entered MoveUp");
 
@@ -186,38 +328,34 @@ public class Customer_Behaviour : MonoBehaviour
         }     
     }
 
-    public void CheckSlotAhead()
+    public void FinalDestination(GameObject agent)
     {
-        //Debug.Log("Entered CheckSlots");
-        //Debug.Log(!_checkoutTriggers[_currentCheckoutSlot - 1].IsOccupied);
-        if (!_checkoutTriggers[_currentCheckoutSlot - 1].IsOccupied)
-        {
-            MoveUpCheckout();
-        }
+        if(agent != this.gameObject) return;
+
+        NavMeshPath path = new NavMeshPath();
+
+        _agent.CalculatePath(LeaveMarketTarget.position, path);
+
+        _agent.SetPath(path);
+
+        StartWalking();
+
+        GameEventsManager.instance.checkoutEvents.onRecalculateCheckoutSlot -= RecalculateCheckoutSlot;
+
+        GameEventsManager.instance.checkoutEvents.onPay -= MoveUpCheckout;
     }
 
-    public void FinalDestination()
+    public void Kill(GameObject agent)
     {
-        if (_isAtCheckout)
-        {
-            NavMeshPath path = new NavMeshPath();
-
-            _agent.CalculatePath(LeaveMarketTarget.position, path);
-
-            _agent.SetPath(path);
-
-            StartWalking();
-        }
-    }
-
-    public void Kill()
-    {
-        Trigger_NPC_Method.OnCheckoutLeave -= MoveUpCheckout;
+        if(agent != this.gameObject) return;
+        
         Destroy(gameObject);
     }
 
     IEnumerator WaitForNewDestination()
     {
+        Debug.Log("Started NewDestination Coroutine: " + gameObject);
+
         yield return new WaitForSeconds(3);
 
         _currentTarget++;
@@ -231,20 +369,6 @@ public class Customer_Behaviour : MonoBehaviour
 
         yield return new WaitForSeconds(3);
 
-        NavMeshPath path = new NavMeshPath();
-
-        Trigger_NPC_Method.OnCheckoutLeave += MoveUpCheckout;
-
-        _agent.areaMask += 1 << NavMesh.GetAreaFromName("Checkout");    
-
-        _agent.CalculatePath(CheckoutTargets[3].position, path);
-
-        _agent.SetPath(path);
-
-        _headingToCheckout = true;
-
-        _currentCheckoutSlot = 3;
-
-        StartWalking();
+        StartCheckoutBehaviour();
     }
 }

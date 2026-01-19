@@ -3,21 +3,48 @@ using UnityEngine;
 
 public class Trigger_NPC_Method : MonoBehaviour
 {
-    public static Action OnCheckoutLeave;
-
     public bool CheckoutLine;
 
-    public bool FinalSlot;
+    public bool CheckoutSlot;
 
     public bool FinalDestination;
 
-    public bool IsOccupied { get; private set; }
+    [SerializeField] bool IsFinalSlot;
+
+    public bool IsOccupied; //{ get; private set; }
 
     private Customer_Behaviour _agent;
 
-    private void Start()
+    private void OnEnable()
     {
-        CashRegister_MiniGame.OnPay += SetAgentFinalDestination;
+        if(!CheckoutLine) return;
+
+        GameEventsManager.instance.checkoutEvents.onRequestSlotUpdate += SendSlotUpdate;
+        GameEventsManager.instance.checkoutEvents.onReserveSlot += ReserveSlot;
+    }
+
+    private void OnDisable()
+    {
+        if(!CheckoutLine) return;
+
+        GameEventsManager.instance.checkoutEvents.onRequestSlotUpdate -= SendSlotUpdate;
+        GameEventsManager.instance.checkoutEvents.onReserveSlot -= ReserveSlot;
+    }
+
+    private void SendSlotUpdate(GameObject slot, GameObject agent)
+    {
+        if(slot != this.gameObject) return;
+
+        GameEventsManager.instance.checkoutEvents.SendSlotUpdate(this.gameObject, IsOccupied, agent);
+
+        Debug.Log(gameObject + " is Occupied: " + IsOccupied + " / parameter: " + slot);
+    }
+
+    private void ReserveSlot(GameObject slot)
+    {
+        if(slot != this.gameObject) return;
+
+        IsOccupied = true;
     }
 
     void GetAgent(Collider other)
@@ -25,40 +52,31 @@ public class Trigger_NPC_Method : MonoBehaviour
         _agent = other.gameObject.GetComponent<Customer_Behaviour>();
     }
 
-    void SetAgentFinalDestination()
-    {
-        Debug.Log(_agent);
-        if (_agent != null) _agent.FinalDestination();  
-    }
-
     private void OnTriggerEnter(Collider other)
     {
-
         if (other.CompareTag("NPC_Customer"))
         {
-            IsOccupied = true;
-
-            other.GetComponent<Customer_Behaviour>().IsInTrigger = true;
-
-            GetAgent(other);
-
-            Debug.Log(_agent);
-
-            if (CheckoutLine && FinalSlot)
+            if (CheckoutLine && CheckoutSlot)
             {
-                other.GetComponent<Customer_Behaviour>().StartCheckoutGame();
+                GameEventsManager.instance.checkoutEvents.StartCheckoutGame(other.gameObject);
+                GameEventsManager.instance.checkoutEvents.RecalculateCheckoutSlot(other.gameObject);
+                Debug.Log("Sent Checkout event");
             }
-            else if (CheckoutLine)
+            else if(CheckoutLine && IsFinalSlot)
             {
-                other.GetComponent<Customer_Behaviour>().CheckSlotAhead();
+                GameEventsManager.instance.checkoutEvents.EnteredCheckoutLine(other.gameObject);
             }
             else if (FinalDestination)
             {
-                other.GetComponent<Customer_Behaviour>().Kill();
+                GameEventsManager.instance.checkoutEvents.KillAgent(other.gameObject);
+                Debug.Log("Sent kill event");
             }
-            else
+            else if (!CheckoutLine)
             {
-                other.GetComponent<Customer_Behaviour>().CheckFinalDestination();
+                IsOccupied = true;
+
+                GameEventsManager.instance.checkoutEvents.SetNPCTrigger(other.gameObject, true);
+                GameEventsManager.instance.checkoutEvents.ArrivedAtTarget(other.gameObject);
             }
         }   
     }
@@ -69,11 +87,11 @@ public class Trigger_NPC_Method : MonoBehaviour
         {
             IsOccupied = false;
 
-            other.GetComponent<Customer_Behaviour>().IsInTrigger = false;
+            GameEventsManager.instance.checkoutEvents.SetNPCTrigger(other.gameObject, false);
 
-            if (CheckoutLine && FinalSlot)
+            if (CheckoutLine && CheckoutSlot)
             {
-                OnCheckoutLeave?.Invoke();
+                GameEventsManager.instance.checkoutEvents.MoveUpNPCs();
             }
         }
         

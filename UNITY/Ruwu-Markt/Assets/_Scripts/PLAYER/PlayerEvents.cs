@@ -44,4 +44,24 @@ public class PlayerEvents
             onPressedInteract(inputContext);
         }
     }
+
+    public event Action<bool> onToggleJump;
+
+    public void ToggleJump(bool toggle)
+    {
+        if(onToggleJump != null)
+        {
+            onToggleJump(toggle);
+        }
+    }
+
+    public event Action<InputEventContext> onPressedEscape;
+
+    public void PressedEscape()
+    {
+        if(onPressedEscape != null)
+        {
+            onPressedEscape(inputContext);
+        }
+    }
 }

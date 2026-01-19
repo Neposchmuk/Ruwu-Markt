@@ -27,18 +27,7 @@ public class CashRegister_MiniGame : MonoBehaviour
 
     public TMP_Text RegisterChangeGiven;
 
-    public Button ButtonPayWithCash;
-
-    public Button ButtonPayWithCard;
-
-    public List<Button> ChangeButtons;
-
     public GameObject CashRegisterDrawer;
-
-
-
-    public static event Action OnPay;
-
 
 
     private List<GameObject> productsBought = new List<GameObject>();
@@ -53,23 +42,38 @@ public class CashRegister_MiniGame : MonoBehaviour
 
     private int _intPriceTotal;
 
-    private float _floatChangeToGive;
+    private int _intChangeToGive;
 
-    private float _floatChangeGiven;
+    private int _intChangeGiven;
 
     private float cashRegisterDeficit;
 
     private bool questIsRunning;
 
+    private GameObject agent;
+
+
+    private void OnEnable()
+    {
+        GameEventsManager.instance.questEvents.onButtonAddChange += CountChange;
+        GameEventsManager.instance.questEvents.onPayCard += PayCard;
+        GameEventsManager.instance.questEvents.onPayCash += PlayCashAnimation;
+        GameEventsManager.instance.playerEvents.onPressedInteract += Interact;
+        GameEventsManager.instance.checkoutEvents.onStartCheckoutGame += InitializeQuest;
+    }
+
+    private void OnDisable()
+    {
+        GameEventsManager.instance.questEvents.onButtonAddChange -= CountChange;
+        GameEventsManager.instance.questEvents.onPayCard -= PayCard;
+        GameEventsManager.instance.questEvents.onPayCash -= PlayCashAnimation;
+        GameEventsManager.instance.playerEvents.onPressedInteract -= Interact;
+        GameEventsManager.instance.checkoutEvents.onStartCheckoutGame -= InitializeQuest;
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        SM = FindFirstObjectByType<Sanity_Manager>();
-
-        interact = FindFirstObjectByType<PlayerInput>().actions.FindAction("Interact");
-
-        ButtonListeners();
-
         cashRegisterDeficit = 0;
 
         RegisterScannedProducts.text = "";
@@ -77,27 +81,23 @@ public class CashRegister_MiniGame : MonoBehaviour
         RegisterChangeToGive.text = "";
         RegisterChangeGiven.text = "";
         productsScanned = 0;
-        ButtonPayWithCard.interactable = false;
-        ButtonPayWithCash.interactable = false;
+
+        GameEventsManager.instance.questEvents.ToggleButtonInteractable(UIButtonType.CASH, false);
+        GameEventsManager.instance.questEvents.ToggleButtonInteractable(UIButtonType.PAYCARD, false);
+        GameEventsManager.instance.questEvents.ToggleButtonInteractable(UIButtonType.PAYCASH, false);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void InitializeQuest(GameObject agent)
     {
-        if (interact.WasPressedThisFrame())
-        {
-            Interact();
-        }
-    }
-
-    public void InitializeQuest()
-    {
+        Debug.Log(questIsRunning);
         if (!questIsRunning)
         {
+            this.agent = agent;
+
             questIsRunning = true;
             productsToScan = 0;
             productsScanned = 0;
-            _floatChangeGiven = 0;
+            _intChangeGiven = 0;
             InstantiateProducts();
         }
     }
@@ -118,11 +118,11 @@ public class CashRegister_MiniGame : MonoBehaviour
 
     void ScanProduct(productInfo productInfo)
     {
-        _intPriceTotal += (int)(productInfo.price * 100);
+        _intPriceTotal += productInfo.price;
         productInfo.hasBeenScanned = true;
         productsScanned++;
         //playAnimation
-        RegisterScannedProducts.text += productInfo.name + " - " +productInfo.price + "$\n";
+        RegisterScannedProducts.text += productInfo.name + " - " +(float)productInfo.price/100 + "$\n";
         RegisterTotalPrice.text ="Total: " + $"{(float)_intPriceTotal / 100}$";
         if(productsScanned == productsToScan)
         {
@@ -136,36 +136,13 @@ public class CashRegister_MiniGame : MonoBehaviour
         if(payWithCard > 4)
         {
             Debug.Log("Pays with Card");
-            ButtonPayWithCard.interactable = true;
+            GameEventsManager.instance.questEvents.ToggleButtonInteractable(UIButtonType.PAYCARD, true);
         }
         else
         {
             Debug.Log("Pays with cash");
-            ButtonPayWithCash.interactable = true;
+            GameEventsManager.instance.questEvents.ToggleButtonInteractable(UIButtonType.PAYCASH, true);
         }
-    }
-
-    void ButtonListeners()
-    {
-        ButtonPayWithCash.onClick.AddListener(() => PlayCashAnimation());
-        ButtonPayWithCard.onClick.AddListener(() => PayCard());
-
-        try
-        {
-            ChangeButtons[0].onClick.AddListener(() => CountChange(1));
-            ChangeButtons[1].onClick.AddListener(() => CountChange(2));
-            ChangeButtons[2].onClick.AddListener(() => CountChange(5));
-            ChangeButtons[3].onClick.AddListener(() => CountChange(10));
-            ChangeButtons[4].onClick.AddListener(() => CountChange(20));
-            ChangeButtons[5].onClick.AddListener(() => CountChange(50));
-            ChangeButtons[6].onClick.AddListener(() => CountChange(100));
-            ChangeButtons[7].onClick.AddListener(() => CountChange(200));
-        }
-        catch (IndexOutOfRangeException)
-        {
-            Debug.Log("More / Less than 8 Buttons registered in List!");
-        }
-        
     }
 
     void PayCard()
@@ -177,19 +154,23 @@ public class CashRegister_MiniGame : MonoBehaviour
 
     void PayCash()
     {
-        int moneyGiven = Mathf.CeilToInt((float)_intPriceTotal / 500) * 500;
-        _floatChangeToGive = (((float)moneyGiven / 100) - ((float)_intPriceTotal / 100));
-        Debug.Log(_floatChangeToGive);
-        RegisterChangeToGive.text = "Change to give: \n" + $"{_floatChangeToGive}$";
+        /*Debug.Log(_intPriceTotal);
+        Debug.Log(Mathf.CeilToInt((float)_intPriceTotal / 100 * 5));
+        int moneyGiven = Mathf.CeilToInt(Mathf.CeilToInt((float)_intPriceTotal / 100 * 5 )/ 5) * 100;*/
+
+        int moneyGiven = _intPriceTotal;
+        moneyGiven += 500 - (moneyGiven % 500);
+        Debug.Log(moneyGiven);
+
+        _intChangeToGive = moneyGiven - _intPriceTotal;
+        Debug.Log(_intChangeToGive);
+        RegisterChangeToGive.text = "Change to give: \n" + $"{(float)_intChangeToGive / 100}$";
 
         
 
         CashRegisterDrawer.SetActive(false);
 
-        for(int i = 0; i < ChangeButtons.Count; i++)
-        {
-            ChangeButtons[i].interactable = true;
-        }
+        GameEventsManager.instance.questEvents.ToggleButtonInteractable(UIButtonType.CASH, true);
         //CashRegisterDrawer animation
     }
 
@@ -201,17 +182,17 @@ public class CashRegister_MiniGame : MonoBehaviour
 
     void CountChange(int changeValue)
     {
-        _floatChangeGiven += (float)changeValue / 100;
-        Debug.Log(_floatChangeGiven);
-        RegisterChangeGiven.text = "Change given:\n" + $"{_floatChangeGiven}$";
-        if((int)(_floatChangeGiven * 100) == (int)(_floatChangeToGive * 100))
+        _intChangeGiven += changeValue;
+        Debug.Log(_intChangeGiven);
+        RegisterChangeGiven.text = "Change given:\n" + $"{(float)_intChangeGiven / 100}$";
+        if(_intChangeGiven == _intChangeToGive)
         {
             Debug.Log("Change given exactly!");
             CleanUp();
         }
-        else if((int)(_floatChangeGiven * 100) > (int)(_floatChangeToGive *100))
+        else if(_intChangeGiven > _intChangeToGive)
         {
-            cashRegisterDeficit -= _floatChangeGiven - _floatChangeToGive;
+            cashRegisterDeficit -= _intChangeGiven - _intChangeToGive;
             Debug.Log("Given too much change!");
             CleanUp();
         }
@@ -231,26 +212,25 @@ public class CashRegister_MiniGame : MonoBehaviour
         RegisterChangeToGive.text = "";
         RegisterChangeGiven.text = "";
         productsScanned = 0;
-        ButtonPayWithCard.interactable = false;
-        ButtonPayWithCash.interactable = false;
 
         CashRegisterDrawer.SetActive(true);
 
 
-        for (int i = 0; i < ChangeButtons.Count; i++)
-        {
-            ChangeButtons[i].interactable = false;
-        }
+        GameEventsManager.instance.questEvents.ToggleButtonInteractable(UIButtonType.CASH, false);
+        GameEventsManager.instance.questEvents.ToggleButtonInteractable(UIButtonType.PAYCARD, false);
+        GameEventsManager.instance.questEvents.ToggleButtonInteractable(UIButtonType.PAYCASH, false);
 
-        OnPay?.Invoke();
+        GameEventsManager.instance.checkoutEvents.Pay(agent);
 
         questIsRunning = false;
 
         //play CashDrawer animation
     }
 
-    void Interact()
+    void Interact(InputEventContext inputEventContext)
     {
+        if(inputEventContext != InputEventContext.DEFAULT) return;
+
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
 
         if(Physics.Raycast(ray, out RaycastHit hit, 2, RCLayerMask))
@@ -272,15 +252,7 @@ public class CashRegister_MiniGame : MonoBehaviour
                 Destroy(hit.collider.gameObject);
             }
 
-            if (hit.collider.CompareTag("UI_Button"))
-            {
-                Debug.Log("Hit UI_Button)");
-                Button button = hit.collider.gameObject.GetComponent<Button>();
-                if (button.interactable)
-                {
-                    button.onClick.Invoke();
-                }
-            }
+            
         }
     }
 }

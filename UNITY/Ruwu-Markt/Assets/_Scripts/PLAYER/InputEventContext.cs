@@ -3,5 +3,6 @@ using UnityEngine;
 public enum InputEventContext
 {
    DEFAULT,
-   DIALOGUE
+   DIALOGUE,
+   UI
 }

@@ -16,7 +16,7 @@ What do you want?
 I don't have time right now.
 
 Get back to work!
-*[Yes Chef :(]
+*[Yes Boss :(]
     Good slave.
 *[Fuk U!!!]
     Owie my feelings!

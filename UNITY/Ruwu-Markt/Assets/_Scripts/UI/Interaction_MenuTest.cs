@@ -105,6 +105,7 @@ public class Interaction_MenuTest : MonoBehaviour
             interactionUI.SetActive(false);
             GameEventsManager.instance.playerEvents.LockCamera(Toggle);
             GameEventsManager.instance.playerEvents.LockPlayerMovement(Toggle);
+            GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.DEFAULT);
         }
         else
         {
@@ -114,6 +115,7 @@ public class Interaction_MenuTest : MonoBehaviour
             interactionUI.SetActive(true);
             GameEventsManager.instance.playerEvents.LockCamera(Toggle);
             GameEventsManager.instance.playerEvents.LockPlayerMovement(Toggle);
+            GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.UI);
         }
     }
     
