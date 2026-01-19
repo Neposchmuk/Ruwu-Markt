@@ -68,6 +68,8 @@ public class Nightmare_Doom_State : NightmareBaseState
 
         _gun.gameObject.SetActive(true);
 
+        GameEventsManager.instance.questEvents.onHitEnemy += CountKilled;
+
         Enemy_Behaviour.OnEnemyKill += CountKilled;
 
         Enemy_Behaviour.OnKilledPlayer += HitPlayer;
@@ -100,6 +102,8 @@ public class Nightmare_Doom_State : NightmareBaseState
         Enemy_Behaviour.OnEnemyKill -= CountKilled;
 
         Enemy_Behaviour.OnKilledPlayer -= HitPlayer;
+
+        GameEventsManager.instance.questEvents.onHitEnemy -= CountKilled;
 
         _stateManager.EndNight(true, 10);
     }

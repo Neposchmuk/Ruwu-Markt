@@ -50,6 +50,10 @@ public class CashRegister_MiniGame : MonoBehaviour
 
     private bool questIsRunning;
 
+    private bool paysCard;
+
+    private bool registerButtonsEnabled;
+
     private GameObject agent;
 
 
@@ -133,20 +137,24 @@ public class CashRegister_MiniGame : MonoBehaviour
     void CheckPaymentMethod()
     {
         int payWithCard = UnityEngine.Random.Range(1, 7);
+        registerButtonsEnabled = true;
         if(payWithCard > 4)
         {
             Debug.Log("Pays with Card");
             GameEventsManager.instance.questEvents.ToggleButtonInteractable(UIButtonType.PAYCARD, true);
+            paysCard = true;
         }
         else
         {
             Debug.Log("Pays with cash");
             GameEventsManager.instance.questEvents.ToggleButtonInteractable(UIButtonType.PAYCASH, true);
+            paysCard = false;
         }
     }
 
     void PayCard()
     {
+        if(!paysCard || !registerButtonsEnabled) return;
         //playAnimationShowCard
         CleanUp();
 
@@ -154,6 +162,7 @@ public class CashRegister_MiniGame : MonoBehaviour
 
     void PayCash()
     {
+        if(paysCard || !registerButtonsEnabled) return;
         /*Debug.Log(_intPriceTotal);
         Debug.Log(Mathf.CeilToInt((float)_intPriceTotal / 100 * 5));
         int moneyGiven = Mathf.CeilToInt(Mathf.CeilToInt((float)_intPriceTotal / 100 * 5 )/ 5) * 100;*/
@@ -223,6 +232,7 @@ public class CashRegister_MiniGame : MonoBehaviour
         GameEventsManager.instance.checkoutEvents.Pay(agent);
 
         questIsRunning = false;
+        registerButtonsEnabled = false;
 
         //play CashDrawer animation
     }
