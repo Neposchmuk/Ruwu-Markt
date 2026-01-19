@@ -15,13 +15,11 @@ public class PC_Interaction : MonoBehaviour
 
     public GameObject[] Mail_UI_Groups;
 
-    public Image Inbox;
-
-    public Image Mail;
-
     public Button CloseUI;
 
     public Button CloseMail;
+
+    public Image Mail;
 
     [SerializeField] private GameObject PC_UI_Parent;
 
@@ -40,13 +38,11 @@ public class PC_Interaction : MonoBehaviour
     {
         CloseUI.onClick.AddListener(() => CloseInbox());
 
-        CloseMail.onClick.AddListener(() => CloseMailWindow());
-
         _dayManager = FindFirstObjectByType<Day_Manager>();
 
-        PC_UI_Parent.SetActive(false);
-
         Mail.gameObject.SetActive(false);
+
+        PC_UI_Parent.SetActive(false);
 
         Mail_UI = Mail_UI_Groups[0];
 
@@ -68,7 +64,7 @@ public class PC_Interaction : MonoBehaviour
         }
     }
 
-    void CloseInbox()
+    public void CloseInbox()
     {
         PC_UI_Parent.SetActive(false);
         Mail_UI.SetActive(false);
@@ -78,7 +74,7 @@ public class PC_Interaction : MonoBehaviour
         GameEventsManager.instance.questEvents.UpdateQuestText("Go to work");
     }
 
-    void CloseMailWindow()
+    public void CloseMailWindow()
     {
         Mail.gameObject.SetActive(false);
         CloseUI.interactable = true;

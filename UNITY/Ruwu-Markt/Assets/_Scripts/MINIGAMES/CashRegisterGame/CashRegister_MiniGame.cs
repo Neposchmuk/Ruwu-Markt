@@ -67,7 +67,7 @@ public class CashRegister_MiniGame : MonoBehaviour
         GameEventsManager.instance.questEvents.onButtonAddChange -= CountChange;
         GameEventsManager.instance.questEvents.onPayCard -= PayCard;
         GameEventsManager.instance.questEvents.onPayCash -= PlayCashAnimation;
-        GameEventsManager.instance.playerEvents.onPressedInteract += Interact;
+        GameEventsManager.instance.playerEvents.onPressedInteract -= Interact;
         GameEventsManager.instance.checkoutEvents.onStartCheckoutGame -= InitializeQuest;
     }
 
