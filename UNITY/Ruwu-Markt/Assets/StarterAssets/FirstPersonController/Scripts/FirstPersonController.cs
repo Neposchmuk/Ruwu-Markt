@@ -108,6 +108,7 @@ namespace StarterAssets
 			GameEventsManager.instance.playerEvents.onMovementLock += TogglePlayerMovement;
             GameEventsManager.instance.playerEvents.onLockCamera += LockCamera;
 			GameEventsManager.instance.playerEvents.onToggleJump += ToggleJump;
+			GameEventsManager.instance.npcEvents.onPingPlayerPosition += SendPlayerPosition;
         }
 
         private void OnDisable()
@@ -115,6 +116,7 @@ namespace StarterAssets
             GameEventsManager.instance.playerEvents.onMovementLock -= TogglePlayerMovement;
             GameEventsManager.instance.playerEvents.onLockCamera -= LockCamera;
 			GameEventsManager.instance.playerEvents.onToggleJump -= ToggleJump;
+			GameEventsManager.instance.npcEvents.onPingPlayerPosition -= SendPlayerPosition;
         }
 
         private void Start()
@@ -166,6 +168,11 @@ namespace StarterAssets
 			{
                 CameraRotation();
             }
+		}
+
+		private void SendPlayerPosition(GameObject agent)
+		{
+			GameEventsManager.instance.npcEvents.FacePlayer(agent, transform.position);
 		}
 
 		private void TogglePlayerMovement(bool toggle)

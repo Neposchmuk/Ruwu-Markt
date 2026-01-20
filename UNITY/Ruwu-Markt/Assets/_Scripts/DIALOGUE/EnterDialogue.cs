@@ -11,6 +11,7 @@ public class EnterDialogue : MonoBehaviour
         if (!dialogueKnotName.Equals(""))
         {
             Debug.Log("Sent Dialogue Event");
+            GameEventsManager.instance.npcEvents.PingPlayerPosition(gameObject);
             GameEventsManager.instance.dialogueEvents.EnterDialogue(dialogueKnotName);
         }
     }

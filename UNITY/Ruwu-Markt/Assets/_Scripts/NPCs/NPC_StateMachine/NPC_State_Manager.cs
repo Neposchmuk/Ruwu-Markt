@@ -9,6 +9,10 @@ public class NPC_State_Manager : MonoBehaviour
     public NPC_Walking_State Walking_State = new NPC_Walking_State();
     public NPC_Checkout_State Checkout_State = new NPC_Checkout_State();
 
+    [SerializeField] private Animator animator;
+
+    private string currentTrigger;
+
     private void Awake()
     {
         SwitchState(Idle_State);
@@ -26,6 +30,14 @@ public class NPC_State_Manager : MonoBehaviour
         currentState.EnterState(this);
     }
 
-    
-    
+    public void SetAnimatorTrigger(string trigger)
+    {
+        if(currentTrigger != null)
+        {
+            animator.ResetTrigger(currentTrigger);
+        }
+
+        animator.SetTrigger(trigger);
+        currentTrigger = trigger;
+    }
 }
