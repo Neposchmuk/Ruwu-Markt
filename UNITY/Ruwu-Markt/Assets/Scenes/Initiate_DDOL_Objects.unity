@@ -2594,8 +2594,8 @@ MonoBehaviour:
   nightScene: Greyboxing_Night
   IsDay: 1
   CheckedPC: 0
-  IsFinalDay: 1
-  GetsGoodEnding: 1
+  IsFinalDay: 0
+  GetsGoodEnding: 0
 --- !u!1 &1897077850
 GameObject:
   m_ObjectHideFlags: 0
