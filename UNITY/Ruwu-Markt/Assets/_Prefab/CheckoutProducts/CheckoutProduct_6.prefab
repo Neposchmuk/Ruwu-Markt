@@ -687,7 +687,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   productName: blueCylinder
-  price: 4.49
+  price: 499
   PLU: 4458
   ageRestricted: 0
   hasBeenScanned: 0

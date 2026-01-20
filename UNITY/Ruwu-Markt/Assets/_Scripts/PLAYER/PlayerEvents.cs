@@ -23,13 +23,13 @@ public class PlayerEvents
     }
 
 
-    public event Action<bool> onCameraLock;
+    public event Action<bool> onLockCamera;
 
-    public void CameraLock(bool toggle)
+    public void LockCamera(bool toggle)
     {
-        if(onCameraLock != null)
+        if(onLockCamera != null)
         {
-            onCameraLock(toggle);
+            onLockCamera(toggle);
         }
     }
 
@@ -42,6 +42,26 @@ public class PlayerEvents
         if(onPressedInteract != null)
         {
             onPressedInteract(inputContext);
+        }
+    }
+
+    public event Action<bool> onToggleJump;
+
+    public void ToggleJump(bool toggle)
+    {
+        if(onToggleJump != null)
+        {
+            onToggleJump(toggle);
+        }
+    }
+
+    public event Action<InputEventContext> onPressedEscape;
+
+    public void PressedEscape()
+    {
+        if(onPressedEscape != null)
+        {
+            onPressedEscape(inputContext);
         }
     }
 }

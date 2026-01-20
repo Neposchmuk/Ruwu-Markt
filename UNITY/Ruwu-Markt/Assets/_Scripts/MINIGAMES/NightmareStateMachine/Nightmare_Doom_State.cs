@@ -68,6 +68,8 @@ public class Nightmare_Doom_State : NightmareBaseState
 
         _gun.gameObject.SetActive(true);
 
+        GameEventsManager.instance.questEvents.onHitEnemy += CountKilled;
+
         Enemy_Behaviour.OnEnemyKill += CountKilled;
 
         Enemy_Behaviour.OnKilledPlayer += HitPlayer;
@@ -75,19 +77,19 @@ public class Nightmare_Doom_State : NightmareBaseState
 
     public override void UpdateState()
     {
-        if (_attack.WasPressedThisFrame())
+        if (_attack.WasPressedThisDynamicUpdate())
         {
             _gun.Fire();
         }
 
-        if (_melee.WasPressedThisFrame())
+        if (_melee.WasPressedThisDynamicUpdate())
         {
             _gun.gameObject.SetActive(false);
             _batParent.StartAnimatorCoroutine();
             _gun.gameObject.SetActive(true);
         }
 
-        if (_reload.WasPressedThisFrame())
+        if (_reload.WasPressedThisDynamicUpdate())
         {
             _gun.StartReload();
         }
@@ -100,6 +102,8 @@ public class Nightmare_Doom_State : NightmareBaseState
         Enemy_Behaviour.OnEnemyKill -= CountKilled;
 
         Enemy_Behaviour.OnKilledPlayer -= HitPlayer;
+
+        GameEventsManager.instance.questEvents.onHitEnemy -= CountKilled;
 
         _stateManager.EndNight(true, 10);
     }

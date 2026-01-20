@@ -687,7 +687,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   productName: orangeCylinder
-  price: 6.66
+  price: 666
   PLU: 6969
   ageRestricted: 0
   hasBeenScanned: 0

@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -32,11 +33,13 @@ public class RayCast : MonoBehaviour
     private void OnEnable()
     {
         GameEventsManager.instance.playerEvents.onPressedInteract += Raycast;
+        Debug.Log("Added RC Listener");
     }
 
     private void OnDisable()
     {
         GameEventsManager.instance.playerEvents.onPressedInteract -= Raycast;
+        Debug.Log("Removed RC listener");
     }
 
     private void Start()
@@ -69,7 +72,7 @@ public class RayCast : MonoBehaviour
 
         if(Physics.Raycast(ray, out RaycastHit hit, rayLength, layerMask))
         {
-            if(hit.collider.tag == "Shelf" && !QM.isDoingQuest && !QM.shelfQuestCompleted)
+            if(hit.collider.tag == "ShelfQuest" && !QM.isDoingQuest && !QM.shelfQuestCompleted)
             {
                 hit.collider.gameObject.GetComponent<Interaction_MenuTest>().ToggleUI(true);
                 questObject = hit.collider.gameObject;
@@ -115,7 +118,6 @@ public class RayCast : MonoBehaviour
 
             if(hit.collider.tag == "Safe" && _carryingCashtray)
             {
-                Debug.Log("InteractSafe");
                 Hand.DestroyObjectInHand();
                 QM.CompleteDay();
             }
@@ -150,7 +152,7 @@ public class RayCast : MonoBehaviour
 
             if(hit.collider.tag == "HomeDoor" && _dayManager.IsDay && _dayManager.CheckedPC)
             {
-                SceneManager.LoadScene("Greyboxing_Day");
+                GameEventsManager.instance.gameEvents.ChangeScene("Greyboxing_Day");
             }
 
             if(hit.collider.tag == "HomeMatress" && !_dayManager.IsDay)
@@ -159,7 +161,7 @@ public class RayCast : MonoBehaviour
                 _dayManager.AddDay();
             }
 
-            if(hit.collider.tag == "Computer" && !_dayManager.CheckedPC)
+            if(hit.collider.tag == "Computer")
             {
                 PC_Interaction _pcInteraction = hit.collider.GetComponent<PC_Interaction>();
                 _pcInteraction.OpenInbox();
@@ -171,6 +173,13 @@ public class RayCast : MonoBehaviour
                 hit.collider.TryGetComponent<EnterDialogue>(out _enterDialogue);
                 if (_enterDialogue == null) Debug.LogWarning("NPC has no EnterDialogue Script!");
                 else _enterDialogue.SendDialogueEvent();
+            }
+
+
+            //Possibly add the following interactions to different InputEventContext
+            if (hit.collider.CompareTag("UI_Button"))
+            {
+                GameEventsManager.instance.questEvents.UIButtonInteract(hit.collider.gameObject);
             }
 
             /*if(hit.collider.tag == "ProduceCan" && QM.isDoingQuest && !QM.shelfQuestCompleted)

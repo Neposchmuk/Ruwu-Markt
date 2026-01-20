@@ -6,7 +6,7 @@ public class productInfo : MonoBehaviour
 
     public string productName;
 
-    public float price;
+    public int price; [Tooltip("Price in cents")]
 
     public int PLU;
 
