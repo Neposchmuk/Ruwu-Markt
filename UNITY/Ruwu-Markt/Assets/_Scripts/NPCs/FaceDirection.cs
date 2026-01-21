@@ -32,7 +32,7 @@ public class FaceDirection : MonoBehaviour
 
     private void FaceInDirection(GameObject agent)
     {
-        if(agent != this.agent) return;
+        if(agent != this.agent || currentTrigger == null) return;
 
         Quaternion LookDirection = Quaternion.Euler(new Vector3(transform.rotation.x, currentTrigger.transform.localEulerAngles.y, transform.rotation.z));
 

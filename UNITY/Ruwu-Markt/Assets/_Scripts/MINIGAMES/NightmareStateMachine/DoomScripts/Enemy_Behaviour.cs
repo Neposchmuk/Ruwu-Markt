@@ -26,7 +26,7 @@ public class Enemy_Behaviour : MonoBehaviour
     }
     private void OnDisable()
     {
-        GameEventsManager.instance.questEvents.onHitEnemy += KillEnemy;
+        GameEventsManager.instance.questEvents.onHitEnemy -= KillEnemy;
     }
 
     private void Start()

@@ -75,19 +75,19 @@ public class Nightmare_Doom_State : NightmareBaseState
 
     public override void UpdateState()
     {
-        if (_attack.WasPressedThisDynamicUpdate())
+        if (_attack.WasPerformedThisDynamicUpdate())
         {
             _gun.Fire();
         }
 
-        if (_melee.WasPressedThisDynamicUpdate())
+        if (_melee.WasPerformedThisDynamicUpdate())
         {
             _gun.gameObject.SetActive(false);
             _batParent.StartAnimatorCoroutine();
             _gun.gameObject.SetActive(true);
         }
 
-        if (_reload.WasPressedThisDynamicUpdate())
+        if (_reload.WasPerformedThisDynamicUpdate())
         {
             _gun.StartReload();
         }
@@ -116,6 +116,8 @@ public class Nightmare_Doom_State : NightmareBaseState
 
     void HitPlayer()
     {
+        if(_stateManager.playerInvincible) return;
+
         _playerHealth--;
         Debug.Log("Player HP: " + _playerHealth);
         if(_playerHealth <= 0)

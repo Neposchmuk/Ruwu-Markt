@@ -52,4 +52,14 @@ public class NPC_Events
             onResetFace(agent);
         }
     }
+
+    public event Action<GameObject> onResumeBehaviour;
+
+    public void ResumeBehaviour(GameObject agent)
+    {
+        if(onResumeBehaviour != null)
+        {
+            onResumeBehaviour(agent);
+        }
+    }
 }

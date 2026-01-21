@@ -32,7 +32,7 @@ public class SmashThings_Animation : MonoBehaviour
 
         yield return new WaitForSeconds(AnimationClip.length);
 
-        _animator.ResetTrigger("Hit");
+        //_animator.ResetTrigger("Hit");
 
         Bat.SetActive(false);
     }
