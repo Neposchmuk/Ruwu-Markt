@@ -23,13 +23,23 @@ public class NPC_Events
         }
     }
 
-    public event Action<GameObject, Quaternion> onFaceDirection;
+    public event Action<GameObject, GameObject> onSetFaceTrigger;
 
-    public void FaceDirection(GameObject agent, Quaternion faceDirection)
+    public void SetFaceTrigger(GameObject agent, GameObject target)
     {
-        if(onFaceDirection != null)
+        if(onSetFaceTrigger != null)
         {
-            onFaceDirection(agent, faceDirection);
+            onSetFaceTrigger(agent, target);
+        }
+    }
+
+    public event Action<GameObject> onFaceTrigger;
+
+    public void FaceTrigger(GameObject agent)
+    {
+        if(onFaceTrigger != null)
+        {
+            onFaceTrigger(agent);
         }
     }
 

@@ -58,7 +58,7 @@ public class Trigger_NPC_Method : MonoBehaviour
         {
             if (CheckoutLine && CheckoutSlot)
             {
-                GameEventsManager.instance.npcEvents.FaceDirection(other.gameObject, transform.rotation);
+                GameEventsManager.instance.npcEvents.SetFaceTrigger(other.gameObject, gameObject);
 
                 GameEventsManager.instance.checkoutEvents.StartCheckoutGame(other.gameObject);
                 GameEventsManager.instance.checkoutEvents.RecalculateCheckoutSlot(other.gameObject);
@@ -77,7 +77,7 @@ public class Trigger_NPC_Method : MonoBehaviour
             {
                 IsOccupied = true;
 
-                GameEventsManager.instance.npcEvents.FaceDirection(other.gameObject, transform.rotation);
+                GameEventsManager.instance.npcEvents.SetFaceTrigger(other.gameObject, gameObject);
 
                 GameEventsManager.instance.checkoutEvents.SetNPCTrigger(other.gameObject, true);
                 GameEventsManager.instance.checkoutEvents.ArrivedAtTarget(other.gameObject);

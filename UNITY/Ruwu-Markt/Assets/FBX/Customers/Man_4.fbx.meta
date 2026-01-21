@@ -3,12 +3,7 @@ guid: c53ddb73f85857641b58553977c158b9
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Character_09.001
-    second: {fileID: 2100000, guid: fc73e9bee22cc3b41b1269fc6b94cd88, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -36,9 +31,38 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
+      name: Man_4_Idle
+      takeName: Man_4
+      internalID: 6693428636811072170
+      firstFrame: 100
+      lastFrame: 350
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
       name: Man_4_Walk
-      takeName: Man_4_Rigged|mixamo.com
-      internalID: 443892786154872323
+      takeName: Man_4
+      internalID: -6249481946374885808
       firstFrame: 1
       lastFrame: 46
       wrapMode: 0
@@ -66,39 +90,10 @@ ModelImporter:
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Man_4_Run
-      takeName: Man_4_Rigged|mixamo.com.001
-      internalID: 3347464285774378745
+      takeName: Man_4
+      internalID: 3965448155320103579
       firstFrame: 400
-      lastFrame: 416
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Man_4_Idle
-      takeName: Man_4_Rigged|mixamo.com.003
-      internalID: -1225012782519063392
-      firstFrame: 100
-      lastFrame: 350
+      lastFrame: 417
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

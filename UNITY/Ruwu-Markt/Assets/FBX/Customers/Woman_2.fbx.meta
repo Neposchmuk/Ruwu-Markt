@@ -3,12 +3,7 @@ guid: c1b4357084a06b742b325377f8fd29cc
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Character_Female_15.001
-    second: {fileID: 2100000, guid: 51ed6adbd9468724fab510c5d94d78fd, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -36,9 +31,38 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
+      name: Woman_2_Idle
+      takeName: Woman_2
+      internalID: 4322334651711953568
+      firstFrame: 1
+      lastFrame: 251
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
       name: Woman_2_Walk
-      takeName: Woman_2_Rigged|mixamo.com.015
-      internalID: 8353246529195621763
+      takeName: Woman_2
+      internalID: 9053227070522772199
       firstFrame: 300
       lastFrame: 338
       wrapMode: 0
@@ -66,39 +90,10 @@ ModelImporter:
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Woman_2_Run
-      takeName: Woman_2_Rigged|mixamo.com.023
-      internalID: -7263386075379584106
+      takeName: Woman_2
+      internalID: 1350464977826931679
       firstFrame: 400
-      lastFrame: 417
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Woman_2_Idle
-      takeName: Woman_2_Rigged|mixamo.com.025
-      internalID: 7144459094633675215
-      firstFrame: 1
-      lastFrame: 251
+      lastFrame: 416
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

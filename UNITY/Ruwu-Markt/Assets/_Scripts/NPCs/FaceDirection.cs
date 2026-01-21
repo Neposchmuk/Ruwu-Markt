@@ -2,32 +2,48 @@ using UnityEngine;
 
 public class FaceDirection : MonoBehaviour
 {
+
+    [SerializeField] private GameObject agent;
+
+    private GameObject currentTrigger;
+
     private void OnEnable()
     {
         GameEventsManager.instance.npcEvents.onResetFace += ResetFace;
         GameEventsManager.instance.npcEvents.onFacePlayer += FacePlayer;
-        GameEventsManager.instance.npcEvents.onFaceDirection += FaceInDirection;
+        GameEventsManager.instance.npcEvents.onSetFaceTrigger += SetCurrentTrigger;
+        GameEventsManager.instance.npcEvents.onFaceTrigger += FaceInDirection;
     }
 
     private void OnDisable()
     {
         GameEventsManager.instance.npcEvents.onResetFace -= ResetFace;
         GameEventsManager.instance.npcEvents.onFacePlayer -= FacePlayer;
-        GameEventsManager.instance.npcEvents.onFaceDirection -= FaceInDirection;
+        GameEventsManager.instance.npcEvents.onSetFaceTrigger -= SetCurrentTrigger;
+        GameEventsManager.instance.npcEvents.onFaceTrigger -= FaceInDirection;
     }
 
-    private void FaceInDirection(GameObject agent, Quaternion direction)
+    private void SetCurrentTrigger(GameObject agent, GameObject trigger)
     {
-        if(agent != this.gameObject) return;
+        if(agent != this.agent) return;
 
-        Vector3 LookDirection = new Vector3(direction.x, transform.position.y, direction.z);
+        currentTrigger = trigger;
+    }
 
-        transform.LookAt(LookDirection);
+    private void FaceInDirection(GameObject agent)
+    {
+        if(agent != this.agent) return;
+
+        Quaternion LookDirection = Quaternion.Euler(new Vector3(transform.rotation.x, currentTrigger.transform.localEulerAngles.y, transform.rotation.z));
+
+        Debug.Log(LookDirection);
+
+        transform.rotation = LookDirection;
     }
 
     private void FacePlayer(GameObject agent, Vector3 playerPosition)
     {
-        if(agent != this.gameObject) return;
+        if(agent != this.agent) return;
 
         Vector3 PlayerDirection = new Vector3(playerPosition.x, transform.position.y, playerPosition.z);
 
@@ -36,8 +52,8 @@ public class FaceDirection : MonoBehaviour
 
     private void ResetFace(GameObject agent)
     {
-        if(agent != this.gameObject) return;
+        if(agent != this.agent) return;
 
-        transform.rotation = Quaternion.Euler(Vector3.zero);
+        transform.localEulerAngles = Vector3.zero;
     }
 }

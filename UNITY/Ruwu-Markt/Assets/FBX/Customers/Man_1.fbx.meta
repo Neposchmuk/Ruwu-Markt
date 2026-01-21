@@ -3,12 +3,7 @@ guid: 59f76d83ed66c654f8304d3e504cdde9
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Character_04.001
-    second: {fileID: 2100000, guid: 8cb70f8de7f3d27489297465db7e9430, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -37,10 +32,10 @@ ModelImporter:
     clipAnimations:
     - serializedVersion: 16
       name: Man_1_Idle
-      takeName: Man_1_Rigged|mixamo.com.002
-      internalID: -8771438131454062567
+      takeName: Man_1_Rigged|Man_1
+      internalID: -1922295017860049655
       firstFrame: 1
-      lastFrame: 250
+      lastFrame: 251
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -66,8 +61,8 @@ ModelImporter:
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Man_1_Walk
-      takeName: Man_1_Rigged|mixamo.com.003
-      internalID: -1612230749326073820
+      takeName: Man_1
+      internalID: -7148042018129814493
       firstFrame: 300
       lastFrame: 384
       wrapMode: 0
@@ -95,10 +90,10 @@ ModelImporter:
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Man_1_Run
-      takeName: Man_1_Rigged|mixamo.com.005
-      internalID: -4031093596495054025
+      takeName: Man_1
+      internalID: 8456256487919244572
       firstFrame: 400
-      lastFrame: 419
+      lastFrame: 418
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

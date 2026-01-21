@@ -9,6 +9,8 @@ public class NPC_State_Manager : MonoBehaviour
     public NPC_Walking_State Walking_State = new NPC_Walking_State();
     public NPC_Checkout_State Checkout_State = new NPC_Checkout_State();
 
+    public NPC_Running_State Running_State = new NPC_Running_State();
+
     [SerializeField] private Animator animator;
 
     private string currentTrigger;

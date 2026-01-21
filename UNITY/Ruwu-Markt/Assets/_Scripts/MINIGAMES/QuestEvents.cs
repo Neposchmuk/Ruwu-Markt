@@ -125,13 +125,13 @@ public class QuestEvents
         }
     }
 
-    public event Action onHitEnemy;
+    public event Action<GameObject> onHitEnemy;
 
-    public void HitEnemy()
+    public void HitEnemy(GameObject enemy)
     {
         if(onHitEnemy != null)
         {
-            onHitEnemy();
+            onHitEnemy(enemy);
         }
     }
 }
