@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 3233326927241315537}
   - component: {fileID: 5636126652312969365}
   - component: {fileID: -9146534984501666744}
+  - component: {fileID: 3306323123962136303}
   m_Layer: 0
   m_Name: Bottle_WorldObject
   m_TagString: Bottle
@@ -213,6 +214,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3306323123962136303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2648528847359911036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3692ced1aa6fe8409df46b31493dd13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particles: {fileID: 8366693497785415894, guid: 62f900b7548e31142b9a137b287c6da0, type: 3}
 --- !u!1 &8179971446466651519
 GameObject:
   m_ObjectHideFlags: 0

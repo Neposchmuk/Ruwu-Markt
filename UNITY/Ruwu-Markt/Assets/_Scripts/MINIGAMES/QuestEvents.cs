@@ -134,4 +134,14 @@ public class QuestEvents
             onHitEnemy(enemy);
         }
     }
+
+    public event Action<GameObject> onAllowBottleExplode;
+
+    public void AllowBottleExplode(GameObject bottle)
+    {
+        if(onAllowBottleExplode != null)
+        {
+            onAllowBottleExplode(bottle);
+        }
+    }
 }

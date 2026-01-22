@@ -52387,7 +52387,7 @@ MonoBehaviour:
   - {fileID: 4856194436506024225, guid: 4f04cbb59223cd6428c6e3b1d4246c68, type: 3}
   MopAnimator: {fileID: 0}
   objectHolding: {fileID: 0}
-  throwStrength: 10
+  throwStrength: 17
 --- !u!65 &994581435
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -110,11 +110,14 @@ public class Hand_Actions: MonoBehaviour
     {
         Debug.Log("Called throw object");
         GameObject objectThrown = Instantiate(placeObject[PickUp], transform.position, transform.rotation);
+        GameEventsManager.instance.questEvents.AllowBottleExplode(objectThrown);
         try
         {
             Debug.Log("Trying to throw object");
             objectThrown.TryGetComponent<Rigidbody>(out Rigidbody thrownRB);
             thrownRB.AddForce(transform.forward * throwStrength, ForceMode.Impulse);
+            thrownRB.AddRelativeTorque(new Vector3(0.2f, 0,0), ForceMode.Impulse);
+            
         }
         catch (NullReferenceException)
         {
