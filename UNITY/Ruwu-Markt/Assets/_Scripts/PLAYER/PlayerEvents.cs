@@ -95,6 +95,16 @@ public class PlayerEvents
         }
     }
 
+    public event Action<InputEventContext> onReleasedAttack;
+
+    public void ReleasedAttack()
+    {
+        if(onReleasedAttack != null)
+        {
+            onReleasedAttack(inputContext);
+        }
+    }
+
     public event  Action<InputEventContext> onPressedSpecialSecondary;
 
     public void PressedSpecialSecondary()

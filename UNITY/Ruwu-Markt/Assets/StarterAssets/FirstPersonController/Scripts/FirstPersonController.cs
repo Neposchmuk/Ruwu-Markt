@@ -180,6 +180,11 @@ namespace StarterAssets
 				GameEventsManager.instance.playerEvents.HoldAttack();
 			}
 
+			if (_attack.WasReleasedThisDynamicUpdate())
+			{
+				GameEventsManager.instance.playerEvents.ReleasedAttack();
+			}
+
 			if (_specialPrimary.WasPressedThisDynamicUpdate())
 			{
 				GameEventsManager.instance.playerEvents.PressedSpecialPrimary();

@@ -6,6 +6,8 @@ public enum InputEventContext
    DIALOGUE,
    UI,
 
+   MENU_UI,
+
    NIGHTMARE_DOOM,
 
    NIGHTMARE_ESCAPE,

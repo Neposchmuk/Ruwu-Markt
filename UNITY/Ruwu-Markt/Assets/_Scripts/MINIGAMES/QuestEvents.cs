@@ -144,4 +144,14 @@ public class QuestEvents
             onAllowBottleExplode(bottle);
         }
     }
+
+    public event Action<bool> onWateringFillState;
+
+    public void WateringFillState(bool toggle)
+    {
+        if(onWateringFillState != null)
+        {
+            onWateringFillState(toggle);
+        }
+    }
 }
