@@ -10,6 +10,16 @@ public class SmashThings_Animation : MonoBehaviour
 
     Animator _animator;
 
+    private void Awake()
+    {
+        GameEventsManager.instance.playerEvents.onPressedSpecialPrimary += StartAnimatorCoroutine;
+    }
+
+    private void OnDestroy()
+    {
+        GameEventsManager.instance.playerEvents.onPressedSpecialPrimary -= StartAnimatorCoroutine;
+    }
+
 
     private void Start()
     {
@@ -19,8 +29,12 @@ public class SmashThings_Animation : MonoBehaviour
     }
 
 
-    public void StartAnimatorCoroutine()
+    public void StartAnimatorCoroutine(InputEventContext context)
     {
+        Debug.Log(context);
+
+        if(context != InputEventContext.NIGHTMARE_DOOM && context != InputEventContext.NIGHTMARE_SMASH) return;
+
         StartCoroutine(WaitForAnimation());
     }
 

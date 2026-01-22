@@ -4,5 +4,13 @@ public enum InputEventContext
 {
    DEFAULT,
    DIALOGUE,
-   UI
+   UI,
+
+   NIGHTMARE_DOOM,
+
+   NIGHTMARE_ESCAPE,
+
+   NIGHTMARE_SMASH,
+
+   NIGHTMARE_JUMP
 }

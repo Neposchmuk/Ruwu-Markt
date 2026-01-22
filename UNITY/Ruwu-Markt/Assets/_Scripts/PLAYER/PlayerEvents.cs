@@ -64,4 +64,44 @@ public class PlayerEvents
             onPressedEscape(inputContext);
         }
     }
+
+    public event Action<InputEventContext> onPressedSpecialPrimary;
+
+    public void PressedSpecialPrimary()
+    {
+        if(onPressedSpecialPrimary != null)
+        {
+            onPressedSpecialPrimary(inputContext);
+        }
+    }
+
+    public event Action<InputEventContext> onPressedAttack;
+
+    public void PressedAttack()
+    {
+        if(onPressedAttack != null)
+        {
+            onPressedAttack(inputContext);
+        }
+    }
+
+    public event  Action<InputEventContext> onHoldAttack;
+
+    public void HoldAttack()
+    {
+        if(onHoldAttack != null)
+        {
+            onHoldAttack(inputContext);
+        }
+    }
+
+    public event  Action<InputEventContext> onPressedSpecialSecondary;
+
+    public void PressedSpecialSecondary()
+    {
+        if(onPressedSpecialSecondary != null)
+        {
+            onPressedSpecialSecondary(inputContext);
+        }
+    }
 }
