@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 3233326927241315537}
   - component: {fileID: 5636126652312969365}
   - component: {fileID: -9146534984501666744}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Bottle_WorldObject
   m_TagString: Bottle
   m_Icon: {fileID: 0}
