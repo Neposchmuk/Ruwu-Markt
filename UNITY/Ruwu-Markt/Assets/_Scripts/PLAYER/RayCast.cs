@@ -116,23 +116,35 @@ public class RayCast : MonoBehaviour
 
                 if(hit.collider.tag == "Safe" && _carryingCashtray)
                 {
+                    GameEventsManager.instance.soundEvents.TriggerSound(SoundType.SAFE);
                     Hand.DestroyObjectInHand();
                     QM.CompleteDay();
                 }
 
-                if(hit.collider.tag == "HomeDoor" && _dayManager.IsDay && _dayManager.CheckedPC)
+                if(hit.collider.tag == "HomeDoor")
                 {
-                    GameEventsManager.instance.gameEvents.ChangeScene("Greyboxing_Day");
+                    if(_dayManager.IsDay && _dayManager.CheckedPC)
+                    {
+                        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.DOOR_OPEN);
+                        GameEventsManager.instance.gameEvents.ChangeScene("Greyboxing_Day");
+                    }
+                    else
+                    {
+                        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.DOOR_LOCKED);
+                    }
+                    
                 }
 
                 if(hit.collider.tag == "HomeMatress" && !_dayManager.IsDay)
                 {
+                    GameEventsManager.instance.soundEvents.TriggerSound(SoundType.MATRESS);
                     Debug.Log("Hit");
                     _dayManager.AddDay();
                 }
 
                 if(hit.collider.tag == "Computer")
                 {
+                    GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PC_CLICK);
                     PC_Interaction _pcInteraction = hit.collider.GetComponent<PC_Interaction>();
                     _pcInteraction.OpenInbox();
                 }
@@ -163,6 +175,7 @@ public class RayCast : MonoBehaviour
         
                 if(hit.collider.tag == "MarketKey")
                 {
+                    GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PICKUP);
                     OnKeyPickup?.Invoke();
                     _hasMarketKey = true;
                     Destroy(hit.collider.gameObject);
@@ -172,10 +185,12 @@ public class RayCast : MonoBehaviour
                 {
                     if (_hasMarketKey)
                     {
+                        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.MARKET_DOOR_OPEN);
                         OnMarketLeave?.Invoke();
                     }
                     else
                     {
+                        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.MARKET_DOOR_CLOSED);
                         GameEventsManager.instance.questEvents.ShowKeyText();
                     }
                 }
@@ -185,6 +200,7 @@ public class RayCast : MonoBehaviour
                     AmmoStation _ammoStation = hit.collider.GetComponent<AmmoStation>();
                     if (!_ammoStation.IsLocked)
                     {
+                        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PICKUP);
                         _ammoStation.AmmoPicked();
                     }     
                 }

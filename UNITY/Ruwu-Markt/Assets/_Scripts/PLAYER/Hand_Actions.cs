@@ -128,6 +128,8 @@ public class Hand_Actions: MonoBehaviour
         objectToPlace = placeObject[PickUp];
         Debug.Log(objectHolding);
 
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PICKUP);
+
         return objectHolding;
         
     }
@@ -137,6 +139,8 @@ public class Hand_Actions: MonoBehaviour
         objectHolding = Instantiate(instanceObject[PickUp], transform.position, Quaternion.Euler(transform.eulerAngles + RotationOverride), gameObject.transform);
         objectToPlace = placeObject[PickUp];
 
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PICKUP);
+
         return objectHolding;
     }
 
@@ -145,6 +149,7 @@ public class Hand_Actions: MonoBehaviour
         Debug.Log("Called throw object");
         GameObject objectThrown = Instantiate(placeObject[PickUp], transform.position, transform.rotation);
         GameEventsManager.instance.questEvents.AllowBottleExplode(objectThrown);
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.BOTTLE_THROW);
         try
         {
             Debug.Log("Trying to throw object");

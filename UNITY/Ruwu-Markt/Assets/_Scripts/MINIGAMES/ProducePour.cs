@@ -29,9 +29,11 @@ public class ProducePour : MonoBehaviour
             case QuestContext.SHELF_POUR:
                 particles.Play();
                 animator.SetBool("Pour", true);
+                GameEventsManager.instance.soundEvents.TriggerSound(SoundType.POUR);
                 break;
             case QuestContext.SHELF_SIP:
                 animator.SetBool("Sip", true);
+                GameEventsManager.instance.soundEvents.TriggerSound(SoundType.DRINK);
                 break;
         }
 
@@ -52,5 +54,7 @@ public class ProducePour : MonoBehaviour
                 animator.SetBool("Sip", false);
                 break;
         }
+
+        GameEventsManager.instance.soundEvents.StopSound();
     }
 }

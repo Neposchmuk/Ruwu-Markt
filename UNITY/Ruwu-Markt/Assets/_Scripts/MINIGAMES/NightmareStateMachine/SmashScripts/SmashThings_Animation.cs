@@ -44,6 +44,8 @@ public class SmashThings_Animation : MonoBehaviour
 
         _animator.SetTrigger("Hit");
 
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.BAT_SWOOSH);
+
         yield return new WaitForSeconds(AnimationClip.length);
 
         //_animator.ResetTrigger("Hit");

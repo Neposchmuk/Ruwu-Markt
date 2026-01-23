@@ -125,7 +125,9 @@ public class CashRegister_MiniGame : MonoBehaviour
         _intPriceTotal += productInfo.price;
         productInfo.hasBeenScanned = true;
         productsScanned++;
-        //playAnimation
+        
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.CASH_SCAN);
+
         RegisterScannedProducts.text += productInfo.name + " - " +(float)productInfo.price/100 + "$\n";
         RegisterTotalPrice.text ="Total: " + $"{(float)_intPriceTotal / 100}$";
         if(productsScanned == productsToScan)
@@ -155,7 +157,7 @@ public class CashRegister_MiniGame : MonoBehaviour
     void PayCard()
     {
         if(!paysCard || !registerButtonsEnabled) return;
-        //playAnimationShowCard
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.CASH_BUTTONS);
         CleanUp();
 
     }
@@ -185,12 +187,15 @@ public class CashRegister_MiniGame : MonoBehaviour
 
     void PlayCashAnimation()
     {
-        //playAnimationGiveCash
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.CASH_BUTTONS);
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.CASH_SPAWN);
         Instantiate(moneyPrefab, moneySpawnPoint.transform.position, transform.rotation);
     }
 
     void CountChange(int changeValue)
     {
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.CASH_CHANGE);
+
         _intChangeGiven += changeValue;
         Debug.Log(_intChangeGiven);
         RegisterChangeGiven.text = "Change given:\n" + $"{(float)_intChangeGiven / 100}$";
@@ -260,6 +265,9 @@ public class CashRegister_MiniGame : MonoBehaviour
             {
                 PayCash();
                 Destroy(hit.collider.gameObject);
+
+                GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PICKUP);
+                GameEventsManager.instance.soundEvents.TriggerSound(SoundType.CASH_OPEN);
             }
 
             

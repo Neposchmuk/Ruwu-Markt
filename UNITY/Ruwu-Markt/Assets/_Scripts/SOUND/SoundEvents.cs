@@ -22,6 +22,16 @@ public class SoundEvents
             onSendAudioClip(clip);
         }
     }
+
+    public event Action onStopSound;
+
+    public void StopSound()
+    {
+        if(onStopSound != null)
+        {
+            onStopSound();
+        }
+    }
 }
 
 public enum SoundType
@@ -33,7 +43,7 @@ public enum SoundType
     POUR,
     MOP,
     WATER,
-    BOTTLES_THROW,
+    BOTTLE_THROW,
     BOTTLE_CRASH,
     PICKUP,
     CASH_SCAN,
@@ -44,14 +54,18 @@ public enum SoundType
     SAFE,
     DOOR_OPEN,
     DOOR_LOCKED,
+    MATRESS,
+    PC_CLICK,
     BAT_SWOOSH,
     BAT_HIT,
     GUN_SHOOT,
     GUN_LOAD,
-    AMMO,
     PLAYER_HURT,
     NPC_DEATH,
     FLASHLIGHT,
     MARKET_DOOR_CLOSED,
     MARKET_DOOR_OPEN,
+
+    UI_CLICK,
+    UI_OPEN
 }

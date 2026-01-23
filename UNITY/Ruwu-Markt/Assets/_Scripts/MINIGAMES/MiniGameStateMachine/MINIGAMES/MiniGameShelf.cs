@@ -133,6 +133,7 @@ public class MiniGameShelf : MiniGameBaseState
             {
                 HA.Place(hit);
                 GameEventsManager.instance.questEvents.PlaceObject();
+                GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PLACE_PRODUCT);
                 objectsPlaced++;
                 UpdateQuest();
                 if (objectsPlaced == objectsToPlace)

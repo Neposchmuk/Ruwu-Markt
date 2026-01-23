@@ -23,6 +23,8 @@ public class Pause_Menu : MonoBehaviour
     {
         if(context != InputEventContext.DEFAULT && context != InputEventContext.MENU_UI) return;
 
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_OPEN);
+
         showPauseMenu = !showPauseMenu;
 
         if(showPauseMenu == false)
@@ -33,6 +35,7 @@ public class Pause_Menu : MonoBehaviour
             TogglePause(false);
             pauseMenu.SetActive(false);
             GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.DEFAULT);
+            GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_CLICK);
         }
         else
         {
@@ -41,6 +44,7 @@ public class Pause_Menu : MonoBehaviour
             Cursor.visible = true;
             pauseMenu.SetActive(true);
             GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.MENU_UI);
+            GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_CLICK);
         }
     }
 
@@ -57,12 +61,14 @@ public class Pause_Menu : MonoBehaviour
 
     public void SwitchSettingsMenu()
     {
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_CLICK);
         GameEventsManager.instance.gameEvents.ShowSettings(true);
         pauseMenu.SetActive(false);
     }
 
     public void ReturnToMenu()
     {
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_CLICK);
         TogglePause(false);
         GameEventsManager.instance.gameEvents.ChangeScene("Main_Menu");
         GameEventsManager.instance.gameEvents.DestroyDDOLObjects();

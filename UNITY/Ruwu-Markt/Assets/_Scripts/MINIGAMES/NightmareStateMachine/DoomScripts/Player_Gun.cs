@@ -92,6 +92,8 @@ public class Player_Gun : MonoBehaviour
         ParticlesLeft.Emit(20);
         ParticlesRight.Emit(20);
 
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.GUN_SHOOT);
+
         try
         {
            _projectileLeft.GetComponent<Rigidbody>().AddForce(transform.right.normalized * 10, ForceMode.Impulse);
@@ -137,7 +139,11 @@ public class Player_Gun : MonoBehaviour
     {
         if(context != InputEventContext.NIGHTMARE_DOOM) return;
 
-        if(!_isReloading) StartCoroutine(Reload());
+        if (!_isReloading)
+        {
+            GameEventsManager.instance.soundEvents.TriggerSound(SoundType.GUN_LOAD);
+            StartCoroutine(Reload());
+        } 
     }
 
     public void UnsubscribeEvents()

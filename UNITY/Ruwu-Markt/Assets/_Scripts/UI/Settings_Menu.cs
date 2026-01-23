@@ -43,11 +43,13 @@ public class Settings_Menu : MonoBehaviour
 
     public void SetFullscreen(bool toggle)
     {
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_CLICK);
         Screen.fullScreen = toggle;
     }
 
     public void SetQuality(int qualityIndex)
     {
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_CLICK);
         QualitySettings.SetQualityLevel(qualityIndex);
         Debug.Log(QualitySettings.GetQualityLevel());
     }
@@ -81,12 +83,14 @@ public class Settings_Menu : MonoBehaviour
 
     public void SetResolution(int resolutionIndex)
     {
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_CLICK);
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 
     private void SwitchSettingsMenu(bool toggle)
     {
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_CLICK);
         Debug.Log("Called SwitchSettings: " + toggle);
         if(toggle == false)
         {

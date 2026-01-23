@@ -31,6 +31,8 @@ public class WateringCanAnimation : MonoBehaviour
         }   
 
         animator.SetBool("Pour", true);
+
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.WATER);
     }
 
     void StopPour(InputEventContext context)
@@ -40,6 +42,8 @@ public class WateringCanAnimation : MonoBehaviour
         particles.Stop();
 
         animator.SetBool("Pour", false);
+
+        GameEventsManager.instance.soundEvents.StopSound();
     }
 
     void ToggleParticles(bool toggle)
@@ -58,6 +62,8 @@ public class WateringCanAnimation : MonoBehaviour
                 if (particles.isPlaying)
                 {
                     particles.Stop();
+                    
+                    GameEventsManager.instance.soundEvents.StopSound();
                 }            
                 break;
         }

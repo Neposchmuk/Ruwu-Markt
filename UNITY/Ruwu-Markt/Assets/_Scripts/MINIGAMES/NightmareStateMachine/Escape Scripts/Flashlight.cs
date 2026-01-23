@@ -19,6 +19,8 @@ public class Flashlight : MonoBehaviour
 
     public void ToggleFlashlight(bool isOn)
     {
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.FLASHLIGHT);
+
         if (isOn)
         {
             _flashlight.enabled = true;

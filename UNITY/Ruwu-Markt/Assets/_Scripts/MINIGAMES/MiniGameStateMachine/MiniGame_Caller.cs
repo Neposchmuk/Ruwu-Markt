@@ -42,6 +42,7 @@ public class MiniGame_Caller : MonoBehaviour
     }
     public void CallStartQuest(int questVariant)
     {
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_CLICK);
         FindFirstObjectByType<MiniGameStateManager>().StartQuest(this, Quest, questVariant, sanityChange, jobSecurityChange);
         InteractionCollider.enabled = false;
     }

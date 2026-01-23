@@ -79,6 +79,8 @@ public class Nightmare_Doom_State : NightmareBaseState
     {
         if(_stateManager.playerInvincible) return;
 
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PLAYER_HURT);
+
         _playerHealth--;
         Debug.Log("Player HP: " + _playerHealth);
         if(_playerHealth <= 0)

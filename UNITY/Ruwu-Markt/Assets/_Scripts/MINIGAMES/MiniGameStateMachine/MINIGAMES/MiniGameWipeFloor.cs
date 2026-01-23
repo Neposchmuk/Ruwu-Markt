@@ -124,17 +124,25 @@ public class MiniGameWipeFloor : MiniGameBaseState
         }
     }
 
+    private bool mopPlaying;
+
     public override void HoldingAttack(bool buttonIsPressed)
     {
         if (isHoldingMop && buttonIsPressed)
         {
+            mopPlaying = true;
+            
+            if(mopPlaying) return;
+            
             MopCollider.enabled = true;
             MopAnimator.SetBool("IsCleaning", true);
+            GameEventsManager.instance.soundEvents.TriggerSound(SoundType.MOP);
         }
         else if(isHoldingMop)
         {
             MopCollider.enabled = false;
             MopAnimator.SetBool("IsCleaning", false);
+            GameEventsManager.instance.soundEvents.StopSound();
         }
 
         if (puddlesCleaned == puddlesToClean)
@@ -142,6 +150,7 @@ public class MiniGameWipeFloor : MiniGameBaseState
             MopCollider.enabled = false;
             MopAnimator.SetBool("IsCleaning", false);
             GameObject.Destroy(objectHeld);
+            GameEventsManager.instance.soundEvents.StopSound();
             EndQuest();
         }
     }

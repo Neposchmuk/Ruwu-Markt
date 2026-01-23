@@ -66,6 +66,8 @@ public class PC_Interaction : MonoBehaviour
 
     public void CloseInbox()
     {
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PC_CLICK);
+
         PC_UI_Parent.SetActive(false);
         Mail_UI.SetActive(false);
         ToggleCursorLockmode(false);
@@ -76,12 +78,16 @@ public class PC_Interaction : MonoBehaviour
 
     public void CloseMailWindow()
     {
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PC_CLICK);
+
         Mail.gameObject.SetActive(false);
         CloseUI.interactable = true;
     }
 
     public void OpenMailWindow(int mailType)
     {
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PC_CLICK);
+
         SetMailSprites(mailType);
 
         Mail.gameObject.SetActive(true);
@@ -131,6 +137,8 @@ public class PC_Interaction : MonoBehaviour
         PC_UI_Parent.SetActive(true);
         Mail_UI.SetActive(true);
         ToggleCursorLockmode(true);
+
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PC_CLICK);
 
         GameEventsManager.instance.gameEvents.ToggleSanityWidget(false);
     }

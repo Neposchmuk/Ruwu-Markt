@@ -98,6 +98,8 @@ public class Interaction_MenuTest : MonoBehaviour
 
     public void ToggleUI(bool Toggle)
     {
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_OPEN);
+
         if (!Toggle)
         {
             Cursor.lockState = CursorLockMode.Locked;

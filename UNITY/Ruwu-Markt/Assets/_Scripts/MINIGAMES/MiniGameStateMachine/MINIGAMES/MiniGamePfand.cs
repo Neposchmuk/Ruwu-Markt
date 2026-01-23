@@ -206,6 +206,7 @@ public class MiniGamePfand : MiniGameBaseState
                     {
                         HA.Place(hit);
                         GameEventsManager.instance.questEvents.PlaceObject();
+                        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PLACE_CRATE);
                         HA.DestroyObjectInHand();
                         cratesPlaced++;
                         UpdateQuest();
@@ -219,6 +220,7 @@ public class MiniGamePfand : MiniGameBaseState
                     {
                         HA.Place(hit);
                         GameEventsManager.instance.questEvents.PlaceObject();
+                        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PLACE_CRATE);
                         HA.DestroyObjectInHand();                       
                         cratesPlaced++;
                         UpdateQuest();
@@ -232,6 +234,7 @@ public class MiniGamePfand : MiniGameBaseState
                     {
                         HA.Place(hit);
                         GameEventsManager.instance.questEvents.PlaceObject();
+                        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PLACE_CRATE);
                         HA.DestroyObjectInHand();
                         cratesPlaced++;
                         UpdateQuest();
@@ -255,6 +258,7 @@ public class MiniGamePfand : MiniGameBaseState
                     if(hit.collider.tag == "CrateFill" && isHoldingObject && bottlesPlaced < bottlesToPlace)
                     {
                         HA.DestroyObjectInHand();
+                        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PLACE_BOTTLE);
                         isHoldingObject = false;
                         bottlesPlaced++;
                         UpdateQuest();
@@ -287,6 +291,7 @@ public class MiniGamePfand : MiniGameBaseState
                     if (hit.collider.tag == "PyramidArea" && isHoldingObject)
                     {
                         HA.Place(PPO.pyramidCrates[pyramidCratesPlaced].transform.position, PPO.pyramidCrates[pyramidCratesPlaced].transform.eulerAngles, new Vector3(0.6f,0.6f,0.6f));
+                        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PLACE_CRATE);
                         HA.DestroyObjectInHand();
                         pyramidCratesPlaced++;
                         UpdateQuest();
