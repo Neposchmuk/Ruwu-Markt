@@ -60,6 +60,8 @@ public class Nightmare_Doom_State : NightmareBaseState
 
         UnsubscribeEvents();
 
+        GameEventsManager.instance.questEvents.onHitEnemy -= CountKilled;
+
         _stateManager.EndNight(true, 10);
 
         GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.DEFAULT);
