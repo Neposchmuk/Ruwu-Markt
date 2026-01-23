@@ -125,13 +125,33 @@ public class QuestEvents
         }
     }
 
-    public event Action onHitEnemy;
+    public event Action<GameObject> onHitEnemy;
 
-    public void HitEnemy()
+    public void HitEnemy(GameObject enemy)
     {
         if(onHitEnemy != null)
         {
-            onHitEnemy();
+            onHitEnemy(enemy);
+        }
+    }
+
+    public event Action<GameObject> onAllowBottleExplode;
+
+    public void AllowBottleExplode(GameObject bottle)
+    {
+        if(onAllowBottleExplode != null)
+        {
+            onAllowBottleExplode(bottle);
+        }
+    }
+
+    public event Action<bool> onWateringFillState;
+
+    public void WateringFillState(bool toggle)
+    {
+        if(onWateringFillState != null)
+        {
+            onWateringFillState(toggle);
         }
     }
 }

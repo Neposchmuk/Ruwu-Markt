@@ -80,6 +80,12 @@ namespace StarterAssets
 
 		private InputAction _escape;
 
+		private InputAction _attack;
+
+		private InputAction _specialPrimary;
+
+		private InputAction _specialSecondary;
+
         private const float _threshold = 0.01f;
 
 		private bool IsCurrentDeviceMouse
@@ -108,6 +114,7 @@ namespace StarterAssets
 			GameEventsManager.instance.playerEvents.onMovementLock += TogglePlayerMovement;
             GameEventsManager.instance.playerEvents.onLockCamera += LockCamera;
 			GameEventsManager.instance.playerEvents.onToggleJump += ToggleJump;
+			GameEventsManager.instance.npcEvents.onPingPlayerPosition += SendPlayerPosition;
         }
 
         private void OnDisable()
@@ -115,6 +122,7 @@ namespace StarterAssets
             GameEventsManager.instance.playerEvents.onMovementLock -= TogglePlayerMovement;
             GameEventsManager.instance.playerEvents.onLockCamera -= LockCamera;
 			GameEventsManager.instance.playerEvents.onToggleJump -= ToggleJump;
+			GameEventsManager.instance.npcEvents.onPingPlayerPosition -= SendPlayerPosition;
         }
 
         private void Start()
@@ -125,6 +133,9 @@ namespace StarterAssets
 			_playerInput = GetComponent<PlayerInput>();
 			_interact = _playerInput.actions.FindAction("Interact");
 			_escape = _playerInput.actions.FindAction("Escape");
+			_attack = _playerInput.actions.FindAction("Attack");
+			_specialPrimary = _playerInput.actions.FindAction("Flash");
+			_specialSecondary = _playerInput.actions.FindAction("Reload");
 #else
 			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif
@@ -158,6 +169,32 @@ namespace StarterAssets
 				GameEventsManager.instance.playerEvents.PressedEscape();
 				Debug.Log("Pressed Escape");
 			}
+
+			if (_attack.WasPressedThisDynamicUpdate())
+			{
+				GameEventsManager.instance.playerEvents.PressedAttack();
+			}
+
+			if (_attack.IsPressed())
+			{
+				GameEventsManager.instance.playerEvents.HoldAttack();
+			}
+
+			if (_attack.WasReleasedThisDynamicUpdate())
+			{
+				GameEventsManager.instance.playerEvents.ReleasedAttack();
+			}
+
+			if (_specialPrimary.WasPressedThisDynamicUpdate())
+			{
+				GameEventsManager.instance.playerEvents.PressedSpecialPrimary();
+				Debug.Log("Pressed F");
+			}
+
+			if (_specialSecondary.WasPressedThisDynamicUpdate())
+			{
+				GameEventsManager.instance.playerEvents.PressedSpecialSecondary();
+			}
 		}
 
 		private void LateUpdate()
@@ -166,6 +203,11 @@ namespace StarterAssets
 			{
                 CameraRotation();
             }
+		}
+
+		private void SendPlayerPosition(GameObject agent)
+		{
+			GameEventsManager.instance.npcEvents.FacePlayer(agent, transform.position);
 		}
 
 		private void TogglePlayerMovement(bool toggle)

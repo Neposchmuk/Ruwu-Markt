@@ -63,9 +63,17 @@ public class Hand_Actions: MonoBehaviour
             {
                 Instantiate(instanceObject[1], hit.point + new Vector3(0, 0.02f, 0), Quaternion.Euler(new Vector3(0, UnityEngine.Random.Range(0, 359), 0)));
                 timeToPour -= 1 * Time.deltaTime;
-            }
+                Debug.Log(hit.collider.gameObject);
+            }       
+        }
 
-            
+        if(timeToPour <= 0)
+        {
+            GameEventsManager.instance.questEvents.WateringFillState(false);
+        }
+        else if(timeToPour >= 0)
+        {
+            GameEventsManager.instance.questEvents.WateringFillState(true);
         }
 
         objectHolding.GetComponentInChildren<TMP_Text>().text = $"{Mathf.CeilToInt(timeToPour * 20f)}";
@@ -110,11 +118,14 @@ public class Hand_Actions: MonoBehaviour
     {
         Debug.Log("Called throw object");
         GameObject objectThrown = Instantiate(placeObject[PickUp], transform.position, transform.rotation);
+        GameEventsManager.instance.questEvents.AllowBottleExplode(objectThrown);
         try
         {
             Debug.Log("Trying to throw object");
             objectThrown.TryGetComponent<Rigidbody>(out Rigidbody thrownRB);
             thrownRB.AddForce(transform.forward * throwStrength, ForceMode.Impulse);
+            thrownRB.AddRelativeTorque(new Vector3(0.2f, 0,0), ForceMode.Impulse);
+            
         }
         catch (NullReferenceException)
         {

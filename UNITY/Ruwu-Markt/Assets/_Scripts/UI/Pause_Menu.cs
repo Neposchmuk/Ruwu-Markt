@@ -21,7 +21,7 @@ public class Pause_Menu : MonoBehaviour
 
     private void SwitchPauseMenu(InputEventContext context)
     {
-        if(context != InputEventContext.DEFAULT) return;
+        if(context != InputEventContext.DEFAULT && context != InputEventContext.MENU_UI) return;
 
         showPauseMenu = !showPauseMenu;
 
@@ -32,6 +32,7 @@ public class Pause_Menu : MonoBehaviour
             Cursor.visible = false;
             TogglePause(false);
             pauseMenu.SetActive(false);
+            GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.DEFAULT);
         }
         else
         {
@@ -39,6 +40,7 @@ public class Pause_Menu : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             pauseMenu.SetActive(true);
+            GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.MENU_UI);
         }
     }
 

@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.AI;
 
 public class NPC_Walking_State : NPC_BaseState
@@ -19,6 +20,10 @@ public class NPC_Walking_State : NPC_BaseState
         _agent.updateRotation = true;
 
         _switchedState = false;
+
+        _stateManager.SetAnimatorTrigger("Walk");
+
+        GameEventsManager.instance.npcEvents.ResetFace(_stateManager.gameObject);
 
         //walkingAnimation
     }

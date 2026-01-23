@@ -21,6 +21,10 @@ public class NPC_Idle_State : NPC_BaseState
 
         _agent.updateRotation = false;
 
+        _stateManager.SetAnimatorTrigger("Idle");
+
+        GameEventsManager.instance.npcEvents.FaceTrigger(_stateManager.gameObject);
+
         /*if (_stateManager._currentTarget == _stateManager._destinations.Count - 1)
         {
             _stateManager.SwitchState(_stateManager.Checkout_State);

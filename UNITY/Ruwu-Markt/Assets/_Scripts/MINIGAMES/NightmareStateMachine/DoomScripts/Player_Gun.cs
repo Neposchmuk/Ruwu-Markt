@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using System.Collections;
 using TMPro;
+using UnityEngine.InputSystem.LowLevel;
 
 public class Player_Gun : MonoBehaviour
 {
@@ -35,13 +36,27 @@ public class Player_Gun : MonoBehaviour
 
     Nightmare_State_Manager _stateManager;
 
+    private void OnEnable()
+    {
+        GameEventsManager.instance.playerEvents.onPressedAttack += Fire;
+        GameEventsManager.instance.playerEvents.onPressedSpecialSecondary += StartReload;
+    }
+
     private void OnDisable()
     {
         UnsubscribeEvents();
+        GameEventsManager.instance.playerEvents.onPressedAttack -= Fire;
+        GameEventsManager.instance.playerEvents.onPressedSpecialSecondary -= StartReload;
     }
 
     private void Start()
     {
+        if(GameEventsManager.instance.playerEvents.inputContext != InputEventContext.NIGHTMARE_DOOM)
+        {
+            gameObject.SetActive(false);
+            return;
+        } 
+
         _animator = GetComponent<Animator>();
 
         _stateManager = FindFirstObjectByType<Nightmare_State_Manager>();
@@ -61,8 +76,10 @@ public class Player_Gun : MonoBehaviour
         AmmoText.text = $"{AmmoCarrying}" + "\n" + $"{_ammoInMagazine}";
     }
 
-    public void Fire()
+    public void Fire(InputEventContext context)
     {
+        if(context != InputEventContext.NIGHTMARE_DOOM) return;
+
         if (!_weaponLoaded || AmmoCarrying < 1)
         {
             Debug.Log("returned");
@@ -95,7 +112,7 @@ public class Player_Gun : MonoBehaviour
         {
             _weaponLoaded = false;
 
-            StartReload();
+            StartReload(InputEventContext.NIGHTMARE_DOOM);
         }        
     }
 
@@ -116,8 +133,10 @@ public class Player_Gun : MonoBehaviour
         }
     }
 
-    public void StartReload()
+    public void StartReload(InputEventContext context)
     {
+        if(context != InputEventContext.NIGHTMARE_DOOM) return;
+
         if(!_isReloading) StartCoroutine(Reload());
     }
 

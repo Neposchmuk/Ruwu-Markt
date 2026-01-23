@@ -20,6 +20,15 @@ public class Enemy_Behaviour : MonoBehaviour
 
     FirstPersonController _player;
 
+    private void OnEnable()
+    {
+        GameEventsManager.instance.questEvents.onHitEnemy += KillEnemy;
+    }
+    private void OnDisable()
+    {
+        GameEventsManager.instance.questEvents.onHitEnemy -= KillEnemy;
+    }
+
     private void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
@@ -29,8 +38,6 @@ public class Enemy_Behaviour : MonoBehaviour
         _player = FindFirstObjectByType<FirstPersonController>();
 
         InvokeRepeating("SetPlayerDestination", 0, 0.5f);
-
-        
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -51,12 +58,13 @@ public class Enemy_Behaviour : MonoBehaviour
 
         _agent.SetPath(path);
 
-        _stateManager.SwitchState(_stateManager.Walking_State);
+        _stateManager.SwitchState(_stateManager.Running_State);
     }
 
-    public void KillEnemy()
+    public void KillEnemy(GameObject enemy)
     {
-        OnEnemyKill?.Invoke();
+        if(enemy != this.gameObject) return;
+
         Debug.Log("Killed enemy");
         CancelInvoke("SetPlayerDestination");
         Instantiate(KillParticles, transform.position + new Vector3(0, 1, 0), transform.rotation);

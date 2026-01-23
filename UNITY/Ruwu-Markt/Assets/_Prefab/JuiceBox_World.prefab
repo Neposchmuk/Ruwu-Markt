@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7617462406038072344}
   - component: {fileID: 82330799873520564}
   - component: {fileID: 2040328490008851686}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: JuiceBox_World
   m_TagString: ProduceCan
   m_Icon: {fileID: 0}
