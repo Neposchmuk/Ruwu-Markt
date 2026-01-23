@@ -1,6 +1,7 @@
 using Cinemachine.Utility;
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 public class PlayerEvents
 {
@@ -9,6 +10,13 @@ public class PlayerEvents
     public void ChangeInputEventContext (InputEventContext newContext)
     {
         inputContext = newContext;
+    }
+
+    public QuestContext questContext { get; private set; } = QuestContext.NONE;
+
+    public void ChangeQuestContext (QuestContext newContext)
+    {
+        questContext = newContext;
     }
 
 
@@ -85,13 +93,13 @@ public class PlayerEvents
         }
     }
 
-    public event  Action<InputEventContext> onHoldAttack;
+    public event Action<InputEventContext, QuestContext> onPressedAttackQuest;
 
-    public void HoldAttack()
+    public void PressedAttackQuest()
     {
-        if(onHoldAttack != null)
+        if(onPressedAttackQuest != null)
         {
-            onHoldAttack(inputContext);
+            onPressedAttackQuest(inputContext, questContext);
         }
     }
 

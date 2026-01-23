@@ -173,11 +173,7 @@ namespace StarterAssets
 			if (_attack.WasPressedThisDynamicUpdate())
 			{
 				GameEventsManager.instance.playerEvents.PressedAttack();
-			}
-
-			if (_attack.IsPressed())
-			{
-				GameEventsManager.instance.playerEvents.HoldAttack();
+				GameEventsManager.instance.playerEvents.PressedAttackQuest();
 			}
 
 			if (_attack.WasReleasedThisDynamicUpdate())

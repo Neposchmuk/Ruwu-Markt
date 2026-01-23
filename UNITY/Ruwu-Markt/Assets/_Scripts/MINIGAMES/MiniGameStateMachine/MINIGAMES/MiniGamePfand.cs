@@ -160,6 +160,7 @@ public class MiniGamePfand : MiniGameBaseState
         if (questVariant == 4 && isHoldingObject)
         {
             HA.ThrowObject(3);
+            GameEventsManager.instance.questEvents.PlaceObject();
             HA.DestroyObjectInHand();
             bottlesThrown++;
             UpdateQuest();
@@ -204,6 +205,7 @@ public class MiniGamePfand : MiniGameBaseState
                     if (hit.collider.tag == "CrateAreaBlue" && HA.objectHolding.CompareTag("CrateBlue"))
                     {
                         HA.Place(hit);
+                        GameEventsManager.instance.questEvents.PlaceObject();
                         HA.DestroyObjectInHand();
                         cratesPlaced++;
                         UpdateQuest();
@@ -216,6 +218,7 @@ public class MiniGamePfand : MiniGameBaseState
                     else if (hit.collider.tag == "CrateAreaYellow" && HA.objectHolding.CompareTag("CrateYellow"))
                     {
                         HA.Place(hit);
+                        GameEventsManager.instance.questEvents.PlaceObject();
                         HA.DestroyObjectInHand();                       
                         cratesPlaced++;
                         UpdateQuest();
@@ -228,6 +231,7 @@ public class MiniGamePfand : MiniGameBaseState
                     else if (hit.collider.tag == "CrateAreaRed" && HA.objectHolding.CompareTag("CrateRed"))
                     {
                         HA.Place(hit);
+                        GameEventsManager.instance.questEvents.PlaceObject();
                         HA.DestroyObjectInHand();
                         cratesPlaced++;
                         UpdateQuest();

@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public class Hand_Actions: MonoBehaviour
 {
+    [SerializeField] private Animator animator;
+
     public GameObject[] instanceObject;
 
     public GameObject[] placeObject;
@@ -18,9 +20,33 @@ public class Hand_Actions: MonoBehaviour
 
     private float timeToPour = Mathf.Clamp(5, 0, 5); 
 
+    private float timeToSip = Mathf.Clamp(5, 0, 5); 
+
     private GameObject objectToPlace;
 
     private Collider MopTrigger;
+
+
+    private void OnEnable()
+    {
+        GameEventsManager.instance.questEvents.onplaceObject += PlayPlaceAnimation;
+    }
+    private void OnDisable()
+    {
+        GameEventsManager.instance.questEvents.onplaceObject -= PlayPlaceAnimation;
+    }
+
+    private void PlayPlaceAnimation()
+    {
+        animator.SetTrigger("Place");
+    }
+
+    public float TakeSip()
+    {
+        timeToSip -= 1 * Time.deltaTime;
+
+        return timeToSip;
+    }
 
     //Instantiates Object on Ray hit position, if Instance Object is already present, increases size of Object
     public float Pour()

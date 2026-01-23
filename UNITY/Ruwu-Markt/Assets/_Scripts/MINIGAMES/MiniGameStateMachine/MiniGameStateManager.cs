@@ -11,6 +11,7 @@ public enum QuestType
     Flowers
 }
 
+
 public class MiniGameStateManager : MonoBehaviour
 {
     public bool isDoingQuest;

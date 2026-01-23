@@ -50,10 +50,11 @@ public class MiniGameShelf : MiniGameBaseState
                 InitiateQuest();
                 break;
             case 3:
-                //Needs to be changed to require Animation first
+                GameEventsManager.instance.playerEvents.ChangeQuestContext(QuestContext.SHELF_SIP);
                 InitiateQuest();
                 break;
             case 4:
+                GameEventsManager.instance.playerEvents.ChangeQuestContext(QuestContext.SHELF_POUR);
                 InitiateQuest();
                 break;
         }
@@ -102,6 +103,8 @@ public class MiniGameShelf : MiniGameBaseState
         GameEventsManager.instance.questEvents.QuestCompleted(QuestType.Shelf);
         GameEventsManager.instance.questEvents.ToggleQuestmarkers(true);
 
+        GameEventsManager.instance.playerEvents.ChangeQuestContext(QuestContext.NONE);
+
         QM.CompleteQuest(0, questVariant -1, QuestSource.gameObject);
     }
 
@@ -129,6 +132,7 @@ public class MiniGameShelf : MiniGameBaseState
             if (hit.collider.tag == "Shelf" && isHoldingObject && objectsPlaced < objectsToPlace && (questVariant == 1 || questVariant == 2))
             {
                 HA.Place(hit);
+                GameEventsManager.instance.questEvents.PlaceObject();
                 objectsPlaced++;
                 UpdateQuest();
                 if (objectsPlaced == objectsToPlace)
@@ -155,8 +159,11 @@ public class MiniGameShelf : MiniGameBaseState
 
         if (isHoldingObject && buttonIsPressed && questVariant == 3)
         {
-            //Run animation -> Reduces counter, if counter == 0 EndQuest
-            EndQuest();
+            HA.TakeSip();
+            if(HA.TakeSip() <= 0)
+            {
+                EndQuest();
+            }            
         }
     }
 }

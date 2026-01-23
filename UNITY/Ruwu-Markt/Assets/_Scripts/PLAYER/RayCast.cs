@@ -176,7 +176,7 @@ public class RayCast : MonoBehaviour
                     }
                     else
                     {
-                        //Message Need key
+                        GameEventsManager.instance.questEvents.ShowKeyText();
                     }
                 }
 
