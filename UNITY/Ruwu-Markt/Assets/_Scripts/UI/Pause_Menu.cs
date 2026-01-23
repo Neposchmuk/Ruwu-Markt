@@ -21,7 +21,7 @@ public class Pause_Menu : MonoBehaviour
 
     private void SwitchPauseMenu(InputEventContext context)
     {
-        if(context != InputEventContext.DEFAULT) return;
+        if(context != InputEventContext.DEFAULT && context != InputEventContext.MENU_UI) return;
 
         showPauseMenu = !showPauseMenu;
 
