@@ -15,6 +15,8 @@ public class Nightmare_State_Manager : MonoBehaviour
 
     public GameObject DoomLevel;
 
+    public bool playerInvincible = true;
+
     public NightmareBaseState CurrentState;
     public Nightmare_Escape_State EscapeState = new Nightmare_Escape_State();
     public Nightmare_Doom_State DoomState = new Nightmare_Doom_State();

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Customer_Spawner : MonoBehaviour
 {
-    public GameObject[] Customers;
+    public List<GameObject> Customers;
 
     public List<Transform> Destinations;
 
@@ -28,8 +28,9 @@ public class Customer_Spawner : MonoBehaviour
     {
         if (_customersSpawned >= TotalCustomers) return;
         
-        int _randomCustomer = Random.Range(0, Customers.Length);
+        int _randomCustomer = Random.Range(0, Customers.Count);
         Instantiate(Customers[_randomCustomer], transform.position, transform.rotation);
+        Customers.Remove(Customers[_randomCustomer]);
         _customersSpawned++;
     }
 }

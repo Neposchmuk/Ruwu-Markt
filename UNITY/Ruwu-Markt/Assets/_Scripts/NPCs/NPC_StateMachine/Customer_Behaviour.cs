@@ -356,7 +356,7 @@ public class Customer_Behaviour : MonoBehaviour
     {
         Debug.Log("Started NewDestination Coroutine: " + gameObject);
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(5);
 
         _currentTarget++;
 
@@ -367,7 +367,7 @@ public class Customer_Behaviour : MonoBehaviour
     {
         Debug.Log("Starting Checkout Coroutine");
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(5);
 
         StartCheckoutBehaviour();
     }

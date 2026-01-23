@@ -26,20 +26,20 @@ public class Nightmare_Smash_State : NightmareBaseState
         _batParent = GameObject.FindFirstObjectByType<SmashThings_Animation>();
 
         SmashThings.OnDestroy += CountDestroyedObjects;
+
+        GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.NIGHTMARE_SMASH);
     }
 
     public override void UpdateState()
     {
-        if (Attack.WasPressedThisDynamicUpdate())
-        {
-            _batParent.StartAnimatorCoroutine();
-            
-        }
+        
     }
 
     public override void EndState()
     {
         _stateManager.EndNight(true, 10);
+
+        GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.DEFAULT);
     }
 
     void CountDestroyedObjects()

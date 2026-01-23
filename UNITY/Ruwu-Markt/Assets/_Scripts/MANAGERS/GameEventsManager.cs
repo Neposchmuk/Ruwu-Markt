@@ -16,6 +16,8 @@ public class GameEventsManager : MonoBehaviour
 
     public CheckoutEvents checkoutEvents;
 
+    public NPC_Events npcEvents;
+
     private void Awake()
     {
         if(instance != null) 
@@ -33,5 +35,7 @@ public class GameEventsManager : MonoBehaviour
         gameEvents = new GameEvents();
 
         checkoutEvents = new CheckoutEvents();
+
+        npcEvents = new NPC_Events();
     }
 }

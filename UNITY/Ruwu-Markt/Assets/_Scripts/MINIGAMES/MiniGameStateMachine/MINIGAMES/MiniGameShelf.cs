@@ -88,7 +88,7 @@ public class MiniGameShelf : MiniGameBaseState
                 GameEventsManager.instance.questEvents.UpdateQuestText("Take a sip");
                 break;
             case 4:
-                GameEventsManager.instance.questEvents.UpdateQuestText("Let it flow!!!");
+                GameEventsManager.instance.questEvents.UpdateQuestText("Pour it out!");
                 break;
         }
         
@@ -97,7 +97,7 @@ public class MiniGameShelf : MiniGameBaseState
     public override void EndQuest()
     {
         QuestSource.QuestMarkerBig.SetActive(false);
-        GameObject.FindFirstObjectByType<Hand_Actions>().DestroyObjectInHand();
+        HA.DestroyObjectInHand();
 
         GameEventsManager.instance.questEvents.QuestCompleted(QuestType.Shelf);
         GameEventsManager.instance.questEvents.ToggleQuestmarkers(true);
@@ -115,7 +115,7 @@ public class MiniGameShelf : MiniGameBaseState
         {
             if (hit.collider.tag == "ProduceCan")
             {
-                GameObject.FindFirstObjectByType<Hand_Actions>().PickUpObject(0);
+                HA.PickUpObject(0);
                 Debug.Log(hit.collider.gameObject.layer);
                 isHoldingObject = true;
                 Debug.Log(isHoldingObject);
@@ -128,7 +128,7 @@ public class MiniGameShelf : MiniGameBaseState
 
             if (hit.collider.tag == "Shelf" && isHoldingObject && objectsPlaced < objectsToPlace && (questVariant == 1 || questVariant == 2))
             {
-                GameObject.FindFirstObjectByType<Hand_Actions>().Place(hit);
+                HA.Place(hit);
                 objectsPlaced++;
                 UpdateQuest();
                 if (objectsPlaced == objectsToPlace)

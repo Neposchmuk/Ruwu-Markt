@@ -14,17 +14,7 @@ public class Nightmare_Doom_State : NightmareBaseState
 
     Nightmare_State_Manager _stateManager;
 
-    Player_Gun _gun;
-
-    SmashThings_Animation _batParent;
-
     PlayerInput _playerInput;
-
-    InputAction _attack;
-
-    InputAction _melee;
-
-    InputAction _reload;
 
     TMP_Text _enemyCounter;
 
@@ -38,25 +28,17 @@ public class Nightmare_Doom_State : NightmareBaseState
 
     public override void EnterState(Nightmare_State_Manager stateManager)
     {
+        SubscribeEvents();
+
+        GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.NIGHTMARE_DOOM);
+
         _stateManager = stateManager;
-
-        _gun = GameObject.FindFirstObjectByType<Player_Gun>();
-
-        _batParent = GameObject.FindFirstObjectByType<SmashThings_Animation>();
 
         _playerInput = GameObject.FindFirstObjectByType<PlayerInput>();
 
         _enemyCounter = GameObject.FindGameObjectWithTag("DoomEnemyCounter").GetComponent<TMP_Text>();
 
         _player = _playerInput.gameObject.GetComponent<FirstPersonController>();
-
-        _attack = _playerInput.actions.FindAction("Attack");
-
-        _melee = _playerInput.actions.FindAction("Flash");
-
-        _reload = _playerInput.actions.FindAction("Reload");
-
-        _gun.gameObject.SetActive(true);
 
         _enemiesToKill = 20;
 
@@ -65,50 +47,25 @@ public class Nightmare_Doom_State : NightmareBaseState
         _player.MoveSpeed = 10;
 
         _player.SprintSpeed = 10;
-
-        _gun.gameObject.SetActive(true);
-
-        GameEventsManager.instance.questEvents.onHitEnemy += CountKilled;
-
-        Enemy_Behaviour.OnEnemyKill += CountKilled;
-
-        Enemy_Behaviour.OnKilledPlayer += HitPlayer;
     }
 
     public override void UpdateState()
     {
-        if (_attack.WasPressedThisDynamicUpdate())
-        {
-            _gun.Fire();
-        }
-
-        if (_melee.WasPressedThisDynamicUpdate())
-        {
-            _gun.gameObject.SetActive(false);
-            _batParent.StartAnimatorCoroutine();
-            _gun.gameObject.SetActive(true);
-        }
-
-        if (_reload.WasPressedThisDynamicUpdate())
-        {
-            _gun.StartReload();
-        }
+        
     }
 
     public override void EndState()
     {
         OnEndState?.Invoke();
 
-        Enemy_Behaviour.OnEnemyKill -= CountKilled;
-
-        Enemy_Behaviour.OnKilledPlayer -= HitPlayer;
-
-        GameEventsManager.instance.questEvents.onHitEnemy -= CountKilled;
+        UnsubscribeEvents();
 
         _stateManager.EndNight(true, 10);
+
+        GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.DEFAULT);
     }
 
-    void CountKilled()
+    void CountKilled(GameObject enemy)
     {
         _enemiesKilled++;
         _enemyCounter.text = $"{_enemiesKilled}" + "/" + $"{_enemiesToKill}";
@@ -120,17 +77,33 @@ public class Nightmare_Doom_State : NightmareBaseState
 
     void HitPlayer()
     {
+        if(_stateManager.playerInvincible) return;
+
         _playerHealth--;
         Debug.Log("Player HP: " + _playerHealth);
         if(_playerHealth <= 0)
         {
             OnEndState?.Invoke();
 
-            Enemy_Behaviour.OnEnemyKill -= CountKilled;
-
-            Enemy_Behaviour.OnKilledPlayer -= HitPlayer;
+            UnsubscribeEvents();
 
             _stateManager.EndNight(false, -20);
+
+            GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.DEFAULT);
         }   
+    }
+
+    private void SubscribeEvents()
+    {
+        GameEventsManager.instance.questEvents.onHitEnemy += CountKilled;
+
+        Enemy_Behaviour.OnKilledPlayer += HitPlayer;
+    }
+
+    private void UnsubscribeEvents()
+    {
+        GameEventsManager.instance.questEvents.onHitEnemy -= CountKilled;
+
+        Enemy_Behaviour.OnKilledPlayer -= HitPlayer;
     }
 }

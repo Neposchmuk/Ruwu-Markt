@@ -16,9 +16,9 @@ public class Day_Manager : MonoBehaviour
 
     public bool GetsGoodEnding;
 
-    public int Day {get; private set;} = 1; 
+    public int Day = 1; 
 
-    public int Night {get; private set;} = 1;
+    public int Night = 1;
 
     private void Awake()
     {
