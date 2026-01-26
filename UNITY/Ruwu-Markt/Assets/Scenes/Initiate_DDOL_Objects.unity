@@ -2596,6 +2596,8 @@ MonoBehaviour:
   CheckedPC: 0
   IsFinalDay: 0
   GetsGoodEnding: 0
+  Day: 1
+  Night: 1
 --- !u!1 &1897077850
 GameObject:
   m_ObjectHideFlags: 0
