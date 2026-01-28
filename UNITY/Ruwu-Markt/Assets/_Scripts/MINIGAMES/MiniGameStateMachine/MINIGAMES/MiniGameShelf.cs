@@ -87,9 +87,11 @@ public class MiniGameShelf : MiniGameBaseState
                 break;
             case 3:
                 GameEventsManager.instance.questEvents.UpdateQuestText("Take a sip");
+                GameEventsManager.instance.uiEvents.SendActionSprite(UI_Widget.SIP, 0);
                 break;
             case 4:
                 GameEventsManager.instance.questEvents.UpdateQuestText("Pour it out!");
+                GameEventsManager.instance.uiEvents.SendActionSprite(UI_Widget.POUR, 0);
                 break;
         }
         
@@ -102,6 +104,8 @@ public class MiniGameShelf : MiniGameBaseState
 
         GameEventsManager.instance.questEvents.QuestCompleted(QuestType.Shelf);
         GameEventsManager.instance.questEvents.ToggleQuestmarkers(true);
+
+        GameEventsManager.instance.uiEvents.HideActionWidget();
 
         GameEventsManager.instance.playerEvents.ChangeQuestContext(QuestContext.NONE);
 
@@ -165,6 +169,26 @@ public class MiniGameShelf : MiniGameBaseState
             {
                 EndQuest();
             }            
+        }
+    }
+
+    public override void WidgetRaycast()
+    {
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 2, QuestSource.interactionLayer))
+        {
+            if (hit.collider.tag == "ProduceCan")
+            {
+                GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+            }
+
+
+
+            if (hit.collider.tag == "Shelf" && isHoldingObject && objectsPlaced < objectsToPlace && (questVariant == 1 || questVariant == 2))
+            {
+                GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.PLACE);
+            }
         }
     }
 }

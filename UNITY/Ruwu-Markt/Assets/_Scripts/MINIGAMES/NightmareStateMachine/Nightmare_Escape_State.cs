@@ -31,6 +31,8 @@ public class Nightmare_Escape_State : NightmareBaseState
         _keyImage.enabled = false;
 
         GameEventsManager.instance.playerEvents.ToggleJump(false);
+
+        GameEventsManager.instance.uiEvents.SendActionSprite(UI_Widget.FLASH, 0);
     }
 
     public override void UpdateState()
@@ -61,6 +63,6 @@ public class Nightmare_Escape_State : NightmareBaseState
 
     void ToggleKeyImage()
     {
-        _keyImage.enabled = true;
+        GameEventsManager.instance.uiEvents.SendActionSprite(UI_Widget.KEY, 1);
     }
 }

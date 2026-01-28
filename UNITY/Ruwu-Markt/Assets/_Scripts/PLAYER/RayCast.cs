@@ -30,6 +30,10 @@ public class RayCast : MonoBehaviour
 
     private bool _hasMarketKey;
 
+    private bool showInteraction;
+
+    private bool showAction;
+
     private void OnEnable()
     {
         GameEventsManager.instance.playerEvents.onPressedInteract += Raycast;
@@ -61,7 +65,11 @@ public class RayCast : MonoBehaviour
         
 
         Hand = gameObject.GetComponentInChildren<Hand_Actions>();
+    }
 
+    private void Update()
+    {
+        WidgetRaycast();
     }
 
     private void Raycast(InputEventContext inputContext)
@@ -207,6 +215,96 @@ public class RayCast : MonoBehaviour
             }
         }
     }
+
+    private void WidgetRaycast()
+    {
+        Ray ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
+
+            if(Physics.Raycast(ray, out RaycastHit hit, rayLength, layerMask))
+            {
+                if(showInteraction) return;
+
+                showInteraction = true;
+
+                if(hit.collider.tag == "ShelfQuest" && !QM.isDoingQuest && !QM.shelfQuestCompleted)
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TALK);
+                }
+
+                if (hit.collider.tag == "FloorQuest" && !QM.isDoingQuest && !QM.floorQuestCompleted)
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TALK);
+                }
+
+                if (hit.collider.tag == "PfandQuest" && !QM.isDoingQuest && !QM.pfandQuestCompleted)
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TALK);
+                }
+
+                if(hit.collider.tag == "FlowersQuest" && !QM.isDoingQuest && !QM.flowersQuestCompleted)
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TALK);
+                }
+
+                if(hit.collider.tag == "Cashtray" && QM.DayComplete)
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);           
+                }
+
+                if(hit.collider.tag == "Safe" && _carryingCashtray)
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.PLACE);
+                }
+
+                if(hit.collider.tag == "HomeDoor")
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                }
+
+                if(hit.collider.tag == "HomeMatress" && !_dayManager.IsDay)
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                }
+
+                if(hit.collider.tag == "Computer")
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TALK);
+                }
+
+                if(hit.collider.tag == "NPC_Boss")
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TALK);
+                }
+
+                if (hit.collider.CompareTag("UI_Button"))
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                }   
+
+        
+                if(hit.collider.tag == "MarketKey")
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                }
+
+                if(hit.collider.tag == "MarketDoor")
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                }
+
+                if(hit.collider.tag == "AmmoStation")
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);    
+                }
+            }
+        else
+        {
+            GameEventsManager.instance.uiEvents.HideInteractionWidget();
+            showInteraction = false;
+        }
+        
+        
+        }
             /*if(hit.collider.tag == "ProduceCan" && QM.isDoingQuest && !QM.shelfQuestCompleted)
             {
                 Debug.Log("RayCast Hit");

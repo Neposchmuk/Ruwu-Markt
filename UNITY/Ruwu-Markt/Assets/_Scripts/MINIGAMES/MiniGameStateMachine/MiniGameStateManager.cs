@@ -93,6 +93,8 @@ public class MiniGameStateManager : MonoBehaviour
             }
             /*Debug.Log(currentQuest);
             currentQuest.UpdateQuest();*/
+
+            currentQuest.WidgetRaycast();
         }
         
     }

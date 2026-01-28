@@ -50,7 +50,7 @@ ScriptedImporter:
     flipbookColumns: 0
     ignorePngGamma: 0
     cookieMode: 0
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 0
@@ -71,9 +71,9 @@ ScriptedImporter:
     textureFormatSet: 0
     applyGammaDecoding: 0
   singleSpriteImportData:
-  - name: Icons_1
+  - name: 
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -81,9 +81,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 0
       y: 0
-      width: 512
-      height: 512
-    spriteID: 58811240506252047a3d64a5d3fef063
+      width: 0
+      height: 0
+    spriteID: 86b6c8af08e23d047ba35254df28a437
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -95,6 +95,358 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   multiSpriteImportData: []
   layeredSpriteImportData:
+  - name: ButtonCash
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 512
+      height: 512
+    spriteID: a390c2bc9f8140342b1d65942121f750
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+    spritePosition: {x: 0, y: 0}
+  - name: ButtonCard
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 524
+      width: 512
+      height: 512
+    spriteID: d4386d3e5427a0141ba5837383bbaf3f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 524}
+    spritePosition: {x: 0, y: 0}
+  - name: Talk E
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 1035
+      y: 499
+      width: 292
+      height: 453
+    spriteID: be02596f768b5584fa2489cbd6e94de2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1035, y: 499}
+    spritePosition: {x: 79, y: 16}
+  - name: Key Ion
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 524
+      y: 1899
+      width: 467
+      height: 434
+    spriteID: 2c719b4e7d4a0ec4eab18ee65532a09f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 524, y: 1899}
+    spritePosition: {x: 22, y: 39}
+  - name: Ammo Station
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 524
+      y: 2341
+      width: 441
+      height: 414
+    spriteID: 8ab934981fef326409aca0f4b6bc8821
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 524, y: 2341}
+    spritePosition: {x: 36, y: 49}
+  - name: Talk E old
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 1035
+      y: 4
+      width: 350
+      height: 487
+    spriteID: 8929b6f5743586644b5d14b85a057270
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1035, y: 4}
+    spritePosition: {x: 71, y: 16}
+  - name: Throw E
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 524
+      y: 934
+      width: 495
+      height: 457
+    spriteID: ccb49f912d6d8a54ab6143e66cccb5bc
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 524, y: 934}
+    spritePosition: {x: 12, y: 16}
+  - name: Water LMB
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 3564
+      width: 476
+      height: 496
+    spriteID: 5ecbf6e90e63ea54e94ee7c0d2e934c0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 3564}
+    spritePosition: {x: 36, y: 0}
+  - name: Sip LMB
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 2069
+      width: 482
+      height: 512
+    spriteID: 56c3eaef0e7cc024984ee170cd1baa41
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 2069}
+    spritePosition: {x: 30, y: 0}
+  - name: Pour LMB
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 1044
+      width: 509
+      height: 507
+    spriteID: 477fe32e66c239a49a9e6eaddc89e925
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1, y: 1044}
+    spritePosition: {x: 3, y: 0}
+  - name: Clean LMB
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 524
+      y: 1399
+      width: 434
+      height: 492
+    spriteID: 376036ced1ce7a34eb78bfe7c8291f84
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 524, y: 1399}
+    spritePosition: {x: 38, y: 0}
+  - name: Place E
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 524
+      y: 2763
+      width: 361
+      height: 489
+    spriteID: 33f6658873050a24a828a2170770b1ed
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 524, y: 2763}
+    spritePosition: {x: 76, y: 11}
+  - name: Take E
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 524
+      y: 3260
+      width: 362
+      height: 480
+    spriteID: 36fb0d63c576e4a4dbf5f09ed71deff6
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 524, y: 3260}
+    spritePosition: {x: 62, y: 11}
+  - name: Flashlight
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 524
+      y: 469
+      width: 501
+      height: 457
+    spriteID: e74a4d46b1440b34086fa1986eaee10c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 524, y: 469}
+    spritePosition: {x: 0, y: 16}
+  - name: Gun_R
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 524
+      y: 4
+      width: 503
+      height: 457
+    spriteID: 8e138b4c911cf2e4296d87da6921d521
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 524, y: 4}
+    spritePosition: {x: 9, y: 16}
+  - name: Gun_LMB
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 2589
+      width: 512
+      height: 473
+    spriteID: 1ad2b08a664733342bf9d46d547a160b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 2589}
+    spritePosition: {x: 0, y: 0}
   - name: Bat_F
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -104,10 +456,10 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 514
+      y: 3070
       width: 493
       height: 486
-    spriteID: 1e6f2c8861737484bba35be6d056d741
+    spriteID: 3cec6302c890ac14f9a6507c768416d6
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -115,7 +467,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 514}
+    uvTransform: {x: 4, y: 3070}
     spritePosition: {x: 9, y: 16}
   - name: Bat_LMB
     originalName: 
@@ -126,10 +478,10 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 4
+      y: 1559
       width: 493
       height: 502
-    spriteID: 19c7e91ea95d9394aa69cfabbb6b4558
+    spriteID: 2a9ab342b88e16844ae9b59e2c2d860b
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -137,7 +489,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 4}
+    uvTransform: {x: 4, y: 1559}
     spritePosition: {x: 9, y: 0}
   spriteImportData: []
   rigSpriteImportData: []
@@ -147,7 +499,7 @@ ScriptedImporter:
   - name: DefaultTexturePlatform
     overridden: 0
     ignorePlatformSupport: 0
-    maxTextureSize: 256
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -196,15 +548,223 @@ ScriptedImporter:
   pipelineVersion: 
   spritePackingTag: 
   resliceFromLayer: 0
-  pSDLayerImportSetting: []
+  pSDLayerImportSetting:
+  - spriteId: 17b0277f391f70448a1b77ff5a84daa0
+    name: Water Bar
+    layerId: 92
+    flatten: 0
+    isGroup: 1
+    importLayer: 1
+  - spriteId: bf7e8cd6013901e44841856498f42ef9
+    name: WaterBar Fill
+    layerId: 91
+    flatten: 0
+    isGroup: 0
+    importLayer: 1
+  - spriteId: 63d21b4c9ca30c6449bceec907324edc
+    name: WaterBar Outline
+    layerId: 90
+    flatten: 0
+    isGroup: 0
+    importLayer: 1
   psdLayers:
+  - name: Water Bar
+    spriteName: 
+    isGroup: 1
+    parentIndex: -1
+    spriteID: 17b0277f391f70448a1b77ff5a84daa0
+    layerID: 92
+    mosaicPosition: {x: 0, y: 0}
+    flatten: 0
+    isImported: 0
+    isVisible: 0
+  - name: WaterBar Fill
+    spriteName: 
+    isGroup: 0
+    parentIndex: 0
+    spriteID: bf7e8cd6013901e44841856498f42ef9
+    layerID: 91
+    mosaicPosition: {x: 0, y: 0}
+    flatten: 0
+    isImported: 0
+    isVisible: 1
+  - name: WaterBar Outline
+    spriteName: 
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 63d21b4c9ca30c6449bceec907324edc
+    layerID: 90
+    mosaicPosition: {x: 0, y: 0}
+    flatten: 0
+    isImported: 0
+    isVisible: 1
+  - name: ButtonCash
+    spriteName: ButtonCash
+    isGroup: 0
+    parentIndex: -1
+    spriteID: a390c2bc9f8140342b1d65942121f750
+    layerID: 100
+    mosaicPosition: {x: 4, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: ButtonCard
+    spriteName: ButtonCard
+    isGroup: 0
+    parentIndex: -1
+    spriteID: d4386d3e5427a0141ba5837383bbaf3f
+    layerID: 105
+    mosaicPosition: {x: 4, y: 524}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Talk E
+    spriteName: Talk E
+    isGroup: 0
+    parentIndex: -1
+    spriteID: be02596f768b5584fa2489cbd6e94de2
+    layerID: 84
+    mosaicPosition: {x: 1035, y: 499}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Key Ion
+    spriteName: Key Ion
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 2c719b4e7d4a0ec4eab18ee65532a09f
+    layerID: 88
+    mosaicPosition: {x: 524, y: 1899}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Ammo Station
+    spriteName: Ammo Station
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 8ab934981fef326409aca0f4b6bc8821
+    layerID: 86
+    mosaicPosition: {x: 524, y: 2341}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Talk E old
+    spriteName: Talk E old
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 8929b6f5743586644b5d14b85a057270
+    layerID: 81
+    mosaicPosition: {x: 1035, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Throw E
+    spriteName: Throw E
+    isGroup: 0
+    parentIndex: -1
+    spriteID: ccb49f912d6d8a54ab6143e66cccb5bc
+    layerID: 78
+    mosaicPosition: {x: 524, y: 934}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Water LMB
+    spriteName: Water LMB
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 5ecbf6e90e63ea54e94ee7c0d2e934c0
+    layerID: 75
+    mosaicPosition: {x: 4, y: 3564}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Sip LMB
+    spriteName: Sip LMB
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 56c3eaef0e7cc024984ee170cd1baa41
+    layerID: 72
+    mosaicPosition: {x: 4, y: 2069}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Pour LMB
+    spriteName: Pour LMB
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 477fe32e66c239a49a9e6eaddc89e925
+    layerID: 69
+    mosaicPosition: {x: 4, y: 1044}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Clean LMB
+    spriteName: Clean LMB
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 376036ced1ce7a34eb78bfe7c8291f84
+    layerID: 64
+    mosaicPosition: {x: 524, y: 1399}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Place E
+    spriteName: Place E
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 33f6658873050a24a828a2170770b1ed
+    layerID: 59
+    mosaicPosition: {x: 524, y: 2763}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Take E
+    spriteName: Take E
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 36fb0d63c576e4a4dbf5f09ed71deff6
+    layerID: 54
+    mosaicPosition: {x: 524, y: 3260}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Flashlight
+    spriteName: Flashlight
+    isGroup: 0
+    parentIndex: -1
+    spriteID: e74a4d46b1440b34086fa1986eaee10c
+    layerID: 47
+    mosaicPosition: {x: 524, y: 469}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Gun_R
+    spriteName: Gun_R
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 8e138b4c911cf2e4296d87da6921d521
+    layerID: 40
+    mosaicPosition: {x: 524, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Gun_LMB
+    spriteName: Gun_LMB
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 1ad2b08a664733342bf9d46d547a160b
+    layerID: 50
+    mosaicPosition: {x: 4, y: 2589}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
   - name: Bat_F
     spriteName: Bat_F
     isGroup: 0
     parentIndex: -1
-    spriteID: 1e6f2c8861737484bba35be6d056d741
+    spriteID: 3cec6302c890ac14f9a6507c768416d6
     layerID: 23
-    mosaicPosition: {x: 4, y: 514}
+    mosaicPosition: {x: 4, y: 3070}
     flatten: 0
     isImported: 1
     isVisible: 1
@@ -212,17 +772,27 @@ ScriptedImporter:
     spriteName: Bat_LMB
     isGroup: 0
     parentIndex: -1
-    spriteID: 19c7e91ea95d9394aa69cfabbb6b4558
+    spriteID: 2a9ab342b88e16844ae9b59e2c2d860b
     layerID: 13
-    mosaicPosition: {x: 4, y: 4}
+    mosaicPosition: {x: 4, y: 1559}
     flatten: 0
     isImported: 1
     isVisible: 1
+  - name: Ebene 3
+    spriteName: 
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 6aa80d99617dee145897e1fa33820f21
+    layerID: 28
+    mosaicPosition: {x: 0, y: 0}
+    flatten: 0
+    isImported: 0
+    isVisible: 0
   mosaicPSDLayers: []
   rigPSDLayers: []
   sharedRigPSDLayers: []
   importFileNodeState: 1
-  platformSettingsDirtyTick: 639050229252457302
+  platformSettingsDirtyTick: 639052152261281641
   spriteSizeExpandChanged: 0
   generateGOHierarchy: 0
   textureAssetName: 

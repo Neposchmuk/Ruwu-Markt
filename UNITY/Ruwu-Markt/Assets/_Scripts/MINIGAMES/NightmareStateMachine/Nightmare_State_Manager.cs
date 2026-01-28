@@ -71,6 +71,8 @@ public class Nightmare_State_Manager : MonoBehaviour
 
     public void EndNight(bool survived, int sanityChange)
     {
+        GameEventsManager.instance.uiEvents.HideActionWidget();
+
         Debug.Log("Called EndNight");
         if(TimerIsRunning) CancelInvoke("Timer");
 

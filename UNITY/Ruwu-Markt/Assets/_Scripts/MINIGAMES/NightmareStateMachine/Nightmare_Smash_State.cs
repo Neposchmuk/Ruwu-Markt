@@ -28,6 +28,8 @@ public class Nightmare_Smash_State : NightmareBaseState
         SmashThings.OnDestroy += CountDestroyedObjects;
 
         GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.NIGHTMARE_SMASH);
+
+        GameEventsManager.instance.uiEvents.SendActionSprite(UI_Widget.BAT_LMB, 0);
     }
 
     public override void UpdateState()
