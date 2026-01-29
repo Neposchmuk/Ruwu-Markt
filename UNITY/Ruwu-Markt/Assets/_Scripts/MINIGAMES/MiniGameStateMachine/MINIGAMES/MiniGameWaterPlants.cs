@@ -21,6 +21,8 @@ public class MiniGameWaterPlants : MiniGameBaseState
 
     private bool isHoldingCan;
 
+    private bool showInteraction;
+
     private int questStage;
     public override void StartQuest(MiniGame_Caller Quest, int questVariant)
     {
@@ -179,6 +181,10 @@ public class MiniGameWaterPlants : MiniGameBaseState
 
         if (Physics.Raycast(ray, out RaycastHit hit, 2, QuestSource.interactionLayer))
         {
+            if(showInteraction) return;
+
+            showInteraction = true;
+
             if(hit.collider.tag == "WateringCan")
             {
                 GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
@@ -190,6 +196,11 @@ public class MiniGameWaterPlants : MiniGameBaseState
             }
 
 
+        }
+        else if (showInteraction)
+        {
+            showInteraction = false;
+            GameEventsManager.instance.uiEvents.HideInteractionWidget();
         }
     }
 }

@@ -24,6 +24,8 @@ public class MiniGameWipeFloor : MiniGameBaseState
 
     private bool isHoldingMop;
 
+    private bool showInteraction;
+
 
     private void OnEnable()
     {
@@ -169,10 +171,19 @@ public class MiniGameWipeFloor : MiniGameBaseState
 
         if (Physics.Raycast(ray, out RaycastHit hit, 2, QuestSource.interactionLayer))
         {
+            if(showInteraction) return;
+
+            showInteraction = true;
+
             if (hit.collider.tag == "Mop")
             {
                 GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
             }
+        }
+        else if (showInteraction)
+        {
+            showInteraction = false;
+            GameEventsManager.instance.uiEvents.HideInteractionWidget();
         }
     }
 

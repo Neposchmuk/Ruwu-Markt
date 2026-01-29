@@ -16,6 +16,8 @@ public class MiniGameShelf : MiniGameBaseState
 
     private bool isHoldingObject;
 
+    private bool showInteraction;
+
     private MiniGame_Caller QuestSource;
 
     private Quest_Manager QM;
@@ -178,6 +180,10 @@ public class MiniGameShelf : MiniGameBaseState
 
         if (Physics.Raycast(ray, out RaycastHit hit, 2, QuestSource.interactionLayer))
         {
+            if(showInteraction) return;
+
+            showInteraction = true;
+
             if (hit.collider.tag == "ProduceCan")
             {
                 GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
@@ -189,6 +195,11 @@ public class MiniGameShelf : MiniGameBaseState
             {
                 GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.PLACE);
             }
+        }
+        else if (showInteraction)
+        {
+            showInteraction = false;
+            GameEventsManager.instance.uiEvents.HideInteractionWidget();
         }
     }
 }

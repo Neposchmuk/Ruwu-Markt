@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5649513899849018735}
   - component: {fileID: 4616315019441048661}
   - component: {fileID: 4599168287156494128}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 5752667947621489996}
   - component: {fileID: 2561612732208786361}
   - component: {fileID: 6373407547955198298}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CrateBlue_WorldObject
   m_TagString: CrateBlue
   m_Icon: {fileID: 0}
@@ -479,7 +479,7 @@ GameObject:
   - component: {fileID: 1669838847473710495}
   - component: {fileID: 5256530741004505349}
   - component: {fileID: 2597123714228888273}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}

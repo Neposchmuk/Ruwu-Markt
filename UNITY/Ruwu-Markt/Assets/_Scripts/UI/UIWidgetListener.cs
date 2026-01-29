@@ -48,8 +48,12 @@ public class UIWidgetListener : MonoBehaviour
 
     private void ShowInteractionWidget(Sprite sprite)
     {
+        Debug.Log("Showing "+sprite);
+
         interactionImage.sprite = sprite;
         interactionImage.enabled = true;
+
+        Debug.Log(interactionImage.enabled);
     }
 
     private void HideActionWidget()
@@ -64,6 +68,7 @@ public class UIWidgetListener : MonoBehaviour
     private void HideInteractionWidget()
     {
         interactionImage.enabled = false;
+        Debug.Log(interactionImage.enabled);
     }
 
 }

@@ -210,6 +210,7 @@ public class MiniGamePfand : MiniGameBaseState
                         HA.Place(hit);
                         GameEventsManager.instance.questEvents.PlaceObject();
                         GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PLACE_CRATE);
+                        GameEventsManager.instance.uiEvents.HideInteractionWidget();
                         HA.DestroyObjectInHand();
                         cratesPlaced++;
                         UpdateQuest();
@@ -224,6 +225,7 @@ public class MiniGamePfand : MiniGameBaseState
                         HA.Place(hit);
                         GameEventsManager.instance.questEvents.PlaceObject();
                         GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PLACE_CRATE);
+                        GameEventsManager.instance.uiEvents.HideInteractionWidget();
                         HA.DestroyObjectInHand();                       
                         cratesPlaced++;
                         UpdateQuest();
@@ -238,6 +240,7 @@ public class MiniGamePfand : MiniGameBaseState
                         HA.Place(hit);
                         GameEventsManager.instance.questEvents.PlaceObject();
                         GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PLACE_CRATE);
+                        GameEventsManager.instance.uiEvents.HideInteractionWidget();
                         HA.DestroyObjectInHand();
                         cratesPlaced++;
                         UpdateQuest();
@@ -262,6 +265,7 @@ public class MiniGamePfand : MiniGameBaseState
                     {
                         HA.DestroyObjectInHand();
                         GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PLACE_BOTTLE);
+                        GameEventsManager.instance.uiEvents.HideInteractionWidget();
                         isHoldingObject = false;
                         bottlesPlaced++;
                         UpdateQuest();
@@ -295,6 +299,7 @@ public class MiniGamePfand : MiniGameBaseState
                     {
                         HA.Place(PPO.pyramidCrates[pyramidCratesPlaced].transform.position, PPO.pyramidCrates[pyramidCratesPlaced].transform.eulerAngles, new Vector3(0.6f,0.6f,0.6f));
                         GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PLACE_CRATE);
+                        GameEventsManager.instance.uiEvents.HideInteractionWidget();
                         HA.DestroyObjectInHand();
                         pyramidCratesPlaced++;
                         UpdateQuest();
@@ -400,6 +405,8 @@ public class MiniGamePfand : MiniGameBaseState
         {
             if(showInteraction) return;
 
+            Debug.Log(hit.collider.tag);
+
             showInteraction = true;
 
             switch (questVariant)
@@ -448,14 +455,17 @@ public class MiniGamePfand : MiniGameBaseState
                     if (hit.collider.tag == "CrateBlue" && !isHoldingObject)
                     {
                         GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                        Debug.Log("ShowSprite");
                     }
                     else if (hit.collider.tag == "CrateYellow" && !isHoldingObject)
                     {
                         GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                        Debug.Log("ShowSprite");
                     }
                     else if (hit.collider.tag == "CrateRed" && !isHoldingObject)
                     {
                         GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                        Debug.Log("ShowSprite");
                     }
 
                     if (hit.collider.tag == "PyramidArea" && isHoldingObject)
@@ -471,9 +481,10 @@ public class MiniGamePfand : MiniGameBaseState
                     break;
             }
         }
-        else 
+        else if(showInteraction)
         {
             GameEventsManager.instance.uiEvents.HideInteractionWidget();
+            Debug.Log("HideWidget");
             showInteraction = false;
         }
     }

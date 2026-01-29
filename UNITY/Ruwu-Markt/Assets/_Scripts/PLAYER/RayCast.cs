@@ -65,6 +65,8 @@ public class RayCast : MonoBehaviour
         
 
         Hand = gameObject.GetComponentInChildren<Hand_Actions>();
+
+        GameEventsManager.instance.uiEvents.HideInteractionWidget();
     }
 
     private void Update()
@@ -297,7 +299,7 @@ public class RayCast : MonoBehaviour
                     GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);    
                 }
             }
-        else
+        else if(showInteraction)
         {
             GameEventsManager.instance.uiEvents.HideInteractionWidget();
             showInteraction = false;

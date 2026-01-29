@@ -54,6 +54,8 @@ public class CashRegister_MiniGame : MonoBehaviour
 
     private bool registerButtonsEnabled;
 
+    private bool showInteraction;
+
     private GameObject agent;
 
 
@@ -89,6 +91,11 @@ public class CashRegister_MiniGame : MonoBehaviour
         GameEventsManager.instance.questEvents.ToggleButtonInteractable(UIButtonType.CASH, false);
         GameEventsManager.instance.questEvents.ToggleButtonInteractable(UIButtonType.PAYCARD, false);
         GameEventsManager.instance.questEvents.ToggleButtonInteractable(UIButtonType.PAYCASH, false);
+    }
+
+    void Update()
+    {
+        WidgetRaycast();
     }
 
     public void InitializeQuest(GameObject agent)
@@ -128,7 +135,7 @@ public class CashRegister_MiniGame : MonoBehaviour
         
         GameEventsManager.instance.soundEvents.TriggerSound(SoundType.CASH_SCAN);
 
-        RegisterScannedProducts.text += productInfo.name + " - " +(float)productInfo.price/100 + "$\n";
+        RegisterScannedProducts.text += productInfo.productName + " - " +(float)productInfo.price/100 + "$\n";
         RegisterTotalPrice.text ="Total: " + $"{(float)_intPriceTotal / 100}$";
         if(productsScanned == productsToScan)
         {
@@ -248,7 +255,7 @@ public class CashRegister_MiniGame : MonoBehaviour
 
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
 
-        if(Physics.Raycast(ray, out RaycastHit hit, 2, RCLayerMask))
+        if(Physics.Raycast(ray, out RaycastHit hit, 2.5f, RCLayerMask))
         {
             if (hit.collider.CompareTag("CheckOutProduct"))
             {
@@ -271,6 +278,36 @@ public class CashRegister_MiniGame : MonoBehaviour
             }
 
             
+        }
+    }
+
+    void WidgetRaycast()
+    {
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
+
+        if(Physics.Raycast(ray, out RaycastHit hit, 2.5f, RCLayerMask))
+        {
+            if(showInteraction) return;
+
+            showInteraction = true;
+
+            if (hit.collider.CompareTag("CheckOutProduct"))
+            {
+                GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                
+            }
+
+            if (hit.collider.CompareTag("Cash"))
+            {
+                GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+            }
+
+            
+        }
+        else if (showInteraction)
+        {
+            showInteraction = false;
+            GameEventsManager.instance.uiEvents.HideInteractionWidget();
         }
     }
 }
