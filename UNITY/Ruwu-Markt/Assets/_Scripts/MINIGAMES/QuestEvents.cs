@@ -174,4 +174,14 @@ public class QuestEvents
             onShowKeytext();
         }
     }
+
+    public event Action<float> onCanPourTime;
+
+    public void CanPourTime(float time)
+    {
+        if(onCanPourTime != null)
+        {
+            onCanPourTime(time);
+        }
+    }
 }

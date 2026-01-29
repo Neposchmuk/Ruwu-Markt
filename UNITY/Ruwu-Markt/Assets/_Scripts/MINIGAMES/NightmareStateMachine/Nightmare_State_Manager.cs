@@ -31,7 +31,7 @@ public class Nightmare_State_Manager : MonoBehaviour
 
     public bool TimerIsRunning { get; private set; }
 
-    private void Awake()
+    private void OnEnable()
     {
         _dayManager = FindFirstObjectByType<Day_Manager>();
 
@@ -57,8 +57,11 @@ public class Nightmare_State_Manager : MonoBehaviour
                 EscapeLevel.SetActive(true);
                 CurrentState = EscapeState;
                 break;
-        }
+        } 
+    }
 
+    void Start()
+    {
         CurrentState.EnterState(this);
         Debug.Log("StateManager EnterState");
     }

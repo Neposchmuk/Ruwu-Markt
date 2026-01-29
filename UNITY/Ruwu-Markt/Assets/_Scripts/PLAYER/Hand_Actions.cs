@@ -97,18 +97,17 @@ public class Hand_Actions: MonoBehaviour
         {
             GameEventsManager.instance.questEvents.WateringFillState(false);
         }
-        else if(timeToPour >= 0)
+        else if(timeToPour > 0)
         {
             GameEventsManager.instance.questEvents.WateringFillState(true);
+            GameEventsManager.instance.questEvents.CanPourTime(timeToPour*20);
         }
-
-        objectHolding.GetComponentInChildren<TMP_Text>().text = $"{Mathf.CeilToInt(timeToPour * 20f)}";
     }
 
     public void SetPourTime(float time)
     {
         timeToPour = time;
-        objectHolding.GetComponentInChildren<TMP_Text>().text = $"{Mathf.CeilToInt(timeToPour * 20f)}";
+        GameEventsManager.instance.questEvents.CanPourTime(timeToPour*20);
     }
 
     public void Place(RaycastHit hit)

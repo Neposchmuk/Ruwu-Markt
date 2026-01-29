@@ -1,3 +1,4 @@
+using UnityEngine.UI;
 using UnityEngine;
 
 public class WateringCanAnimation : MonoBehaviour
@@ -6,6 +7,8 @@ public class WateringCanAnimation : MonoBehaviour
 
     [SerializeField] ParticleSystem particles;
 
+    [SerializeField] Image fillBar;
+
     bool canPour;
 
     void OnEnable()
@@ -13,12 +16,14 @@ public class WateringCanAnimation : MonoBehaviour
         GameEventsManager.instance.playerEvents.onPressedAttack += StartPour;
         GameEventsManager.instance.playerEvents.onReleasedAttack += StopPour;
         GameEventsManager.instance.questEvents.onWateringFillState += ToggleParticles;
+        GameEventsManager.instance.questEvents.onCanPourTime += SetPourFill;
     }
     void OnDisable()
     {
         GameEventsManager.instance.playerEvents.onPressedAttack -= StartPour;
         GameEventsManager.instance.playerEvents.onReleasedAttack -= StopPour;
         GameEventsManager.instance.questEvents.onWateringFillState -= ToggleParticles;
+        GameEventsManager.instance.questEvents.onCanPourTime -= SetPourFill;
     }
 
     void StartPour(InputEventContext context)
@@ -67,5 +72,10 @@ public class WateringCanAnimation : MonoBehaviour
                 }            
                 break;
         }
+    }
+
+    void SetPourFill(float time)
+    {
+        fillBar.fillAmount = time/100;
     }
 }

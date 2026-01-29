@@ -121,7 +121,8 @@ public class RayCast : MonoBehaviour
                         _object.SetActive(false);
                     }
                     Hand.PickUpObject(8);
-                    _carryingCashtray = true;               
+                    _carryingCashtray = true;   
+                    GameEventsManager.instance.questEvents.UpdateQuestText("Bring the tray to the safe");            
                 }
 
                 if(hit.collider.tag == "Safe" && _carryingCashtray)
@@ -230,27 +231,27 @@ public class RayCast : MonoBehaviour
 
                 if(hit.collider.tag == "ShelfQuest" && !QM.isDoingQuest && !QM.shelfQuestCompleted)
                 {
-                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TALK);
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.QUEST_E);
                 }
 
                 if (hit.collider.tag == "FloorQuest" && !QM.isDoingQuest && !QM.floorQuestCompleted)
                 {
-                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TALK);
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.QUEST_E);
                 }
 
                 if (hit.collider.tag == "PfandQuest" && !QM.isDoingQuest && !QM.pfandQuestCompleted)
                 {
-                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TALK);
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.QUEST_E);
                 }
 
                 if(hit.collider.tag == "FlowersQuest" && !QM.isDoingQuest && !QM.flowersQuestCompleted)
                 {
-                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TALK);
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.QUEST_E);
                 }
 
                 if(hit.collider.tag == "Cashtray" && QM.DayComplete)
                 {
-                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);           
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.QUEST_E);           
                 }
 
                 if(hit.collider.tag == "Safe" && _carryingCashtray)
@@ -283,7 +284,6 @@ public class RayCast : MonoBehaviour
                     GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
                 }   
 
-        
                 if(hit.collider.tag == "MarketKey")
                 {
                     GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
@@ -297,6 +297,17 @@ public class RayCast : MonoBehaviour
                 if(hit.collider.tag == "AmmoStation")
                 {
                     GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);    
+                }
+
+                if (hit.collider.tag == "CheckOutProduct")
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                
+                }
+
+                if (hit.collider.tag == "Cash")
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
                 }
             }
         else if(showInteraction)

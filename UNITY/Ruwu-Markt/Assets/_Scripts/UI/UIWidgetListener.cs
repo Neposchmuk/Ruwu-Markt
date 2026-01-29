@@ -12,12 +12,13 @@ public class UIWidgetListener : MonoBehaviour
 
     [SerializeField] private Image actionWidget_3;
 
-    private void OnEnable()
+    private void Awake()
     {
         GameEventsManager.instance.uiEvents.onShowActionWidget += ShowActionWidget;
         GameEventsManager.instance.uiEvents.onShowInteractionWidget += ShowInteractionWidget;
         GameEventsManager.instance.uiEvents.onHideActionWidget += HideActionWidget;
         GameEventsManager.instance.uiEvents.onHideInteractionWidget += HideInteractionWidget;
+        Debug.Log("Subscribed to events");
     }
     private void OnDisable()
     {
@@ -29,6 +30,7 @@ public class UIWidgetListener : MonoBehaviour
 
     private void ShowActionWidget(int index, Sprite sprite)
     {
+        Debug.Log("Received event");
         switch (index)
         {
             case 0:

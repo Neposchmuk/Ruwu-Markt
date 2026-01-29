@@ -29,6 +29,7 @@ public class UI_Events
 
     public void ShowActionWidget(int index, Sprite sprite)
     {
+        Debug.Log("Sending Show event");
         if(onShowActionWidget != null)
         {
             onShowActionWidget(index, sprite);

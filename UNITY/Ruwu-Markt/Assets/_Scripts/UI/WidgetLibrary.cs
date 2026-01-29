@@ -29,6 +29,8 @@ public class WidgetLibrary : MonoBehaviour
     public Sprite Bat_F;
 
     public Sprite Bat_LMB;
+
+    public Sprite Quest_E;
 }
 
 public enum UI_Widget
@@ -46,5 +48,6 @@ public enum UI_Widget
     GUN_R,
     GUN_LMB,
     BAT_F,
-    BAT_LMB
+    BAT_LMB,
+    QUEST_E
 }

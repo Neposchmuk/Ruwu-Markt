@@ -110,6 +110,9 @@ public class WidgetManager : MonoBehaviour
             case UI_Widget.BAT_LMB:
             GameEventsManager.instance.uiEvents.ShowInteractionWidget(library.Bat_LMB);
                 break;
+            case UI_Widget.QUEST_E:
+                GameEventsManager.instance.uiEvents.ShowInteractionWidget(library.Quest_E);
+                break;
         }
     }
 }

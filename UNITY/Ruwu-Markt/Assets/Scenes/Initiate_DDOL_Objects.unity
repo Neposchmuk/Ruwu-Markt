@@ -2688,20 +2688,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86dfa7ff1df14dd4a909e9b13f2c15eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Take: {fileID: -4278508589376036555, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
-  Place: {fileID: 3862435523383007747, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
-  Talk: {fileID: -6888110379003590285, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
-  Key: {fileID: 5870984443653246921, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
-  Throw: {fileID: -5420272982853764876, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
-  Water: {fileID: -7403697800490078321, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
-  Sip: {fileID: 6978244934348774305, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
-  Pour: {fileID: 8915642837234279879, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
-  Clean: {fileID: -1998393949561197506, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
-  Flash: {fileID: -5553402099456445879, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
-  Gun_R: {fileID: 4554259775122019521, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
-  Gun_LMB: {fileID: 6208106739480499406, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
-  Bat_F: {fileID: 6989523647573408631, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
-  Bat_LMB: {fileID: -6045497686364807492, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
+  Take: {fileID: -8151574595355363626, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
+  Place: {fileID: -5452715638717895941, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
+  Talk: {fileID: 3990447601386622846, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
+  Key: {fileID: -1973917898278217241, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
+  Throw: {fileID: 7113807806217807273, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
+  Water: {fileID: -164438182181637557, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
+  Sip: {fileID: -2365366527021291921, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
+  Pour: {fileID: 8955639380760747606, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
+  Clean: {fileID: 689508483827302061, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
+  Flash: {fileID: -3333882836497547112, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
+  Gun_R: {fileID: -6490953361271851108, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
+  Gun_LMB: {fileID: -1062289337905928912, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
+  Bat_F: {fileID: -751395404888149888, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
+  Bat_LMB: {fileID: -7312123777435518345, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
+  Quest_E: {fileID: -6864665312733738556, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
 --- !u!114 &1918732921
 MonoBehaviour:
   m_ObjectHideFlags: 0
