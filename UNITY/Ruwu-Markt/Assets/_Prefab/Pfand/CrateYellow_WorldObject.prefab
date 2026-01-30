@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 7404590412277313314}
   - component: {fileID: 6375739259296629099}
   - component: {fileID: 8595424536033820839}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: CrateYellow_WorldObject
   m_TagString: CrateYellow
   m_Icon: {fileID: 0}

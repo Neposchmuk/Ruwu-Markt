@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 1326626110487775402}
   - component: {fileID: 6276178262385105880}
   - component: {fileID: 6824886908975151519}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: CrateRed_WorldObject
   m_TagString: CrateRed
   m_Icon: {fileID: 0}
