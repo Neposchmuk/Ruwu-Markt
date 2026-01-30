@@ -47,11 +47,13 @@ public class Main_Menu_Manager : MonoBehaviour
 
     private void LoadScene(string name)
     {
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_CLICK);
         GameEventsManager.instance.gameEvents.ChangeScene(name);
     }
 
     private void SwitchMenu(bool toggle)
     {
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_CLICK);
         MainMenuGroup.SetActive(!toggle);
         //SettingsMenuGroup.SetActive(toggle);
         GameEventsManager.instance.gameEvents.ShowSettings(true);
@@ -59,6 +61,7 @@ public class Main_Menu_Manager : MonoBehaviour
 
     private void QuitGame()
     {
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_CLICK);
         GameEventsManager.instance.gameEvents.QuitGame();
     }
 

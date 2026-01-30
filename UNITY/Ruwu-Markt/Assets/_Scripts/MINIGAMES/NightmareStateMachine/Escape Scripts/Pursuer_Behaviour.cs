@@ -84,6 +84,7 @@ public class Pursuer_Behaviour : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Player") && _gameRunning)
         {
+            GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PLAYER_HURT);
             //trigger stab animation
             _gameRunning = false;
             _nightmareStateManager.EndNight(false, -30);

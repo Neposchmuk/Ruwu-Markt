@@ -39,7 +39,7 @@ public class CashRegisterButton : MonoBehaviour
 
     private void Interact(GameObject gameObject)
     {
-        if(gameObject != this.gameObject) return;
+        if(gameObject != this.gameObject || !button.interactable) return;
 
         switch (buttonType)
         {

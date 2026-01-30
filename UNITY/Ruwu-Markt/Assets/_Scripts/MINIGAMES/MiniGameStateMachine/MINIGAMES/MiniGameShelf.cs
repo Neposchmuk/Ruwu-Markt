@@ -16,6 +16,8 @@ public class MiniGameShelf : MiniGameBaseState
 
     private bool isHoldingObject;
 
+    private bool showInteraction;
+
     private MiniGame_Caller QuestSource;
 
     private Quest_Manager QM;
@@ -50,10 +52,11 @@ public class MiniGameShelf : MiniGameBaseState
                 InitiateQuest();
                 break;
             case 3:
-                //Needs to be changed to require Animation first
+                GameEventsManager.instance.playerEvents.ChangeQuestContext(QuestContext.SHELF_SIP);
                 InitiateQuest();
                 break;
             case 4:
+                GameEventsManager.instance.playerEvents.ChangeQuestContext(QuestContext.SHELF_POUR);
                 InitiateQuest();
                 break;
         }
@@ -86,9 +89,11 @@ public class MiniGameShelf : MiniGameBaseState
                 break;
             case 3:
                 GameEventsManager.instance.questEvents.UpdateQuestText("Take a sip");
+                GameEventsManager.instance.uiEvents.SendActionSprite(UI_Widget.SIP, 0);
                 break;
             case 4:
                 GameEventsManager.instance.questEvents.UpdateQuestText("Pour it out!");
+                GameEventsManager.instance.uiEvents.SendActionSprite(UI_Widget.POUR, 0);
                 break;
         }
         
@@ -101,6 +106,10 @@ public class MiniGameShelf : MiniGameBaseState
 
         GameEventsManager.instance.questEvents.QuestCompleted(QuestType.Shelf);
         GameEventsManager.instance.questEvents.ToggleQuestmarkers(true);
+
+        GameEventsManager.instance.uiEvents.HideActionWidget();
+
+        GameEventsManager.instance.playerEvents.ChangeQuestContext(QuestContext.NONE);
 
         QM.CompleteQuest(0, questVariant -1, QuestSource.gameObject);
     }
@@ -129,6 +138,8 @@ public class MiniGameShelf : MiniGameBaseState
             if (hit.collider.tag == "Shelf" && isHoldingObject && objectsPlaced < objectsToPlace && (questVariant == 1 || questVariant == 2))
             {
                 HA.Place(hit);
+                GameEventsManager.instance.questEvents.PlaceObject();
+                GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PLACE_PRODUCT);
                 objectsPlaced++;
                 UpdateQuest();
                 if (objectsPlaced == objectsToPlace)
@@ -155,8 +166,40 @@ public class MiniGameShelf : MiniGameBaseState
 
         if (isHoldingObject && buttonIsPressed && questVariant == 3)
         {
-            //Run animation -> Reduces counter, if counter == 0 EndQuest
-            EndQuest();
+            HA.TakeSip();
+            if(HA.TakeSip() <= 0)
+            {
+                EndQuest();
+            }            
+        }
+    }
+
+    public override void WidgetRaycast()
+    {
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 2, QuestSource.interactionLayer))
+        {
+            if(showInteraction) return;
+
+            showInteraction = true;
+
+            if (hit.collider.tag == "ProduceCan")
+            {
+                GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+            }
+
+
+
+            if (hit.collider.tag == "Shelf" && isHoldingObject && objectsPlaced < objectsToPlace && (questVariant == 1 || questVariant == 2))
+            {
+                GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.PLACE);
+            }
+        }
+        else if (showInteraction)
+        {
+            showInteraction = false;
+            GameEventsManager.instance.uiEvents.HideInteractionWidget();
         }
     }
 }
