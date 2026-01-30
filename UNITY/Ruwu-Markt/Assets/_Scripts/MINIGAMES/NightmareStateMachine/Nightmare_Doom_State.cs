@@ -50,6 +50,8 @@ public class Nightmare_Doom_State : NightmareBaseState
         _player.MoveSpeed = 10;
 
         _player.SprintSpeed = 10;
+
+        GameEventsManager.instance.questEvents.UpdateLivesText($"{_playerHealth}");
     }
 
     public override void UpdateState()
@@ -83,6 +85,7 @@ public class Nightmare_Doom_State : NightmareBaseState
         if(_stateManager.playerInvincible) return;
 
         GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PLAYER_HURT);
+        GameEventsManager.instance.questEvents.UpdateLivesText($"{_playerHealth - 1}");
 
         _playerHealth--;
         Debug.Log("Player HP: " + _playerHealth);

@@ -116,4 +116,14 @@ public class GameEvents
             onSendPlayerObject(requester, playerObject);
         }
     }
+
+    public event Action onSkipDay;
+
+    public void SkipDay()
+    {
+        if(onSkipDay != null)
+        {
+            onSkipDay();
+        }
+    }
 }

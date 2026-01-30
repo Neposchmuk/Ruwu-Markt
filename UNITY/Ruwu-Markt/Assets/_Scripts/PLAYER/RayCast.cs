@@ -173,7 +173,12 @@ public class RayCast : MonoBehaviour
                 if (hit.collider.CompareTag("UI_Button"))
                 {
                     GameEventsManager.instance.questEvents.UIButtonInteract(hit.collider.gameObject);
-                }   
+                }
+
+                if (hit.collider.CompareTag("SkipButton"))
+                {
+                    GameEventsManager.instance.gameEvents.SkipDay();
+                }
             }
         }
 
@@ -306,6 +311,11 @@ public class RayCast : MonoBehaviour
                 }
 
                 if (hit.collider.tag == "Cash")
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                }
+
+                if (hit.collider.CompareTag("SkipButton"))
                 {
                     GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
                 }
