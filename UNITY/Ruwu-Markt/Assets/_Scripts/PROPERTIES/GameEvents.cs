@@ -96,4 +96,24 @@ public class GameEvents
             onShowSettings(toggle);
         }
     }
+
+    public event Action<GameObject> onRequestPlayerObject;
+
+    public void RequestPlayerObject(GameObject requester)
+    {
+        if(onRequestPlayerObject != null)
+        {
+            onRequestPlayerObject(requester);
+        }
+    }
+
+    public event Action<GameObject, GameObject> onSendPlayerObject;
+
+    public void SendPlayerObject(GameObject requester, GameObject playerObject)
+    {
+        if(onSendPlayerObject != null)
+        {
+            onSendPlayerObject(requester, playerObject);
+        }
+    }
 }
