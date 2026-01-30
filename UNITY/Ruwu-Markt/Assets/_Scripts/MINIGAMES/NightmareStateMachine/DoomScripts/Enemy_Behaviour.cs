@@ -65,6 +65,7 @@ public class Enemy_Behaviour : MonoBehaviour
     {
         if(enemy != this.gameObject) return;
 
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.NPC_DEATH);
         Debug.Log("Killed enemy");
         CancelInvoke("SetPlayerDestination");
         Instantiate(KillParticles, transform.position + new Vector3(0, 1, 0), transform.rotation);

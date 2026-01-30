@@ -11,6 +11,7 @@ public enum QuestType
     Flowers
 }
 
+
 public class MiniGameStateManager : MonoBehaviour
 {
     public bool isDoingQuest;
@@ -92,6 +93,8 @@ public class MiniGameStateManager : MonoBehaviour
             }
             /*Debug.Log(currentQuest);
             currentQuest.UpdateQuest();*/
+
+            currentQuest.WidgetRaycast();
         }
         
     }

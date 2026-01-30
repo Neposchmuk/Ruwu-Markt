@@ -181,6 +181,7 @@ public class Quest_Manager : MonoBehaviour
         if (shelfQuestCompleted && floorQuestCompleted && pfandQuestCompleted && flowersQuestCompleted && customersQuestCompleted && !SM.isGameOver)
         {
             DayComplete = true;
+            GameEventsManager.instance.questEvents.UpdateQuestText("Pick up the cashtray");
         }
         else if(shelfQuestCompleted && floorQuestCompleted && pfandQuestCompleted && flowersQuestCompleted)
         {
@@ -193,7 +194,7 @@ public class Quest_Manager : MonoBehaviour
     {
         customersServed++;
 
-        if(customersServed == 3)
+        if(customersServed == 5)
         {
             StartCoroutine(DelayCustomersBool());
         }

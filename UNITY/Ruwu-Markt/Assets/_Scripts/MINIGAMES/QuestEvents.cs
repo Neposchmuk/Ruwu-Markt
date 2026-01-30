@@ -154,4 +154,34 @@ public class QuestEvents
             onWateringFillState(toggle);
         }
     }
+
+    public event Action onplaceObject;
+
+    public void PlaceObject()
+    {
+        if(onplaceObject != null)
+        {
+            onplaceObject();
+        }
+    }
+
+    public event Action onShowKeytext;
+
+    public void ShowKeyText()
+    {
+        if(onShowKeytext != null)
+        {
+            onShowKeytext();
+        }
+    }
+
+    public event Action<float> onCanPourTime;
+
+    public void CanPourTime(float time)
+    {
+        if(onCanPourTime != null)
+        {
+            onCanPourTime(time);
+        }
+    }
 }

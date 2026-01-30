@@ -31,6 +31,9 @@ public class Nightmare_Doom_State : NightmareBaseState
         SubscribeEvents();
 
         GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.NIGHTMARE_DOOM);
+        GameEventsManager.instance.uiEvents.SendActionSprite(UI_Widget.GUN_LMB, 0);
+        GameEventsManager.instance.uiEvents.SendActionSprite(UI_Widget.GUN_R, 1);
+        GameEventsManager.instance.uiEvents.SendActionSprite(UI_Widget.BAT_F, 2);
 
         _stateManager = stateManager;
 
@@ -60,8 +63,6 @@ public class Nightmare_Doom_State : NightmareBaseState
 
         UnsubscribeEvents();
 
-        GameEventsManager.instance.questEvents.onHitEnemy -= CountKilled;
-
         _stateManager.EndNight(true, 10);
 
         GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.DEFAULT);
@@ -80,6 +81,8 @@ public class Nightmare_Doom_State : NightmareBaseState
     void HitPlayer()
     {
         if(_stateManager.playerInvincible) return;
+
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PLAYER_HURT);
 
         _playerHealth--;
         Debug.Log("Player HP: " + _playerHealth);

@@ -24,6 +24,8 @@ public class MiniGameWipeFloor : MiniGameBaseState
 
     private bool isHoldingMop;
 
+    private bool showInteraction;
+
 
     private void OnEnable()
     {
@@ -92,6 +94,8 @@ public class MiniGameWipeFloor : MiniGameBaseState
         GameEventsManager.instance.questEvents.QuestCompleted(QuestType.Floor);
         GameEventsManager.instance.questEvents.ToggleQuestmarkers(true);
 
+        GameEventsManager.instance.uiEvents.HideActionWidget();
+
         QM.CompleteQuest(1, questVariant - 1, QuestSource.gameObject);
     }
 
@@ -115,6 +119,8 @@ public class MiniGameWipeFloor : MiniGameBaseState
                 GameObject.Destroy(hit.collider.gameObject);
                 GameEventsManager.instance.questEvents.UpdateQuestText("Clean all puddles" + $"({puddlesCleaned}/{puddlesToClean}");
 
+                GameEventsManager.instance.uiEvents.SendActionSprite(UI_Widget.CLEAN, 0);
+
                 QuestSource.QuestMarkerSmall.SetActive(false);
                 foreach(GameObject puddle in Puddles)
                 {
@@ -124,25 +130,60 @@ public class MiniGameWipeFloor : MiniGameBaseState
         }
     }
 
+    private bool mopPlaying;
+
     public override void HoldingAttack(bool buttonIsPressed)
     {
         if (isHoldingMop && buttonIsPressed)
         {
+            if(mopPlaying) return;
+
+            mopPlaying = true;
+            
             MopCollider.enabled = true;
             MopAnimator.SetBool("IsCleaning", true);
+            GameEventsManager.instance.soundEvents.TriggerSound(SoundType.MOP);
         }
         else if(isHoldingMop)
         {
+            if(!mopPlaying) return;
+            mopPlaying = false;
+
             MopCollider.enabled = false;
             MopAnimator.SetBool("IsCleaning", false);
+            GameEventsManager.instance.soundEvents.StopSound();
         }
 
         if (puddlesCleaned == puddlesToClean)
         {
+            mopPlaying = false;
             MopCollider.enabled = false;
             MopAnimator.SetBool("IsCleaning", false);
             GameObject.Destroy(objectHeld);
+            GameEventsManager.instance.soundEvents.StopSound();
             EndQuest();
+        }
+    }
+
+    public override void WidgetRaycast()
+    {
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 2, QuestSource.interactionLayer))
+        {
+            if(showInteraction) return;
+
+            showInteraction = true;
+
+            if (hit.collider.tag == "Mop")
+            {
+                GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+            }
+        }
+        else if (showInteraction)
+        {
+            showInteraction = false;
+            GameEventsManager.instance.uiEvents.HideInteractionWidget();
         }
     }
 

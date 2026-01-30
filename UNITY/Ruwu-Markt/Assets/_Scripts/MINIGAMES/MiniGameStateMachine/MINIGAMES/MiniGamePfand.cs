@@ -25,6 +25,8 @@ public class MiniGamePfand : MiniGameBaseState
 
     private bool isHoldingObject;
 
+    private bool showInteraction;
+
     private MiniGame_Caller QuestSource;
 
     private Quest_Manager QM;
@@ -160,6 +162,8 @@ public class MiniGamePfand : MiniGameBaseState
         if (questVariant == 4 && isHoldingObject)
         {
             HA.ThrowObject(3);
+            GameEventsManager.instance.uiEvents.HideActionWidget();
+            GameEventsManager.instance.questEvents.PlaceObject();
             HA.DestroyObjectInHand();
             bottlesThrown++;
             UpdateQuest();
@@ -204,6 +208,9 @@ public class MiniGamePfand : MiniGameBaseState
                     if (hit.collider.tag == "CrateAreaBlue" && HA.objectHolding.CompareTag("CrateBlue"))
                     {
                         HA.Place(hit);
+                        GameEventsManager.instance.questEvents.PlaceObject();
+                        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PLACE_CRATE);
+                        GameEventsManager.instance.uiEvents.HideInteractionWidget();
                         HA.DestroyObjectInHand();
                         cratesPlaced++;
                         UpdateQuest();
@@ -216,6 +223,9 @@ public class MiniGamePfand : MiniGameBaseState
                     else if (hit.collider.tag == "CrateAreaYellow" && HA.objectHolding.CompareTag("CrateYellow"))
                     {
                         HA.Place(hit);
+                        GameEventsManager.instance.questEvents.PlaceObject();
+                        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PLACE_CRATE);
+                        GameEventsManager.instance.uiEvents.HideInteractionWidget();
                         HA.DestroyObjectInHand();                       
                         cratesPlaced++;
                         UpdateQuest();
@@ -228,6 +238,9 @@ public class MiniGamePfand : MiniGameBaseState
                     else if (hit.collider.tag == "CrateAreaRed" && HA.objectHolding.CompareTag("CrateRed"))
                     {
                         HA.Place(hit);
+                        GameEventsManager.instance.questEvents.PlaceObject();
+                        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PLACE_CRATE);
+                        GameEventsManager.instance.uiEvents.HideInteractionWidget();
                         HA.DestroyObjectInHand();
                         cratesPlaced++;
                         UpdateQuest();
@@ -251,6 +264,8 @@ public class MiniGamePfand : MiniGameBaseState
                     if(hit.collider.tag == "CrateFill" && isHoldingObject && bottlesPlaced < bottlesToPlace)
                     {
                         HA.DestroyObjectInHand();
+                        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PLACE_BOTTLE);
+                        GameEventsManager.instance.uiEvents.HideInteractionWidget();
                         isHoldingObject = false;
                         bottlesPlaced++;
                         UpdateQuest();
@@ -283,6 +298,8 @@ public class MiniGamePfand : MiniGameBaseState
                     if (hit.collider.tag == "PyramidArea" && isHoldingObject)
                     {
                         HA.Place(PPO.pyramidCrates[pyramidCratesPlaced].transform.position, PPO.pyramidCrates[pyramidCratesPlaced].transform.eulerAngles, new Vector3(0.6f,0.6f,0.6f));
+                        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PLACE_CRATE);
+                        GameEventsManager.instance.uiEvents.HideInteractionWidget();
                         HA.DestroyObjectInHand();
                         pyramidCratesPlaced++;
                         UpdateQuest();
@@ -299,6 +316,8 @@ public class MiniGamePfand : MiniGameBaseState
                         HA.PickUpObject(3);
                         isHoldingObject = true;
                         GameObject.Destroy(hit.collider.gameObject);
+
+                        GameEventsManager.instance.uiEvents.SendActionSprite(UI_Widget.THROW, 0);
                     }
                     break;
             }
@@ -375,6 +394,98 @@ public class MiniGamePfand : MiniGameBaseState
                     }
                 }
                 break;
+        }
+    }
+
+    public override void WidgetRaycast()
+    {
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 2.5f, QuestSource.interactionLayer))
+        {
+            if(showInteraction) return;
+
+            Debug.Log(hit.collider.tag);
+
+            showInteraction = true;
+
+            switch (questVariant)
+            {
+                case 1:
+                    if(hit.collider.tag == "CrateBlue" && !isHoldingObject)
+                    {
+                        GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                    }
+                    else if (hit.collider.tag == "CrateYellow" && !isHoldingObject)
+                    {
+                        GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                    }
+                    else if (hit.collider.tag == "CrateRed" && !isHoldingObject)
+                    {
+                        GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                    }
+
+                    if (hit.collider.tag == "CrateAreaBlue" && HA.objectHolding.CompareTag("CrateBlue"))
+                    {
+                        GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.PLACE);
+                    }
+                    else if (hit.collider.tag == "CrateAreaYellow" && HA.objectHolding.CompareTag("CrateYellow"))
+                    {
+                        GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.PLACE);
+                    }
+                    else if (hit.collider.tag == "CrateAreaRed" && HA.objectHolding.CompareTag("CrateRed"))
+                    {
+                        GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.PLACE);
+                    }
+                    break;
+                case 2:
+
+                    Debug.Log(hit.collider.name);
+                    if(hit.collider.tag == "Bottle" && !isHoldingObject)
+                    {
+                        GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                    }
+
+                    if(hit.collider.tag == "CrateFill" && isHoldingObject && bottlesPlaced < bottlesToPlace)
+                    {
+                        GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.PLACE);
+                    }
+                    break;
+                case 3:
+                    if (hit.collider.tag == "CrateBlue" && !isHoldingObject)
+                    {
+                        GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                        Debug.Log("ShowSprite");
+                    }
+                    else if (hit.collider.tag == "CrateYellow" && !isHoldingObject)
+                    {
+                        GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                        Debug.Log("ShowSprite");
+                    }
+                    else if (hit.collider.tag == "CrateRed" && !isHoldingObject)
+                    {
+                        GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                        Debug.Log("ShowSprite");
+                    }
+
+                    if (hit.collider.tag == "PyramidArea" && isHoldingObject)
+                    {
+                        GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.PLACE);
+                    }
+                    break;
+                case 4:
+                    if (hit.collider.tag == "Bottle" && !isHoldingObject)
+                    {
+                        GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                    }
+                    break;
+            }
+        }
+        else if(showInteraction)
+        {
+            GameEventsManager.instance.uiEvents.HideInteractionWidget();
+            Debug.Log("HideWidget");
+            showInteraction = false;
         }
     }
 }

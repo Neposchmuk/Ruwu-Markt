@@ -80,6 +80,7 @@ public class DialogueManager : MonoBehaviour
         else
         {
             if (_story.currentChoices.Count > 0)
+            GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_CLICK);
                 ContinueOrExitStory();
         }
     }

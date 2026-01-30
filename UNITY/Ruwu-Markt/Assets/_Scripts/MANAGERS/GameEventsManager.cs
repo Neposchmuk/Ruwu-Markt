@@ -18,6 +18,10 @@ public class GameEventsManager : MonoBehaviour
 
     public NPC_Events npcEvents;
 
+    public SoundEvents soundEvents;
+
+    public UI_Events uiEvents;
+
     private void Awake()
     {
         if(instance != null) 
@@ -37,5 +41,9 @@ public class GameEventsManager : MonoBehaviour
         checkoutEvents = new CheckoutEvents();
 
         npcEvents = new NPC_Events();
+
+        soundEvents = new SoundEvents();
+
+        uiEvents = new UI_Events();
     }
 }

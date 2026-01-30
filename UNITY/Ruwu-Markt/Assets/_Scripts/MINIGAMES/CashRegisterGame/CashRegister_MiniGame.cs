@@ -54,6 +54,8 @@ public class CashRegister_MiniGame : MonoBehaviour
 
     private bool registerButtonsEnabled;
 
+    private bool showInteraction;
+
     private GameObject agent;
 
 
@@ -91,6 +93,7 @@ public class CashRegister_MiniGame : MonoBehaviour
         GameEventsManager.instance.questEvents.ToggleButtonInteractable(UIButtonType.PAYCASH, false);
     }
 
+
     public void InitializeQuest(GameObject agent)
     {
         Debug.Log(questIsRunning);
@@ -125,8 +128,10 @@ public class CashRegister_MiniGame : MonoBehaviour
         _intPriceTotal += productInfo.price;
         productInfo.hasBeenScanned = true;
         productsScanned++;
-        //playAnimation
-        RegisterScannedProducts.text += productInfo.name + " - " +(float)productInfo.price/100 + "$\n";
+        
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.CASH_SCAN);
+
+        RegisterScannedProducts.text += productInfo.productName + " - " +(float)productInfo.price/100 + "$\n";
         RegisterTotalPrice.text ="Total: " + $"{(float)_intPriceTotal / 100}$";
         if(productsScanned == productsToScan)
         {
@@ -155,7 +160,8 @@ public class CashRegister_MiniGame : MonoBehaviour
     void PayCard()
     {
         if(!paysCard || !registerButtonsEnabled) return;
-        //playAnimationShowCard
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.CASH_BUTTONS);
+        GameEventsManager.instance.questEvents.ToggleButtonInteractable(UIButtonType.PAYCARD, false);
         CleanUp();
 
     }
@@ -167,13 +173,15 @@ public class CashRegister_MiniGame : MonoBehaviour
         Debug.Log(Mathf.CeilToInt((float)_intPriceTotal / 100 * 5));
         int moneyGiven = Mathf.CeilToInt(Mathf.CeilToInt((float)_intPriceTotal / 100 * 5 )/ 5) * 100;*/
 
+        
+
         int moneyGiven = _intPriceTotal;
         moneyGiven += 500 - (moneyGiven % 500);
         Debug.Log(moneyGiven);
 
         _intChangeToGive = moneyGiven - _intPriceTotal;
         Debug.Log(_intChangeToGive);
-        RegisterChangeToGive.text = "Change to give: \n" + $"{(float)_intChangeToGive / 100}$";
+        RegisterChangeToGive.text = $"{(float)_intChangeToGive / 100}$";
 
         
 
@@ -185,15 +193,19 @@ public class CashRegister_MiniGame : MonoBehaviour
 
     void PlayCashAnimation()
     {
-        //playAnimationGiveCash
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.CASH_BUTTONS);
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.CASH_SPAWN);
+        GameEventsManager.instance.questEvents.ToggleButtonInteractable(UIButtonType.PAYCASH, false);
         Instantiate(moneyPrefab, moneySpawnPoint.transform.position, transform.rotation);
     }
 
     void CountChange(int changeValue)
     {
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.CASH_CHANGE);
+
         _intChangeGiven += changeValue;
         Debug.Log(_intChangeGiven);
-        RegisterChangeGiven.text = "Change given:\n" + $"{(float)_intChangeGiven / 100}$";
+        RegisterChangeGiven.text = $"{(float)_intChangeGiven / 100}$";
         if(_intChangeGiven == _intChangeToGive)
         {
             Debug.Log("Change given exactly!");
@@ -243,7 +255,7 @@ public class CashRegister_MiniGame : MonoBehaviour
 
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
 
-        if(Physics.Raycast(ray, out RaycastHit hit, 2, RCLayerMask))
+        if(Physics.Raycast(ray, out RaycastHit hit, 2.5f, RCLayerMask))
         {
             if (hit.collider.CompareTag("CheckOutProduct"))
             {
@@ -260,6 +272,9 @@ public class CashRegister_MiniGame : MonoBehaviour
             {
                 PayCash();
                 Destroy(hit.collider.gameObject);
+
+                GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PICKUP);
+                GameEventsManager.instance.soundEvents.TriggerSound(SoundType.CASH_OPEN);
             }
 
             

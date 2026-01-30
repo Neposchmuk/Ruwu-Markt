@@ -34,11 +34,13 @@ public class DialoguePanelUI : MonoBehaviour
     private void DialogueStarted()
     {
         contentParent.SetActive(true);
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_OPEN);
     }
 
     private void DialogueFinished()
     {
         contentParent.SetActive(false);
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_OPEN);
     }
 
     private void DisplayDialogue(string dialogueLine, List<Ink.Runtime.Choice> dialogueChoices)
