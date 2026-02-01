@@ -8,7 +8,14 @@ public class Flashlight : MonoBehaviour
 
     public GameObject FogOfwar;
 
+    private bool flashActive;
+
     Light _flashlight;
+
+    private void OnEnable()
+    {
+        GameEventsManager.instance.playerEvents.onPressedSpecialPrimary += ToggleFlashlight;
+    }
 
     private void Start()
     {
@@ -17,11 +24,15 @@ public class Flashlight : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void ToggleFlashlight(bool isOn)
+    void ToggleFlashlight(InputEventContext context)
     {
+        if(context != InputEventContext.NIGHTMARE_ESCAPE) return;
+
+        flashActive = !flashActive;
+
         GameEventsManager.instance.soundEvents.TriggerSound(SoundType.FLASHLIGHT);
 
-        if (isOn)
+        if (flashActive)
         {
             _flashlight.enabled = true;
             FlashConeCollider.enabled = true;
@@ -34,6 +45,6 @@ public class Flashlight : MonoBehaviour
             FlashConeCollider.enabled = false;
             FogOfwar.SetActive(false);
             gameObject.SetActive(false);
-        }
+        } 
     }
 }

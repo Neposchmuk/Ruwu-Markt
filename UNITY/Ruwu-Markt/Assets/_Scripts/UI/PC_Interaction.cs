@@ -68,12 +68,18 @@ public class PC_Interaction : MonoBehaviour
     {
         GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PC_CLICK);
 
+        GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.DEFAULT);
+
         PC_UI_Parent.SetActive(false);
         Mail_UI.SetActive(false);
         ToggleCursorLockmode(false);
         OnCloseUI?.Invoke();
         GameEventsManager.instance.gameEvents.ToggleSanityWidget(true);
-        GameEventsManager.instance.questEvents.UpdateQuestText("Go to work");
+
+        if (_dayManager.IsDay)
+        {
+            GameEventsManager.instance.questEvents.UpdateQuestText("Go to work");
+        }    
     }
 
     public void CloseMailWindow()
@@ -137,6 +143,8 @@ public class PC_Interaction : MonoBehaviour
         PC_UI_Parent.SetActive(true);
         Mail_UI.SetActive(true);
         ToggleCursorLockmode(true);
+
+        GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.UI);
 
         GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PC_CLICK);
 
