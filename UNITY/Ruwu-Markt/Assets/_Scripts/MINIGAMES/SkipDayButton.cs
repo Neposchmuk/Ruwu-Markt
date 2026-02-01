@@ -20,5 +20,6 @@ public class SkipDayButton : MonoBehaviour
     {
         animator.SetTrigger("PressButton");
         buttonCollider.enabled = false;
+        animator.ResetTrigger("PressButton");
     }
 }
