@@ -199,18 +199,21 @@ public class MiniGamePfand : MiniGameBaseState
                         HA.PickUpObject(4);
                         isHoldingObject = true;
                         GameObject.Destroy(hit.collider.gameObject);
+                        PPO.placingZones[0].GetComponentInChildren<Canvas>().enabled = true;
                     }
                     else if (hit.collider.tag == "CrateYellow" && !isHoldingObject)
                     {
                         HA.PickUpObject(5);
                         isHoldingObject = true;
                         GameObject.Destroy(hit.collider.gameObject);
+                        PPO.placingZones[1].GetComponentInChildren<Canvas>().enabled = true;
                     }
                     else if (hit.collider.tag == "CrateRed" && !isHoldingObject)
                     {
                         HA.PickUpObject(6);
                         isHoldingObject = true;
                         GameObject.Destroy(hit.collider.gameObject);
+                        PPO.placingZones[2].GetComponentInChildren<Canvas>().enabled = true;
                     }
 
                     if (hit.collider.tag == "CrateAreaBlue" && HA.objectHolding.CompareTag("CrateBlue"))
@@ -222,6 +225,7 @@ public class MiniGamePfand : MiniGameBaseState
                         HA.DestroyObjectInHand();
                         cratesPlaced++;
                         blueCratesplaced++;
+                        PPO.placingZones[0].GetComponentInChildren<Canvas>().enabled = false;
                         UpdateQuest();
                         isHoldingObject = false;
                         if(cratesPlaced == cratesToPlace)
@@ -238,6 +242,7 @@ public class MiniGamePfand : MiniGameBaseState
                         HA.DestroyObjectInHand();                       
                         cratesPlaced++;
                         yellowCratesplaced++;
+                        PPO.placingZones[1].GetComponentInChildren<Canvas>().enabled = false;
                         UpdateQuest();
                         isHoldingObject = false;
                         if (cratesPlaced == cratesToPlace)
@@ -254,6 +259,7 @@ public class MiniGamePfand : MiniGameBaseState
                         HA.DestroyObjectInHand();
                         cratesPlaced++;
                         redCratesplaced++;
+                        PPO.placingZones[2].GetComponentInChildren<Canvas>().enabled = false;
                         UpdateQuest();
                         isHoldingObject = false;
                         if (cratesPlaced == cratesToPlace)

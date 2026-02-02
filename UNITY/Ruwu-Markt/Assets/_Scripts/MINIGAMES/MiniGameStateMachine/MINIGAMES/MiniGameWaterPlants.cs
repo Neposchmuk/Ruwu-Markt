@@ -23,6 +23,8 @@ public class MiniGameWaterPlants : MiniGameBaseState
 
     private bool showInteraction;
 
+    private float timeToPour = Mathf.Clamp(5, 0, 5);
+
     private int questStage;
     public override void StartQuest(MiniGame_Caller Quest, int questVariant)
     {
@@ -111,10 +113,13 @@ public class MiniGameWaterPlants : MiniGameBaseState
             {
                 objectHeld = HA.PickUpObject(7);
                 HA.SetPourTime(0);
+                timeToPour = 0;
                 isHoldingCan = true;
                 GameObject.Destroy(hit.collider.gameObject);
                 questStage = 2;
                 UpdateQuest();
+
+                ToggleQuestMarkers(questStage, true);
 
                 GameEventsManager.instance.uiEvents.SendActionSprite(UI_Widget.WATER, 0);
             }
@@ -123,12 +128,15 @@ public class MiniGameWaterPlants : MiniGameBaseState
             {
                 questStage = 3;
                 HA.SetPourTime(5);
+                timeToPour = 5;
                 UpdateQuest();
                 ToggleQuestMarkers(questStage, true);
             }
             else if(hit.collider.tag == "Sink" && isHoldingCan && questStage == 3)
             {
                 HA.SetPourTime(5);
+                timeToPour = 5;
+                ToggleQuestMarkers(questStage, true);
             }
 
         }
@@ -138,7 +146,16 @@ public class MiniGameWaterPlants : MiniGameBaseState
     {
         if (buttonIsPressed && isHoldingCan && questStage == 3)
         {
+            timeToPour -= 1 * Time.deltaTime;
             HA.FlowerPour();
+            if(timeToPour <= 0)
+            {
+                QuestSource.QuestMarkerBig.SetActive(true);
+                foreach (GameObject flowerStation in FlowerStations)
+                {
+                    flowerStation.GetComponentInChildren<Canvas>().enabled = false;
+                }
+            }
         }
     }
 
@@ -148,6 +165,12 @@ public class MiniGameWaterPlants : MiniGameBaseState
         if(flowersWatered == flowersToWater)
         {
             questStage = 4;
+
+            foreach (GameObject flowerStation in FlowerStations)
+            {
+                flowerStation.GetComponentInChildren<Canvas>().enabled = false;
+            }
+
         }
         UpdateQuest();
     }
@@ -159,13 +182,19 @@ public class MiniGameWaterPlants : MiniGameBaseState
             case 1:
                 GameObject.FindGameObjectWithTag("WateringCan").GetComponentInChildren<Canvas>().enabled = isActive;
                 break;
+            case 2:
+                QuestSource.QuestMarkerBig.SetActive(true);
+                break;
+            
             case 3:
+                QuestSource.QuestMarkerBig.SetActive(!isActive);
                 foreach (GameObject flowerStation in FlowerStations)
                 {
                     flowerStation.GetComponentInChildren<Canvas>().enabled = isActive;
                 }
                 break;
             case 4:
+                QuestSource.QuestMarkerBig.SetActive(!isActive);
                 foreach (GameObject flowerStation in FlowerStations)
                 {
                     flowerStation.GetComponentInChildren<Canvas>().enabled = isActive;

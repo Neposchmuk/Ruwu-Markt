@@ -33,6 +33,8 @@ public class Nightmare_Escape_State : NightmareBaseState
         GameEventsManager.instance.playerEvents.ToggleJump(false);
 
         GameEventsManager.instance.uiEvents.SendActionSprite(UI_Widget.FLASH, 0);
+
+        GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.NIGHTMARE_ESCAPE);
     }
 
     public override void UpdateState()

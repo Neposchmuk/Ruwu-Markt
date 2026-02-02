@@ -8,6 +8,8 @@ public class Flashlight : MonoBehaviour
 
     public GameObject FogOfwar;
 
+    [SerializeField] MeshRenderer meshRenderer;
+
     private bool flashActive;
 
     Light _flashlight;
@@ -16,12 +18,19 @@ public class Flashlight : MonoBehaviour
     {
         GameEventsManager.instance.playerEvents.onPressedSpecialPrimary += ToggleFlashlight;
     }
+    private void OnDisable()
+    {
+        GameEventsManager.instance.playerEvents.onPressedSpecialPrimary -= ToggleFlashlight;
+    }
 
     private void Start()
     {
         _flashlight = GetComponentInChildren<Light>();
 
-        gameObject.SetActive(false);
+        _flashlight.enabled = false;
+        FlashConeCollider.enabled = false;
+        FogOfwar.SetActive(false);
+        meshRenderer.enabled = false;
     }
 
     void ToggleFlashlight(InputEventContext context)
@@ -37,14 +46,14 @@ public class Flashlight : MonoBehaviour
             _flashlight.enabled = true;
             FlashConeCollider.enabled = true;
             FogOfwar.SetActive(true);
-            gameObject.SetActive(true);
+            meshRenderer.enabled = true;
         }
         else
         {
             _flashlight.enabled = false;
             FlashConeCollider.enabled = false;
             FogOfwar.SetActive(false);
-            gameObject.SetActive(false);
+            meshRenderer.enabled = false;
         } 
     }
 }

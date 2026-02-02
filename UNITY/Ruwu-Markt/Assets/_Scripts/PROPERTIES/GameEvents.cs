@@ -126,4 +126,24 @@ public class GameEvents
             onSkipDay();
         }
     }
+
+    public event Action onCheckGameOver;
+
+    public void CheckGameOver()
+    {
+        if(onCheckGameOver != null)
+        {
+            onCheckGameOver();
+        }
+    }
+
+    public event Action onIsGameOver;
+
+    public void IsGameOver()
+    {
+        if(onIsGameOver != null)
+        {
+            onIsGameOver();
+        }
+    }
 }

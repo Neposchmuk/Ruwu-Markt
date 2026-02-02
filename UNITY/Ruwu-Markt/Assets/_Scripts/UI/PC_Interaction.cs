@@ -31,6 +31,13 @@ public class PC_Interaction : MonoBehaviour
     private void OnEnable()
     {
         GameEventsManager.instance.gameEvents.onSendSanityUpdate += SetInboxGroups;
+        GameEventsManager.instance.playerEvents.onPressedEscape += CheckCloseInbox;
+    }
+
+    private void OnDisable()
+    {
+        GameEventsManager.instance.gameEvents.onSendSanityUpdate -= SetInboxGroups;
+        GameEventsManager.instance.playerEvents.onPressedEscape -= CheckCloseInbox;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -62,6 +69,13 @@ public class PC_Interaction : MonoBehaviour
         {
             GameEventsManager.instance.questEvents.UpdateQuestText("Go to sleep");
         }
+    }
+
+    private void CheckCloseInbox(InputEventContext context)
+    {
+        if(context != InputEventContext.UI) return;
+
+        CloseInbox();
     }
 
     public void CloseInbox()

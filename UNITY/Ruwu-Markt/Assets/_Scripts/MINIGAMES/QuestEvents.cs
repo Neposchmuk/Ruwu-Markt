@@ -204,4 +204,24 @@ public class QuestEvents
             onUpdateLivesText(text);
         }
     }
+
+    public event Action<bool> onWaitForCustomerCheckout;
+
+    public void WaitForCustomerCheckout(bool wait)
+    {
+        if(onWaitForCustomerCheckout != null)
+        {
+            onWaitForCustomerCheckout(wait);
+        }
+    }
+
+    public event Action onShowCustomersWaitText;
+
+    public void ShowCustomersWaitText()
+    {
+        if(onShowCustomersWaitText != null)
+        {
+            onShowCustomersWaitText();
+        }
+    }
 }
