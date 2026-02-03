@@ -131,12 +131,16 @@ public class MiniGameWaterPlants : MiniGameBaseState
                 timeToPour = 5;
                 UpdateQuest();
                 ToggleQuestMarkers(questStage, true);
+
+                GameEventsManager.instance.uiEvents.ShowCrosshair(true);
             }
             else if(hit.collider.tag == "Sink" && isHoldingCan && questStage == 3)
             {
                 HA.SetPourTime(5);
                 timeToPour = 5;
                 ToggleQuestMarkers(questStage, true);
+
+                GameEventsManager.instance.uiEvents.ShowCrosshair(true);
             }
 
         }
@@ -151,6 +155,7 @@ public class MiniGameWaterPlants : MiniGameBaseState
             if(timeToPour <= 0)
             {
                 QuestSource.QuestMarkerBig.SetActive(true);
+                GameEventsManager.instance.uiEvents.ShowCrosshair(false);
                 foreach (GameObject flowerStation in FlowerStations)
                 {
                     flowerStation.GetComponentInChildren<Canvas>().enabled = false;
@@ -164,6 +169,8 @@ public class MiniGameWaterPlants : MiniGameBaseState
         flowersWatered++;
         if(flowersWatered == flowersToWater)
         {
+            GameEventsManager.instance.uiEvents.ShowCrosshair(false);
+
             questStage = 4;
 
             foreach (GameObject flowerStation in FlowerStations)
