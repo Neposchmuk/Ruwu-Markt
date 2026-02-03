@@ -30,11 +30,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 587f0a1f6058ee74291ea90488059628, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 587f0a1f6058ee74291ea90488059628, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 587f0a1f6058ee74291ea90488059628, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -51,6 +51,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 587f0a1f6058ee74291ea90488059628, type: 3}
       propertyPath: m_Name
       value: ceiling_tileMarket
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 587f0a1f6058ee74291ea90488059628, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
