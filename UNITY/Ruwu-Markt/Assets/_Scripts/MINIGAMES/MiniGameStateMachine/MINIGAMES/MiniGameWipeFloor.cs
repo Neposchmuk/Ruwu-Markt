@@ -121,6 +121,10 @@ public class MiniGameWipeFloor : MiniGameBaseState
 
                 GameEventsManager.instance.uiEvents.SendActionSprite(UI_Widget.CLEAN, 0);
 
+                GameEventsManager.instance.uiEvents.SendActionSprite(UI_Widget.CLEAN, 0);
+
+                GameEventsManager.instance.uiEvents.SendActionSprite(UI_Widget.CLEAN, 0);
+
                 QuestSource.QuestMarkerSmall.SetActive(false);
                 foreach(GameObject puddle in Puddles)
                 {

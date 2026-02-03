@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8786870129333594840, guid: a5b3122fa38bee242962d9da7ce69f66, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a5b3122fa38bee242962d9da7ce69f66, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -51,6 +55,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: a5b3122fa38bee242962d9da7ce69f66, type: 3}
       propertyPath: m_Name
       value: fruits 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a5b3122fa38bee242962d9da7ce69f66, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1188256223936568184, guid: a5b3122fa38bee242962d9da7ce69f66, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
