@@ -35,10 +35,12 @@ public class Sanity_Manager : MonoBehaviour
     void Awake()
     {
         GameEventsManager.instance.gameEvents.onRequestSanityUpdate += SendSanityUpdate;
+        GameEventsManager.instance.gameEvents.onCheckGameOver += CheckGameOver;
     }
-    void Oestroy()
+    void OnDestroy()
     {
         GameEventsManager.instance.gameEvents.onRequestSanityUpdate -= SendSanityUpdate;
+        GameEventsManager.instance.gameEvents.onCheckGameOver -= CheckGameOver;
     }
 
 
@@ -66,6 +68,8 @@ public class Sanity_Manager : MonoBehaviour
 
         jobSecBar.AdjustSanityFill(jobSecurity);
     }
+
+    
 
     private void Update()
     {
@@ -99,12 +103,15 @@ public class Sanity_Manager : MonoBehaviour
 
     }
 
+
     private void CheckGameOver()
     {
         if(sanity <= 0)
         {
             isGameOver = true;
-            GameObject.FindFirstObjectByType<FirstPersonController>().enabled = false;
+            GameEventsManager.instance.gameEvents.IsGameOver();
+            GameEventsManager.instance.playerEvents.LockPlayerMovement(true);
+            GameEventsManager.instance.playerEvents.LockCamera(true);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             GO_Insane.SetActive(true);
@@ -113,7 +120,9 @@ public class Sanity_Manager : MonoBehaviour
         else if(jobSecurity <= 0)
         {
             isGameOver = true;
-            GameObject.FindFirstObjectByType<FirstPersonController>().enabled = false;
+            GameEventsManager.instance.gameEvents.IsGameOver();
+            GameEventsManager.instance.playerEvents.LockPlayerMovement(true);
+            GameEventsManager.instance.playerEvents.LockCamera(true);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             Restart.gameObject.SetActive(true);

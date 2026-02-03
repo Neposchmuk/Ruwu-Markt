@@ -65,4 +65,14 @@ public class UI_Events
             onSendActionSprite(widget, index);
         }
     }
+
+    public event Action<bool> onShowCrosshair;
+
+    public void ShowCrosshair(bool toggle)
+    {
+        if(onShowCrosshair != null)
+        {
+            onShowCrosshair(toggle);
+        }
+    }
 }

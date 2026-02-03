@@ -16,6 +16,8 @@ What do you want?
 I don't have time right now.
 
 Get back to work!
+
+Getback to work!
 *[Yes Boss :(]
     Good slave.
 *[Fuk U!!!]
@@ -29,13 +31,19 @@ Get back to work!
 =Good_Ending
 Yes?
 
+Yes?
+
 *[I need to speak with you]
+    Really?
+    
     Really?
     -> Good_Stitch_One
     
     = Good_Stitch_One
         *[It's about work.]
             Why bother me with it?
+            
+            I'm sure it's not that important.
             
             I'm sure it's not that important.
 
@@ -54,6 +62,8 @@ Yes?
             I CAN'T RUN THE STORE WITHOUT YOU!
             
             I BEG YOU!
+            
+            PLEASE!
             
             PLEASE!
             -> Good_Stitch_Three
@@ -94,6 +104,8 @@ Yes?
 
 
 =Bad_Ending
+Yes?
+
 Yes?
 
 *[You wanted to speak with me?]

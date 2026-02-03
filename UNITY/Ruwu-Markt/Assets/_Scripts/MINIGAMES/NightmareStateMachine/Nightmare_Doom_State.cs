@@ -50,6 +50,10 @@ public class Nightmare_Doom_State : NightmareBaseState
         _player.MoveSpeed = 10;
 
         _player.SprintSpeed = 10;
+
+        GameEventsManager.instance.questEvents.UpdateLivesText($"{_playerHealth}");
+
+        GameEventsManager.instance.uiEvents.ShowCrosshair(true);
     }
 
     public override void UpdateState()
@@ -66,6 +70,8 @@ public class Nightmare_Doom_State : NightmareBaseState
         _stateManager.EndNight(true, 10);
 
         GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.DEFAULT);
+
+        GameEventsManager.instance.uiEvents.ShowCrosshair(false);
     }
 
     void CountKilled(GameObject enemy)
@@ -83,6 +89,7 @@ public class Nightmare_Doom_State : NightmareBaseState
         if(_stateManager.playerInvincible) return;
 
         GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PLAYER_HURT);
+        GameEventsManager.instance.questEvents.UpdateLivesText($"{_playerHealth - 1}");
 
         _playerHealth--;
         Debug.Log("Player HP: " + _playerHealth);
@@ -95,6 +102,8 @@ public class Nightmare_Doom_State : NightmareBaseState
             _stateManager.EndNight(false, -20);
 
             GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.DEFAULT);
+
+            GameEventsManager.instance.uiEvents.ShowCrosshair(false);
         }   
     }
 

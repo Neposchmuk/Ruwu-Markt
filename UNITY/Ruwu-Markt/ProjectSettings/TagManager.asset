@@ -52,6 +52,7 @@ TagManager:
   - NPC_Boss
   - ShelfQuest
   - Sink
+  - SkipButton
   layers:
   - Default
   - TransparentFX

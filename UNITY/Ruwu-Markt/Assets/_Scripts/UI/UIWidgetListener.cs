@@ -12,12 +12,15 @@ public class UIWidgetListener : MonoBehaviour
 
     [SerializeField] private Image actionWidget_3;
 
+    [SerializeField] private Image crosshair;
+
     private void Awake()
     {
         GameEventsManager.instance.uiEvents.onShowActionWidget += ShowActionWidget;
         GameEventsManager.instance.uiEvents.onShowInteractionWidget += ShowInteractionWidget;
         GameEventsManager.instance.uiEvents.onHideActionWidget += HideActionWidget;
         GameEventsManager.instance.uiEvents.onHideInteractionWidget += HideInteractionWidget;
+        GameEventsManager.instance.uiEvents.onShowCrosshair += ToggleCroshair;
         Debug.Log("Subscribed to events");
     }
     private void OnDisable()
@@ -26,6 +29,7 @@ public class UIWidgetListener : MonoBehaviour
         GameEventsManager.instance.uiEvents.onShowInteractionWidget -= ShowInteractionWidget;
         GameEventsManager.instance.uiEvents.onHideActionWidget -= HideActionWidget;
         GameEventsManager.instance.uiEvents.onHideInteractionWidget -= HideInteractionWidget;
+        GameEventsManager.instance.uiEvents.onShowCrosshair -= ToggleCroshair;
     }
 
     private void ShowActionWidget(int index, Sprite sprite)
@@ -71,6 +75,11 @@ public class UIWidgetListener : MonoBehaviour
     {
         interactionImage.enabled = false;
         Debug.Log(interactionImage.enabled);
+    }
+
+    private void ToggleCroshair(bool toggle)
+    {
+        crosshair.enabled = toggle;
     }
 
 }

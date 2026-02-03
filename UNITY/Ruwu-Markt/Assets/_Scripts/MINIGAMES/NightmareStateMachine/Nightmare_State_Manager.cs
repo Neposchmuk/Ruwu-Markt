@@ -76,6 +76,8 @@ public class Nightmare_State_Manager : MonoBehaviour
     {
         GameEventsManager.instance.uiEvents.HideActionWidget();
 
+        GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.DEFAULT);
+
         Debug.Log("Called EndNight");
         if(TimerIsRunning) CancelInvoke("Timer");
 

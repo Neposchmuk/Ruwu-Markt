@@ -2703,6 +2703,7 @@ MonoBehaviour:
   Bat_F: {fileID: -751395404888149888, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
   Bat_LMB: {fileID: -7312123777435518345, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
   Quest_E: {fileID: -6864665312733738556, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
+  Crosshair: {fileID: 21300000, guid: a20912ea0db79924dbf6bfcddd7f8c44, type: 3}
 --- !u!114 &1918732921
 MonoBehaviour:
   m_ObjectHideFlags: 0

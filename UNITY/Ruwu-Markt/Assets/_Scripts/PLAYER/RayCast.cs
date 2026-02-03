@@ -34,15 +34,19 @@ public class RayCast : MonoBehaviour
 
     private bool showAction;
 
+    private bool waitForCustomers;
+
     private void OnEnable()
     {
         GameEventsManager.instance.playerEvents.onPressedInteract += Raycast;
+        GameEventsManager.instance.questEvents.onWaitForCustomerCheckout += LockMinigames;
         Debug.Log("Added RC Listener");
     }
 
     private void OnDisable()
     {
         GameEventsManager.instance.playerEvents.onPressedInteract -= Raycast;
+        GameEventsManager.instance.questEvents.onWaitForCustomerCheckout -= LockMinigames;
         Debug.Log("Removed RC listener");
     }
 
@@ -74,6 +78,11 @@ public class RayCast : MonoBehaviour
         WidgetRaycast();
     }
 
+    private void LockMinigames(bool wait)
+    {
+        waitForCustomers = wait;
+    }
+
     private void Raycast(InputEventContext inputContext)
     {
         if (inputContext == InputEventContext.DEFAULT)
@@ -84,6 +93,12 @@ public class RayCast : MonoBehaviour
             {
                 if(hit.collider.tag == "ShelfQuest" && !QM.isDoingQuest && !QM.shelfQuestCompleted)
                 {
+                    if (waitForCustomers)
+                    {
+                        GameEventsManager.instance.questEvents.ShowCustomersWaitText();
+                        return;
+                    }
+
                     hit.collider.gameObject.GetComponent<Interaction_MenuTest>().ToggleUI(true);
                     questObject = hit.collider.gameObject;
                     Debug.Log(questObject.name);
@@ -92,6 +107,11 @@ public class RayCast : MonoBehaviour
 
                 if (hit.collider.tag == "FloorQuest" && !QM.isDoingQuest && !QM.floorQuestCompleted)
                 {
+                    if (waitForCustomers)
+                    {
+                        GameEventsManager.instance.questEvents.ShowCustomersWaitText();
+                        return;
+                    }
                     hit.collider.gameObject.GetComponent<Interaction_MenuTest>().ToggleUI(true);
                     questObject = hit.collider.gameObject;
                     Debug.Log(questObject.name);
@@ -100,6 +120,11 @@ public class RayCast : MonoBehaviour
 
                 if (hit.collider.tag == "PfandQuest" && !QM.isDoingQuest && !QM.pfandQuestCompleted)
                 {
+                    if (waitForCustomers)
+                    {
+                        GameEventsManager.instance.questEvents.ShowCustomersWaitText();
+                        return;
+                    }
                     hit.collider.gameObject.GetComponent<Interaction_MenuTest>().ToggleUI(true);
                     questObject = hit.collider.gameObject;
                     Debug.Log(questObject.name);
@@ -108,6 +133,11 @@ public class RayCast : MonoBehaviour
 
                 if(hit.collider.tag == "FlowersQuest" && !QM.isDoingQuest && !QM.flowersQuestCompleted)
                 {
+                    if (waitForCustomers)
+                    {
+                        GameEventsManager.instance.questEvents.ShowCustomersWaitText();
+                        return;
+                    }
                     hit.collider.gameObject.GetComponent<Interaction_MenuTest>().ToggleUI(true);
                     questObject = hit.collider.gameObject;
                     Debug.Log(questObject.name);
@@ -173,7 +203,12 @@ public class RayCast : MonoBehaviour
                 if (hit.collider.CompareTag("UI_Button"))
                 {
                     GameEventsManager.instance.questEvents.UIButtonInteract(hit.collider.gameObject);
-                }   
+                }
+
+                if (hit.collider.CompareTag("SkipButton"))
+                {
+                    GameEventsManager.instance.gameEvents.SkipDay();
+                }
             }
         }
 
@@ -306,6 +341,11 @@ public class RayCast : MonoBehaviour
                 }
 
                 if (hit.collider.tag == "Cash")
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                }
+
+                if (hit.collider.CompareTag("SkipButton"))
                 {
                     GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
                 }

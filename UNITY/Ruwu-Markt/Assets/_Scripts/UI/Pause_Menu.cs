@@ -7,6 +7,8 @@ public class Pause_Menu : MonoBehaviour
 
     private bool showPauseMenu = false;
 
+    private InputEventContext previousContext;
+
     private void Awake()
     {
         GameEventsManager.instance.gameEvents.onReturnToPreviousMenu += EnableMenu;
@@ -21,7 +23,7 @@ public class Pause_Menu : MonoBehaviour
 
     private void SwitchPauseMenu(InputEventContext context)
     {
-        if(context != InputEventContext.DEFAULT && context != InputEventContext.MENU_UI) return;
+        if((context == InputEventContext.UI || context == InputEventContext.DIALOGUE) && context != InputEventContext.MENU_UI) return;
 
         GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_OPEN);
 
@@ -34,11 +36,12 @@ public class Pause_Menu : MonoBehaviour
             Cursor.visible = false;
             TogglePause(false);
             pauseMenu.SetActive(false);
-            GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.DEFAULT);
+            GameEventsManager.instance.playerEvents.ChangeInputEventContext(previousContext);
             GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_CLICK);
         }
         else
         {
+            previousContext = context;
             TogglePause(true);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
