@@ -24,6 +24,8 @@ public class Sanity_Manager : MonoBehaviour
 
     public GameObject GO_LostJob;
 
+    [SerializeField] GameObject sanityWidgetParent;
+
     public Button Restart;
 
     public int sanity;
@@ -36,11 +38,13 @@ public class Sanity_Manager : MonoBehaviour
     {
         GameEventsManager.instance.gameEvents.onRequestSanityUpdate += SendSanityUpdate;
         GameEventsManager.instance.gameEvents.onCheckGameOver += CheckGameOver;
+        GameEventsManager.instance.uiEvents.onToggleSanityWidget += ToggleWidget;
     }
     void OnDestroy()
     {
         GameEventsManager.instance.gameEvents.onRequestSanityUpdate -= SendSanityUpdate;
         GameEventsManager.instance.gameEvents.onCheckGameOver -= CheckGameOver;
+        GameEventsManager.instance.uiEvents.onToggleSanityWidget -= ToggleWidget;
     }
 
 
@@ -152,5 +156,10 @@ public class Sanity_Manager : MonoBehaviour
         }
 
         SceneManager.LoadScene("MAIN_MENU");
+    }
+
+    private void ToggleWidget(bool toggle)
+    {
+        sanityWidgetParent.SetActive(toggle);
     }
 }

@@ -41,6 +41,8 @@ public class Pause_Menu : MonoBehaviour
         }
         else
         {
+            if(context == InputEventContext.TUTORIAL) return;
+
             previousContext = context;
             TogglePause(true);
             Cursor.lockState = CursorLockMode.None;

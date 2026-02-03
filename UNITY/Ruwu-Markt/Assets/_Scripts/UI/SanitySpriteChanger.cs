@@ -14,7 +14,6 @@ public class SanitySpriteChanger : MonoBehaviour
 
     private void Awake()
     {
-        GameEventsManager.instance.gameEvents.onToggleSanityWidget += ToggleWidgetParent;
         GameEventsManager.instance.gameEvents.onUpdateSanity += CheckSanitySprite;
         Debug.Log("Added Listeners");
     }
@@ -26,7 +25,6 @@ public class SanitySpriteChanger : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameEventsManager.instance.gameEvents.onToggleSanityWidget -= ToggleWidgetParent;
         GameEventsManager.instance.gameEvents.onUpdateSanity -= CheckSanitySprite;
     }
 

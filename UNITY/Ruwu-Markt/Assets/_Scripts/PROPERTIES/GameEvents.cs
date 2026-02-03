@@ -26,16 +26,6 @@ public class GameEvents
     }
 
 
-    public event Action<bool> onToggleSanityWidget;
-
-    public void ToggleSanityWidget(bool toggle)
-    {
-        if(onToggleSanityWidget != null)
-        {
-            onToggleSanityWidget(toggle);
-        }
-    }
-
     public event Action onDestroyDDOLObjects;
 
     public void DestroyDDOLObjects()
@@ -144,6 +134,16 @@ public class GameEvents
         if(onIsGameOver != null)
         {
             onIsGameOver();
+        }
+    }
+
+    public event Action<bool> onKeepPlayerLocked;
+
+    public void KeepPlayerLocked(bool toggle)
+    {
+        if(onKeepPlayerLocked != null)
+        {
+            onKeepPlayerLocked(toggle);
         }
     }
 }

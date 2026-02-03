@@ -5,6 +5,8 @@ public class MatchSanitySpriteFill : MonoBehaviour
 {
     public float fillSpeed = 1;
 
+    float fillAmount;
+
     Sanity_Manager SM;
 
     [SerializeField]Image sprite;
@@ -45,6 +47,13 @@ public class MatchSanitySpriteFill : MonoBehaviour
 
     public void AdjustSanityFill(int givenValue)
     {
-        sprite.fillAmount = givenValue / 100f;
+        Debug.Log((float)givenValue/100);
+
+        fillAmount = Mathf.Lerp(0.15f, 1f, (float)givenValue/100);
+
+        Debug.Log(fillAmount);
+
+
+        sprite.fillAmount = fillAmount;
     }
 }
