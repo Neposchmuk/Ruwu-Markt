@@ -184,4 +184,44 @@ public class QuestEvents
             onCanPourTime(time);
         }
     }
+
+    public event Action<string> onUpdateAmmoText;
+
+    public void UpdateAmmoText(string text)
+    {
+        if(onUpdateAmmoText != null)
+        {
+            onUpdateAmmoText(text);
+        }
+    }
+
+    public event Action<string> onUpdateLivesText;
+
+    public void UpdateLivesText(string text)
+    {
+        if(onUpdateLivesText != null)
+        {
+            onUpdateLivesText(text);
+        }
+    }
+
+    public event Action<bool> onWaitForCustomerCheckout;
+
+    public void WaitForCustomerCheckout(bool wait)
+    {
+        if(onWaitForCustomerCheckout != null)
+        {
+            onWaitForCustomerCheckout(wait);
+        }
+    }
+
+    public event Action onShowCustomersWaitText;
+
+    public void ShowCustomersWaitText()
+    {
+        if(onShowCustomersWaitText != null)
+        {
+            onShowCustomersWaitText();
+        }
+    }
 }

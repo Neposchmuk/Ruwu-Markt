@@ -84,7 +84,7 @@ public class MiniGameWipeFloor : MiniGameBaseState
     public override void UpdateQuest()
     {
         puddlesCleaned++;
-        GameEventsManager.instance.questEvents.UpdateQuestText("Clean all puddles" + $"({puddlesCleaned}/{puddlesToClean}");
+        GameEventsManager.instance.questEvents.UpdateQuestText("Clean all puddles" + $"({puddlesCleaned}/{puddlesToClean}" + ")");
     }
     public override void EndQuest()
     {
@@ -117,7 +117,13 @@ public class MiniGameWipeFloor : MiniGameBaseState
                 MopCollider.enabled = false;
                 Debug.Log(MopCollider.gameObject);
                 GameObject.Destroy(hit.collider.gameObject);
-                GameEventsManager.instance.questEvents.UpdateQuestText("Clean all puddles" + $"({puddlesCleaned}/{puddlesToClean}");
+                GameEventsManager.instance.questEvents.UpdateQuestText("Clean all puddles" + $"({puddlesCleaned}/{puddlesToClean}" + ")");
+
+                GameEventsManager.instance.uiEvents.SendActionSprite(UI_Widget.CLEAN, 0);
+
+                GameEventsManager.instance.uiEvents.SendActionSprite(UI_Widget.CLEAN, 0);
+
+                GameEventsManager.instance.uiEvents.SendActionSprite(UI_Widget.CLEAN, 0);
 
                 GameEventsManager.instance.uiEvents.SendActionSprite(UI_Widget.CLEAN, 0);
 

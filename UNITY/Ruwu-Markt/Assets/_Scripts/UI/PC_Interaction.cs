@@ -31,6 +31,13 @@ public class PC_Interaction : MonoBehaviour
     private void OnEnable()
     {
         GameEventsManager.instance.gameEvents.onSendSanityUpdate += SetInboxGroups;
+        GameEventsManager.instance.playerEvents.onPressedEscape += CheckCloseInbox;
+    }
+
+    private void OnDisable()
+    {
+        GameEventsManager.instance.gameEvents.onSendSanityUpdate -= SetInboxGroups;
+        GameEventsManager.instance.playerEvents.onPressedEscape -= CheckCloseInbox;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -64,16 +71,29 @@ public class PC_Interaction : MonoBehaviour
         }
     }
 
+    private void CheckCloseInbox(InputEventContext context)
+    {
+        if(context != InputEventContext.UI) return;
+
+        CloseInbox();
+    }
+
     public void CloseInbox()
     {
         GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PC_CLICK);
+
+        GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.DEFAULT);
 
         PC_UI_Parent.SetActive(false);
         Mail_UI.SetActive(false);
         ToggleCursorLockmode(false);
         OnCloseUI?.Invoke();
         GameEventsManager.instance.gameEvents.ToggleSanityWidget(true);
-        GameEventsManager.instance.questEvents.UpdateQuestText("Go to work");
+
+        if (_dayManager.IsDay)
+        {
+            GameEventsManager.instance.questEvents.UpdateQuestText("Go to work");
+        }    
     }
 
     public void CloseMailWindow()
@@ -137,6 +157,8 @@ public class PC_Interaction : MonoBehaviour
         PC_UI_Parent.SetActive(true);
         Mail_UI.SetActive(true);
         ToggleCursorLockmode(true);
+
+        GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.UI);
 
         GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PC_CLICK);
 

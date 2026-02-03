@@ -3,9 +3,12 @@ using TMPro;
 using System.Collections;
 using System.Threading;
 using System;
+using UnityEngine.UI;
 
 public class AmmoStation : MonoBehaviour
 {
+    [SerializeField] Image ammoImage;
+
     public static Action OnAmmoPickup;
 
     public TMP_Text StatusText;
@@ -15,6 +18,11 @@ public class AmmoStation : MonoBehaviour
     int _lockedTime = 20;
 
     int _lockedTimeLeft = 20;
+
+    void Start()
+    {
+        StatusText.enabled = false;
+    }
 
 
     public void AmmoPicked()
@@ -30,6 +38,8 @@ public class AmmoStation : MonoBehaviour
 
     void CountAmmoCooldown()
     {
+        ammoImage.enabled = false;
+        StatusText.enabled = true;
         StatusText.text = $"{_lockedTimeLeft}";
 
         if (_lockedTimeLeft == 0)
@@ -40,7 +50,9 @@ public class AmmoStation : MonoBehaviour
 
             _lockedTimeLeft = _lockedTime;
 
-            StatusText.text = "Ammo ready!";
+            StatusText.text = "";
+            StatusText.enabled = false;
+            ammoImage.enabled = true;
             return;
         }
 

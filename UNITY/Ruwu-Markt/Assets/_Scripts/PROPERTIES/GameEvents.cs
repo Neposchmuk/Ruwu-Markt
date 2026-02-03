@@ -96,4 +96,54 @@ public class GameEvents
             onShowSettings(toggle);
         }
     }
+
+    public event Action<GameObject> onRequestPlayerObject;
+
+    public void RequestPlayerObject(GameObject requester)
+    {
+        if(onRequestPlayerObject != null)
+        {
+            onRequestPlayerObject(requester);
+        }
+    }
+
+    public event Action<GameObject, GameObject> onSendPlayerObject;
+
+    public void SendPlayerObject(GameObject requester, GameObject playerObject)
+    {
+        if(onSendPlayerObject != null)
+        {
+            onSendPlayerObject(requester, playerObject);
+        }
+    }
+
+    public event Action onSkipDay;
+
+    public void SkipDay()
+    {
+        if(onSkipDay != null)
+        {
+            onSkipDay();
+        }
+    }
+
+    public event Action onCheckGameOver;
+
+    public void CheckGameOver()
+    {
+        if(onCheckGameOver != null)
+        {
+            onCheckGameOver();
+        }
+    }
+
+    public event Action onIsGameOver;
+
+    public void IsGameOver()
+    {
+        if(onIsGameOver != null)
+        {
+            onIsGameOver();
+        }
+    }
 }

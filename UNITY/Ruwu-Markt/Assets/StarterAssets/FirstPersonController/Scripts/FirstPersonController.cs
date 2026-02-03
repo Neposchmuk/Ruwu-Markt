@@ -115,6 +115,7 @@ namespace StarterAssets
             GameEventsManager.instance.playerEvents.onLockCamera += LockCamera;
 			GameEventsManager.instance.playerEvents.onToggleJump += ToggleJump;
 			GameEventsManager.instance.npcEvents.onPingPlayerPosition += SendPlayerPosition;
+			GameEventsManager.instance.gameEvents.onRequestPlayerObject += SendPlayerObject;
         }
 
         private void OnDisable()
@@ -123,6 +124,7 @@ namespace StarterAssets
             GameEventsManager.instance.playerEvents.onLockCamera -= LockCamera;
 			GameEventsManager.instance.playerEvents.onToggleJump -= ToggleJump;
 			GameEventsManager.instance.npcEvents.onPingPlayerPosition -= SendPlayerPosition;
+			GameEventsManager.instance.gameEvents.onRequestPlayerObject -= SendPlayerObject;
         }
 
         private void Start()
@@ -199,6 +201,11 @@ namespace StarterAssets
 			{
                 CameraRotation();
             }
+		}
+
+		private void SendPlayerObject(GameObject requester)
+		{
+			GameEventsManager.instance.gameEvents.SendPlayerObject(requester, gameObject);
 		}
 
 		private void SendPlayerPosition(GameObject agent)
@@ -300,9 +307,6 @@ namespace StarterAssets
 
 		private void JumpAndGravity()
 		{
-			if(!_canJump) return;
-
-
 			if (Grounded)
 			{
 				// reset the fall timeout timer
@@ -314,18 +318,22 @@ namespace StarterAssets
 					_verticalVelocity = -2f;
 				}
 
-				// Jump
-				if (_input.jump && _jumpTimeoutDelta <= 0.0f)
+				if (_canJump)
 				{
-					// the square root of H * -2 * G = how much velocity needed to reach desired height
-					_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
-				}
+					// Jump
+					if (_input.jump && _jumpTimeoutDelta <= 0.0f)
+					{
+						// the square root of H * -2 * G = how much velocity needed to reach desired height
+						_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+					}
 
-				// jump timeout
-				if (_jumpTimeoutDelta >= 0.0f)
-				{
-					_jumpTimeoutDelta -= Time.deltaTime;
+					// jump timeout
+					if (_jumpTimeoutDelta >= 0.0f)
+					{
+						_jumpTimeoutDelta -= Time.deltaTime;
+					}
 				}
+				
 			}
 			else
 			{

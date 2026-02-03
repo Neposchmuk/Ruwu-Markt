@@ -21,6 +21,7 @@ public class Trigger_NPC_Method : MonoBehaviour
 
         GameEventsManager.instance.checkoutEvents.onRequestSlotUpdate += SendSlotUpdate;
         GameEventsManager.instance.checkoutEvents.onReserveSlot += ReserveSlot;
+        GameEventsManager.instance.checkoutEvents.onSetTriggerVacancy += SetVacancyState;
     }
 
     private void OnDisable()
@@ -29,6 +30,14 @@ public class Trigger_NPC_Method : MonoBehaviour
 
         GameEventsManager.instance.checkoutEvents.onRequestSlotUpdate -= SendSlotUpdate;
         GameEventsManager.instance.checkoutEvents.onReserveSlot -= ReserveSlot;
+        GameEventsManager.instance.checkoutEvents.onSetTriggerVacancy -= SetVacancyState;
+    }
+
+    private void SetVacancyState(GameObject trigger, bool inTrigger)
+    {
+        if(trigger != this.gameObject) return;
+
+        IsOccupied = inTrigger;
     }
 
     private void SendSlotUpdate(GameObject slot, GameObject agent)
@@ -61,6 +70,7 @@ public class Trigger_NPC_Method : MonoBehaviour
                 GameEventsManager.instance.npcEvents.SetFaceTrigger(other.gameObject, gameObject);
 
                 GameEventsManager.instance.checkoutEvents.StartCheckoutGame(other.gameObject);
+                GameEventsManager.instance.questEvents.WaitForCustomerCheckout(true);
                 GameEventsManager.instance.checkoutEvents.RecalculateCheckoutSlot(other.gameObject);
                 Debug.Log("Sent Checkout event");
             }
@@ -79,7 +89,7 @@ public class Trigger_NPC_Method : MonoBehaviour
 
                 GameEventsManager.instance.npcEvents.SetFaceTrigger(other.gameObject, gameObject);
 
-                GameEventsManager.instance.checkoutEvents.SetNPCTrigger(other.gameObject, true);
+                GameEventsManager.instance.checkoutEvents.SetNPCTrigger(other.gameObject, gameObject, true);
                 GameEventsManager.instance.checkoutEvents.ArrivedAtTarget(other.gameObject);
             }
         }   
@@ -89,10 +99,6 @@ public class Trigger_NPC_Method : MonoBehaviour
     {
         if (other.CompareTag("NPC_Customer"))
         {
-            IsOccupied = false;
-
-            GameEventsManager.instance.checkoutEvents.SetNPCTrigger(other.gameObject, false);
-
             if (CheckoutLine && CheckoutSlot)
             {
                 GameEventsManager.instance.checkoutEvents.MoveUpNPCs();

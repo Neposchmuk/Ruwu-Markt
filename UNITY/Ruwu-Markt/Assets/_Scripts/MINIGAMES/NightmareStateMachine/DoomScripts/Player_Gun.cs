@@ -73,7 +73,7 @@ public class Player_Gun : MonoBehaviour
 
         _weaponLoaded = true;
 
-        AmmoText.text = $"{AmmoCarrying}" + "\n" + $"{_ammoInMagazine}";
+        GameEventsManager.instance.questEvents.UpdateAmmoText($"{_ammoInMagazine}" + "/" + $"{AmmoCarrying}");
     }
 
     public void Fire(InputEventContext context)
@@ -108,7 +108,7 @@ public class Player_Gun : MonoBehaviour
 
         _ammoInMagazine--;
 
-        AmmoText.text = $"{AmmoCarrying}" + "\n" + $"{_ammoInMagazine}";
+        GameEventsManager.instance.questEvents.UpdateAmmoText($"{_ammoInMagazine}" + "/" + $"{AmmoCarrying}");
 
         if(_ammoInMagazine <= 0)
         {
@@ -131,7 +131,7 @@ public class Player_Gun : MonoBehaviour
 
             _ammoInMagazine = 3;
 
-            AmmoText.text = $"{AmmoCarrying}" + "\n" + $"{_ammoInMagazine}";
+            GameEventsManager.instance.questEvents.UpdateAmmoText($"{_ammoInMagazine}" + "/" + $"{AmmoCarrying}");
         }
     }
 
@@ -164,7 +164,7 @@ public class Player_Gun : MonoBehaviour
         else _ammoInMagazine = 3;
         
         _animator.ResetTrigger("Reloading");
-        AmmoText.text = $"{AmmoCarrying}" + "\n" + $"{_ammoInMagazine}";
+        GameEventsManager.instance.questEvents.UpdateAmmoText($"{_ammoInMagazine}" + "/" + $"{AmmoCarrying}");
         _weaponLoaded = true;
         _isReloading = false;
         Debug.Log("Finished Reload");

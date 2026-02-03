@@ -6,16 +6,20 @@ public class SceneFade : MonoBehaviour
 {
     [SerializeField] private CanvasGroup blackImage;
 
+    private bool isGameOver;
+
     private void OnEnable()
     {
         GameEventsManager.instance.gameEvents.onChangeScene += ChangeScene;
         GameEventsManager.instance.gameEvents.onQuitGame += QuitGame;
+        GameEventsManager.instance.gameEvents.onIsGameOver += SetGameOverBool;
     }
 
     private void OnDisable()
     {
         GameEventsManager.instance.gameEvents.onChangeScene -= ChangeScene;
         GameEventsManager.instance.gameEvents.onQuitGame -= QuitGame;
+        GameEventsManager.instance.gameEvents.onIsGameOver -= SetGameOverBool;
     }
 
     private void Start()
@@ -89,7 +93,14 @@ public class SceneFade : MonoBehaviour
 
     private void LockPlayer(bool toggle)
     {
+        if(isGameOver) return;
+
         GameEventsManager.instance.playerEvents.LockPlayerMovement(toggle);
         GameEventsManager.instance.playerEvents.LockCamera(toggle);
+    }
+
+    private void SetGameOverBool()
+    {
+        isGameOver = true;
     }
 }

@@ -1,4 +1,3 @@
-using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 
 public class WidgetLibrary : MonoBehaviour
@@ -31,6 +30,8 @@ public class WidgetLibrary : MonoBehaviour
     public Sprite Bat_LMB;
 
     public Sprite Quest_E;
+
+    public Sprite Crosshair;
 }
 
 public enum UI_Widget
@@ -49,5 +50,7 @@ public enum UI_Widget
     GUN_LMB,
     BAT_F,
     BAT_LMB,
-    QUEST_E
+    QUEST_E,
+
+    CROSSHAIR
 }

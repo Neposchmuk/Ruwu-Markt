@@ -74,7 +74,7 @@ public class NPC_Boss_Behaviour : MonoBehaviour
 
     private void SitBehaviour()
     {
-        transform.position = chair.transform.position;
+        transform.position = chair.transform.position + new Vector3(0, -0.5f, 0);
 
         animator.SetTrigger("Sit");
     }
