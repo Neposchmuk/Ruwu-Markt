@@ -23,6 +23,7 @@ public class EnterDialogue : MonoBehaviour
             Debug.Log("Sent Dialogue Event");
             GameEventsManager.instance.npcEvents.PingPlayerPosition(gameObject);
             GameEventsManager.instance.dialogueEvents.EnterDialogue(dialogueKnotName);
+            GameEventsManager.instance.uiEvents.HideInteractionWidget();
         }
     }
 

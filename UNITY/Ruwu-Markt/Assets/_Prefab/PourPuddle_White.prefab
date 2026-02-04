@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1aa4a41c1f9a0af478508817e2c76006, type: 3}
+  m_Sprite: {fileID: 5112067697859588689, guid: 9b6f53e697bc5e24998ee006e99b490d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -249,7 +249,7 @@ GameObject:
   - component: {fileID: -1500237639450667598}
   - component: {fileID: -3893722988402096603}
   m_Layer: 0
-  m_Name: PourPuddle
+  m_Name: PourPuddle_White
   m_TagString: Puddle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -302,7 +302,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 74eafe2d77ef05241b4e1c5a38cd09a8, type: 2}
+  - {fileID: 2100000, guid: c4ee8402b9d277442a9ae281cb437939, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

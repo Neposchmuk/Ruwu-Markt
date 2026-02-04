@@ -108,7 +108,7 @@ public class Day_Manager : MonoBehaviour
         }
         else
         {
-            GameEventsManager.instance.uiEvents.ShowWidgetTutorial(true);
+            GameEventsManager.instance.uiEvents.ShowWidgetTutorial(false);
         }
     }
 }

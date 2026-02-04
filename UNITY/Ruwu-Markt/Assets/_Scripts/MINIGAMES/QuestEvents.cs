@@ -224,4 +224,14 @@ public class QuestEvents
             onShowCustomersWaitText();
         }
     }
+
+    public event Action onAllowPlayerLeave;
+
+    public void AllowPlayerLeave()
+    {
+        if(onAllowPlayerLeave != null)
+        {
+            onAllowPlayerLeave();
+        }
+    }
 }
