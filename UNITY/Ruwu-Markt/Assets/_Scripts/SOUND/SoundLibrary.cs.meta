@@ -1,2 +1,46 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream
 guid: deca163f2878adb4683569491a67b2f8
+=======
+guid: deca163f2878adb4683569491a67b2f8
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - Place_Product: {instanceID: 0}
+  - Place_Bottle: {instanceID: 0}
+  - Place_Crate: {instanceID: 0}
+  - Drink: {instanceID: 0}
+  - Pour: {instanceID: 0}
+  - Mop: {instanceID: 0}
+  - Water: {instanceID: 0}
+  - Bottle_Throw: {instanceID: 0}
+  - Bottle_Crash: {instanceID: 0}
+  - PickUp: {instanceID: 0}
+  - Cash_Scan: {instanceID: 0}
+  - Cash_Spawn: {instanceID: 0}
+  - Cash_Buttons: {instanceID: 0}
+  - Cash_Change: {instanceID: 0}
+  - Cash_Open: {instanceID: 0}
+  - Safe: {instanceID: 0}
+  - Door_Open: {instanceID: 0}
+  - Door_Locked: {instanceID: 0}
+  - Matress: {instanceID: 0}
+  - PC_Click: {instanceID: 0}
+  - Bat_Swoosh: {instanceID: 0}
+  - Bat_Hit: {instanceID: 0}
+  - Gun_Shoot: {instanceID: 0}
+  - Gun_Load: {instanceID: 0}
+  - Player_Hurt: {instanceID: 0}
+  - NPC_Death: {instanceID: 0}
+  - Flashlight: {instanceID: 0}
+  - Market_Door_Closed: {instanceID: 0}
+  - Market_Door_Open: {instanceID: 0}
+  - UI_Click: {instanceID: 0}
+  - UI_Open: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+>>>>>>> Stashed changes
