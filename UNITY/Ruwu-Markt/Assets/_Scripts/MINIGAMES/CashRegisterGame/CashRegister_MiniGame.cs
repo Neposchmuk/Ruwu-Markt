@@ -29,6 +29,8 @@ public class CashRegister_MiniGame : MonoBehaviour
 
     public GameObject CashRegisterDrawer;
 
+    [SerializeField] Canvas questmarker;
+
 
     private List<GameObject> productsBought = new List<GameObject>();
 
@@ -91,6 +93,8 @@ public class CashRegister_MiniGame : MonoBehaviour
         GameEventsManager.instance.questEvents.ToggleButtonInteractable(UIButtonType.CASH, false);
         GameEventsManager.instance.questEvents.ToggleButtonInteractable(UIButtonType.PAYCARD, false);
         GameEventsManager.instance.questEvents.ToggleButtonInteractable(UIButtonType.PAYCASH, false);
+
+        questmarker.enabled = false;
     }
 
 
@@ -106,6 +110,8 @@ public class CashRegister_MiniGame : MonoBehaviour
             productsScanned = 0;
             _intChangeGiven = 0;
             InstantiateProducts();
+
+            questmarker.enabled = true;
         }
     }
 
@@ -125,6 +131,11 @@ public class CashRegister_MiniGame : MonoBehaviour
 
     void ScanProduct(productInfo productInfo)
     {
+        if(questmarker.enabled == true)
+        {
+            questmarker.enabled = false;
+        }
+
         _intPriceTotal += productInfo.price;
         productInfo.hasBeenScanned = true;
         productsScanned++;

@@ -75,4 +75,24 @@ public class UI_Events
             onShowCrosshair(toggle);
         }
     }
+
+    public event Action<bool> onToggleSanityWidget;
+
+    public void ToggleSanityWidget(bool toggle)
+    {
+        if(onToggleSanityWidget != null)
+        {
+            onToggleSanityWidget(toggle);
+        }
+    }
+
+    public event Action<bool> onShowWidgetTutorial;
+
+    public void ShowWidgetTutorial(bool toggle)
+    {
+        if(onShowWidgetTutorial != null)
+        {
+            onShowWidgetTutorial(toggle);
+        }
+    }
 }

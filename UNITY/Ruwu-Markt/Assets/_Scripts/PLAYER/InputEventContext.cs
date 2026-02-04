@@ -8,6 +8,8 @@ public enum InputEventContext
 
    MENU_UI,
 
+   TUTORIAL,
+
    NIGHTMARE_DOOM,
 
    NIGHTMARE_ESCAPE,

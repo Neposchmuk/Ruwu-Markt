@@ -84,11 +84,12 @@ public class PC_Interaction : MonoBehaviour
 
         GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.DEFAULT);
 
+        GameEventsManager.instance.uiEvents.ToggleSanityWidget(true);
+
         PC_UI_Parent.SetActive(false);
         Mail_UI.SetActive(false);
         ToggleCursorLockmode(false);
         OnCloseUI?.Invoke();
-        GameEventsManager.instance.gameEvents.ToggleSanityWidget(true);
 
         if (_dayManager.IsDay)
         {
@@ -162,6 +163,6 @@ public class PC_Interaction : MonoBehaviour
 
         GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PC_CLICK);
 
-        GameEventsManager.instance.gameEvents.ToggleSanityWidget(false);
+        GameEventsManager.instance.uiEvents.ToggleSanityWidget(true);
     }
 }
