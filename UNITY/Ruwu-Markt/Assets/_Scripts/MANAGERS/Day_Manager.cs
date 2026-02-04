@@ -20,9 +20,19 @@ public class Day_Manager : MonoBehaviour
 
     public int Night = 1;
 
+    private bool tutorialShown;
+
     private void Awake()
     {
         GameEventsManager.instance.gameEvents.onSendSanityUpdate += UpdateEndingBool;
+        SceneManager.sceneLoaded += SendTutorialEvent;
+    }
+
+    private void OnDestroy()
+    {
+        GameEventsManager.instance.gameEvents.onSendSanityUpdate -= UpdateEndingBool;
+        SceneManager.sceneLoaded -= SendTutorialEvent;
+
     }
 
     private void Start()
@@ -85,5 +95,20 @@ public class Day_Manager : MonoBehaviour
         }
         else GetsGoodEnding = false;
         
+    }
+
+    private void SendTutorialEvent(Scene scene, LoadSceneMode mode)
+    {
+        if(scene != SceneManager.GetSceneByBuildIndex(2)) return;
+
+        if(!tutorialShown)
+        {
+            GameEventsManager.instance.uiEvents.ShowWidgetTutorial(true);
+            tutorialShown = true;
+        }
+        else
+        {
+            GameEventsManager.instance.uiEvents.ShowWidgetTutorial(false);
+        }
     }
 }

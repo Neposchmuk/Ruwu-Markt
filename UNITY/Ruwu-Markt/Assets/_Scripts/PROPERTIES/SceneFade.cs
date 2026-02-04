@@ -8,11 +8,14 @@ public class SceneFade : MonoBehaviour
 
     private bool isGameOver;
 
+    private bool keepPlayerLocked;
+
     private void OnEnable()
     {
         GameEventsManager.instance.gameEvents.onChangeScene += ChangeScene;
         GameEventsManager.instance.gameEvents.onQuitGame += QuitGame;
         GameEventsManager.instance.gameEvents.onIsGameOver += SetGameOverBool;
+        GameEventsManager.instance.gameEvents.onKeepPlayerLocked += KeepPlayerLocked;
     }
 
     private void OnDisable()
@@ -20,11 +23,12 @@ public class SceneFade : MonoBehaviour
         GameEventsManager.instance.gameEvents.onChangeScene -= ChangeScene;
         GameEventsManager.instance.gameEvents.onQuitGame -= QuitGame;
         GameEventsManager.instance.gameEvents.onIsGameOver -= SetGameOverBool;
+        GameEventsManager.instance.gameEvents.onKeepPlayerLocked -= KeepPlayerLocked;
     }
 
     private void Start()
     {
-        GameEventsManager.instance.gameEvents.ToggleSanityWidget(true);
+        GameEventsManager.instance.uiEvents.ToggleSanityWidget(true);
         LockPlayer(true);
 
         blackImage.gameObject.SetActive(true);
@@ -93,7 +97,7 @@ public class SceneFade : MonoBehaviour
 
     private void LockPlayer(bool toggle)
     {
-        if(isGameOver) return;
+        if(isGameOver || keepPlayerLocked) return;
 
         GameEventsManager.instance.playerEvents.LockPlayerMovement(toggle);
         GameEventsManager.instance.playerEvents.LockCamera(toggle);
@@ -102,5 +106,10 @@ public class SceneFade : MonoBehaviour
     private void SetGameOverBool()
     {
         isGameOver = true;
+    }
+
+    private void KeepPlayerLocked(bool toggle)
+    {
+        keepPlayerLocked = toggle;
     }
 }

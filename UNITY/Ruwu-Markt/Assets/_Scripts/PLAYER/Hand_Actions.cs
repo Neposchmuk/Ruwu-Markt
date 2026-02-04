@@ -59,7 +59,7 @@ public class Hand_Actions: MonoBehaviour
             }
             else
             {
-                Instantiate(instanceObject[1], hit.point + new Vector3 (0,0.02f,0), Quaternion.Euler (new Vector3 (0, UnityEngine.Random.Range(0, 359), 0)));
+                Instantiate(instanceObject[9], hit.point + new Vector3 (0,0.02f,0), Quaternion.Euler (new Vector3 (0, UnityEngine.Random.Range(0, 359), 0)));
             }
 
             timeToPour -= 1 * Time.deltaTime;
