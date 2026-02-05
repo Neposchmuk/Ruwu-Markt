@@ -2471,7 +2471,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dayScene: home
-  nightScene: Greyboxing_Night
+  nightScene: Night_New
   IsDay: 1
   CheckedPC: 0
   IsFinalDay: 0
