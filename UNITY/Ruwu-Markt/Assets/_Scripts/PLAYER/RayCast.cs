@@ -167,7 +167,7 @@ public class RayCast : MonoBehaviour
                     if(_dayManager.IsDay && _dayManager.CheckedPC)
                     {
                         GameEventsManager.instance.soundEvents.TriggerSound(SoundType.DOOR_OPEN);
-                        GameEventsManager.instance.gameEvents.ChangeScene("Greyboxing_Day");
+                        GameEventsManager.instance.gameEvents.ChangeScene("Day_New");
                     }
                     else
                     {
