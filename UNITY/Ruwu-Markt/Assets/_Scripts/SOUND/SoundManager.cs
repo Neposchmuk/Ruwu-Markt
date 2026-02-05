@@ -4,11 +4,11 @@ public class SoundManager : MonoBehaviour
 {
     [SerializeField] private SoundLibrary library;
 
-    private void OnEnable()
+    private void Awake()
     {
         GameEventsManager.instance.soundEvents.onTriggerSound += SendAudioClip;
     }
-    private void OnDisable()
+    private void OnDestroy()
     {
         GameEventsManager.instance.soundEvents.onTriggerSound -= SendAudioClip;
     }
@@ -16,6 +16,8 @@ public class SoundManager : MonoBehaviour
 
     private void SendAudioClip(SoundType sound)
     {
+        Debug.Log("Received Send Audio event: " + sound);
+
         switch (sound)
         {
             case SoundType.PLACE_PRODUCT:

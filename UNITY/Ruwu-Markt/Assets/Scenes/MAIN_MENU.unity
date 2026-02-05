@@ -2800,7 +2800,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 781854822}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2819,36 +2819,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deca163f2878adb4683569491a67b2f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Place_Product: {fileID: 0}
-  Place_Bottle: {fileID: 0}
-  Place_Crate: {fileID: 0}
-  Drink: {fileID: 0}
-  Pour: {fileID: 0}
-  Mop: {fileID: 0}
-  Water: {fileID: 0}
-  Bottle_Throw: {fileID: 0}
-  Bottle_Crash: {fileID: 0}
-  PickUp: {fileID: 0}
-  Cash_Scan: {fileID: 0}
+  Place_Product: {fileID: 8300000, guid: e3a71a2cc1da78449bdee154f288184c, type: 3}
+  Place_Bottle: {fileID: 8300000, guid: 1c7b507b5fd49fb46b3576dac8a084e8, type: 3}
+  Place_Crate: {fileID: 8300000, guid: 154d911d83795d2449a895a795871222, type: 3}
+  Drink: {fileID: 8300000, guid: 644489c9605d52c40916496f0e5deed0, type: 3}
+  Pour: {fileID: 8300000, guid: 0b5daefe4d8f1e04fbde2ed1a1d1e74b, type: 3}
+  Mop: {fileID: 8300000, guid: abc0d14f790ba1246a34ae22408f8cbd, type: 3}
+  Water: {fileID: 8300000, guid: 95c7501d7397fe543961e96f2f51868d, type: 3}
+  Bottle_Throw: {fileID: 8300000, guid: fb9861bf8cdad93469e70a755dc96eed, type: 3}
+  Bottle_Crash: {fileID: 8300000, guid: 364f90e90aa35fa4ebc669b98f08791a, type: 3}
+  PickUp: {fileID: 8300000, guid: d52dea84594312d42972766dae64c261, type: 3}
+  Cash_Scan: {fileID: 8300000, guid: c33bcb60117c9a74eba576d724c36c9a, type: 3}
   Cash_Spawn: {fileID: 0}
-  Cash_Buttons: {fileID: 0}
-  Cash_Change: {fileID: 0}
-  Cash_Open: {fileID: 0}
-  Safe: {fileID: 0}
-  Door_Open: {fileID: 0}
-  Door_Locked: {fileID: 0}
-  Matress: {fileID: 0}
-  PC_Click: {fileID: 0}
-  Bat_Swoosh: {fileID: 0}
-  Bat_Hit: {fileID: 0}
-  Gun_Shoot: {fileID: 0}
-  Gun_Load: {fileID: 0}
-  Player_Hurt: {fileID: 0}
-  NPC_Death: {fileID: 0}
-  Flashlight: {fileID: 0}
-  Market_Door_Closed: {fileID: 0}
+  Cash_Buttons: {fileID: 8300000, guid: ffa52c750de6a3446ac42892d98a586a, type: 3}
+  Cash_Change: {fileID: 8300000, guid: 399aa9a52b16daf4ba360b7c3e41d696, type: 3}
+  Cash_Open: {fileID: 8300000, guid: 632498255bff79347b0cf0108528cc8c, type: 3}
+  Safe: {fileID: 8300000, guid: 41cc1076a1db3a44fbe5da7aaaee3bad, type: 3}
+  Door_Open: {fileID: 8300000, guid: 27fc91da67bf5e2469f5da3057cd5aa4, type: 3}
+  Door_Locked: {fileID: 8300000, guid: a568a3c338c4e3349853c3c29c2c3e64, type: 3}
+  Matress: {fileID: 8300000, guid: a41d4b811e259874daa881b775cf2eef, type: 3}
+  PC_Click: {fileID: 8300000, guid: ffa52c750de6a3446ac42892d98a586a, type: 3}
+  Bat_Swoosh: {fileID: 8300000, guid: 2b2761c1fd8cd664a87ef971c451bc5a, type: 3}
+  Bat_Hit: {fileID: 8300000, guid: 519da943049eb0048b07d63abf7e8202, type: 3}
+  Gun_Shoot: {fileID: 8300000, guid: d632a845f0aaada409db2d10e12d8590, type: 3}
+  Gun_Load: {fileID: 8300000, guid: 0fe867f0dc94b1a45a688375963c7882, type: 3}
+  Player_Hurt: {fileID: 8300000, guid: c0b51fe4c6b5c664fbe6f4e21ffbef52, type: 3}
+  NPC_Death: {fileID: 8300000, guid: 333f87519fdc985418692be43e2bfc35, type: 3}
+  Flashlight: {fileID: 8300000, guid: ffa52c750de6a3446ac42892d98a586a, type: 3}
+  Market_Door_Closed: {fileID: 8300000, guid: a568a3c338c4e3349853c3c29c2c3e64, type: 3}
   Market_Door_Open: {fileID: 0}
-  UI_Click: {fileID: 0}
+  UI_Click: {fileID: 8300000, guid: ffa52c750de6a3446ac42892d98a586a, type: 3}
   UI_Open: {fileID: 0}
 --- !u!114 &781854825
 MonoBehaviour:
@@ -3102,7 +3102,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 24300002, guid: 7ea99eb66cbdee942808cd6d86964f80, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -3200,6 +3200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 996687939}
+  mopSoundClip: {fileID: 8300000, guid: abc0d14f790ba1246a34ae22408f8cbd, type: 3}
 --- !u!4 &996687941
 Transform:
   m_ObjectHideFlags: 0

@@ -130549,6 +130549,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 1822086833}
+  mopSoundClip: {fileID: 8300000, guid: abc0d14f790ba1246a34ae22408f8cbd, type: 3}
 --- !u!82 &1822086833
 AudioSource:
   m_ObjectHideFlags: 0
@@ -130561,10 +130562,10 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 24300002, guid: 7ea99eb66cbdee942808cd6d86964f80, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
