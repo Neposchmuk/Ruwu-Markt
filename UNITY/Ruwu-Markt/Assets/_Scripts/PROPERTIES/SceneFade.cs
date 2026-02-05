@@ -45,7 +45,6 @@ public class SceneFade : MonoBehaviour
             yield return null;
 
         }
-        AudioListener.volume = 0f;
         blackImage.alpha = 1f;
         SceneManager.LoadScene(scene);
     }
@@ -60,7 +59,6 @@ public class SceneFade : MonoBehaviour
             yield return null;
 
         }
-        AudioListener.volume = 0f;
         blackImage.alpha = 1f;
         Application.Quit();
     }

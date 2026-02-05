@@ -2800,7 +2800,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 781854822}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2830,12 +2830,12 @@ MonoBehaviour:
   Bottle_Crash: {fileID: 8300000, guid: 364f90e90aa35fa4ebc669b98f08791a, type: 3}
   PickUp: {fileID: 8300000, guid: d52dea84594312d42972766dae64c261, type: 3}
   Cash_Scan: {fileID: 8300000, guid: c33bcb60117c9a74eba576d724c36c9a, type: 3}
-  Cash_Spawn: {fileID: 8300000, guid: 27fc91da67bf5e2469f5da3057cd5aa4, type: 3}
+  Cash_Spawn: {fileID: 0}
   Cash_Buttons: {fileID: 8300000, guid: ffa52c750de6a3446ac42892d98a586a, type: 3}
   Cash_Change: {fileID: 8300000, guid: 399aa9a52b16daf4ba360b7c3e41d696, type: 3}
   Cash_Open: {fileID: 8300000, guid: 632498255bff79347b0cf0108528cc8c, type: 3}
   Safe: {fileID: 8300000, guid: 41cc1076a1db3a44fbe5da7aaaee3bad, type: 3}
-  Door_Open: {fileID: 8300000, guid: 8faa86cc6b476a44588ca0c01a0a2afe, type: 3}
+  Door_Open: {fileID: 8300000, guid: 27fc91da67bf5e2469f5da3057cd5aa4, type: 3}
   Door_Locked: {fileID: 8300000, guid: a568a3c338c4e3349853c3c29c2c3e64, type: 3}
   Matress: {fileID: 8300000, guid: a41d4b811e259874daa881b775cf2eef, type: 3}
   PC_Click: {fileID: 8300000, guid: ffa52c750de6a3446ac42892d98a586a, type: 3}
@@ -2846,7 +2846,7 @@ MonoBehaviour:
   Player_Hurt: {fileID: 8300000, guid: c0b51fe4c6b5c664fbe6f4e21ffbef52, type: 3}
   NPC_Death: {fileID: 8300000, guid: 333f87519fdc985418692be43e2bfc35, type: 3}
   Flashlight: {fileID: 8300000, guid: ffa52c750de6a3446ac42892d98a586a, type: 3}
-  Market_Door_Closed: {fileID: 0}
+  Market_Door_Closed: {fileID: 8300000, guid: a568a3c338c4e3349853c3c29c2c3e64, type: 3}
   Market_Door_Open: {fileID: 0}
   UI_Click: {fileID: 8300000, guid: ffa52c750de6a3446ac42892d98a586a, type: 3}
   UI_Open: {fileID: 0}
@@ -3102,7 +3102,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 24300002, guid: 7ea99eb66cbdee942808cd6d86964f80, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -3200,6 +3200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 996687939}
+  mopSoundClip: {fileID: 8300000, guid: abc0d14f790ba1246a34ae22408f8cbd, type: 3}
 --- !u!4 &996687941
 Transform:
   m_ObjectHideFlags: 0

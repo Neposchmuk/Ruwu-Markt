@@ -20,7 +20,7 @@ public class Pursuer_Behaviour : MonoBehaviour
 
     GameObject _player;
 
-    BoxCollider _marketFloor;
+    [SerializeField] BoxCollider _marketFloor;
 
     bool _patrolling;
 
@@ -42,8 +42,6 @@ public class Pursuer_Behaviour : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
 
         _player = GameObject.FindGameObjectWithTag("Player");
-
-        _marketFloor = GameObject.Find("MarketFloor").GetComponent<BoxCollider>();
 
         _patrolToPlayer = false;
 

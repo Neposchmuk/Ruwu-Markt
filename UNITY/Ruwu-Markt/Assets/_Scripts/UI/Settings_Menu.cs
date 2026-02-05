@@ -34,6 +34,9 @@ public class Settings_Menu : MonoBehaviour
         returnButton.onClick.AddListener(() => SwitchSettingsMenu(false));
 
         SetQuality(0);
+
+        //https://discussions.unity.com/t/100-gpu-usage-in-editor-builds/769415
+        Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
     }
 
     public void SetVolume(float volume)
@@ -86,6 +89,9 @@ public class Settings_Menu : MonoBehaviour
         GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_CLICK);
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+
+        //https://discussions.unity.com/t/100-gpu-usage-in-editor-builds/769415
+        Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
     }
 
     private void SwitchSettingsMenu(bool toggle)

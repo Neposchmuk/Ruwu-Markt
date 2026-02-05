@@ -3,6 +3,7 @@ using UnityEngine;
 public class AudioSourceListener : MonoBehaviour
 {
     [SerializeField] private AudioSource source;
+    [SerializeField] private AudioClip mopSoundClip;
 
     private void OnEnable()
     {
@@ -17,9 +18,19 @@ public class AudioSourceListener : MonoBehaviour
 
     private void PlaySound(AudioClip clip)
     {
+        Debug.Log("Received Play Audio event: " + clip);
+
         source.clip = clip;
 
-        source.Play();
+        if(clip == mopSoundClip)
+        {
+            source.Play();  
+        }
+        else
+        {
+            source.PlayOneShot(clip);
+        }
+
     }
 
     private void StopSound()

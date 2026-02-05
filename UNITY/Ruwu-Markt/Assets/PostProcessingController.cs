@@ -14,6 +14,10 @@ public class PostProcessingController : MonoBehaviour
     {
         GameEventsManager.instance.gameEvents.onUpdateSanity -= ChangeVolumeWeight;
     }
+    void Start()
+    {
+        GameEventsManager.instance.gameEvents.RequestSanityUpdate();
+    }
 
     private void ChangeVolumeWeight(int sanity)
     {
