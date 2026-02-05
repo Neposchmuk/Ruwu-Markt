@@ -29,7 +29,7 @@ public class SinkObject : MonoBehaviour
 
     void Sink()
     {
-        transform.Translate(Vector3.down * 0.2f * Time.deltaTime, Space.World);
+        gameObject.transform.Translate(Vector3.down * 0.2f * Time.deltaTime, Space.World);
 
         if(transform.position.y <= -1)
         {

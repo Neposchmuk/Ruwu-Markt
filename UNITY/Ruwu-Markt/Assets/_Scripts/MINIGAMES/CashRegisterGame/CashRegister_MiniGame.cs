@@ -225,7 +225,9 @@ public class CashRegister_MiniGame : MonoBehaviour
         else if(_intChangeGiven > _intChangeToGive)
         {
             cashRegisterDeficit -= _intChangeGiven - _intChangeToGive;
-            Debug.Log("Given too much change!");
+            GameEventsManager.instance.gameEvents.SendSanityChange(-10,-10);
+            GameEventsManager.instance.gameEvents.RequestSanityUpdate();
+            GameEventsManager.instance.questEvents.ShowTooMuchChangeText();
             CleanUp();
         }
 

@@ -52,7 +52,6 @@ public class Settings_Menu : MonoBehaviour
 
     public void SetQuality(int qualityIndex)
     {
-        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_CLICK);
         QualitySettings.SetQualityLevel(qualityIndex);
         Debug.Log(QualitySettings.GetQualityLevel());
     }
@@ -86,7 +85,6 @@ public class Settings_Menu : MonoBehaviour
 
     public void SetResolution(int resolutionIndex)
     {
-        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_CLICK);
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
 

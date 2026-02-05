@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3185651723391439296
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3821654326274841966}
+  - component: {fileID: 8334144649954394169}
+  - component: {fileID: 1890998963703504152}
+  m_Layer: 6
+  m_Name: Checkout_Wine_1
+  m_TagString: CheckOutProduct
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3821654326274841966
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3185651723391439296}
+  serializedVersion: 2
+  m_LocalRotation: {x: 1.110223e-17, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2135241147791924329}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8334144649954394169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3185651723391439296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c612105ad4d148f49af70df6f36f20f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  productName: Red Wine
+  price: 1299
+  PLU: 1450
+  ageRestricted: 0
+  hasBeenScanned: 0
+--- !u!65 &1890998963703504152
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3185651723391439296}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.09473526, y: 0.2970954, z: 0.090394475}
+  m_Center: {x: 0, y: 0.1493053, z: -4.9400975e-26}
+--- !u!1001 &8470552272031648641
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3821654326274841966}
+    m_Modifications:
+    - target: {fileID: 2648528847359911036, guid: 087eecf1e5226b54bab6c1b377548b9c, type: 3}
+      propertyPath: m_Name
+      value: Bottle_WorldObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 5636126652312969365, guid: 087eecf1e5226b54bab6c1b377548b9c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7506538417337685992, guid: 087eecf1e5226b54bab6c1b377548b9c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7506538417337685992, guid: 087eecf1e5226b54bab6c1b377548b9c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7506538417337685992, guid: 087eecf1e5226b54bab6c1b377548b9c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7506538417337685992, guid: 087eecf1e5226b54bab6c1b377548b9c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7506538417337685992, guid: 087eecf1e5226b54bab6c1b377548b9c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -7.850463e-18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7506538417337685992, guid: 087eecf1e5226b54bab6c1b377548b9c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: 7506538417337685992, guid: 087eecf1e5226b54bab6c1b377548b9c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 7.850463e-18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7506538417337685992, guid: 087eecf1e5226b54bab6c1b377548b9c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7506538417337685992, guid: 087eecf1e5226b54bab6c1b377548b9c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7506538417337685992, guid: 087eecf1e5226b54bab6c1b377548b9c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: -9146534984501666744, guid: 087eecf1e5226b54bab6c1b377548b9c, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 8179971446466651519, guid: 087eecf1e5226b54bab6c1b377548b9c, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 087eecf1e5226b54bab6c1b377548b9c, type: 3}
+--- !u!4 &2135241147791924329 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7506538417337685992, guid: 087eecf1e5226b54bab6c1b377548b9c, type: 3}
+  m_PrefabInstance: {fileID: 8470552272031648641}
+  m_PrefabAsset: {fileID: 0}

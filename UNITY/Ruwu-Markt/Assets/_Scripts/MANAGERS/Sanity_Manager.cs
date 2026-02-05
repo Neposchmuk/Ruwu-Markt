@@ -39,12 +39,16 @@ public class Sanity_Manager : MonoBehaviour
         GameEventsManager.instance.gameEvents.onRequestSanityUpdate += SendSanityUpdate;
         GameEventsManager.instance.gameEvents.onCheckGameOver += CheckGameOver;
         GameEventsManager.instance.uiEvents.onToggleSanityWidget += ToggleWidget;
+        GameEventsManager.instance.gameEvents.onSendSanityChange += ChangeSanity;
+        GameEventsManager.instance.gameEvents.onSetSanity += SetSanity;
     }
     void OnDestroy()
     {
         GameEventsManager.instance.gameEvents.onRequestSanityUpdate -= SendSanityUpdate;
         GameEventsManager.instance.gameEvents.onCheckGameOver -= CheckGameOver;
         GameEventsManager.instance.uiEvents.onToggleSanityWidget -= ToggleWidget;
+        GameEventsManager.instance.gameEvents.onSendSanityChange -= ChangeSanity;
+        GameEventsManager.instance.gameEvents.onSetSanity -= SetSanity;
     }
 
 
@@ -161,5 +165,14 @@ public class Sanity_Manager : MonoBehaviour
     private void ToggleWidget(bool toggle)
     {
         sanityWidgetParent.SetActive(toggle);
+    }
+
+    private void SetSanity(int sanity, int jobSecurity)
+    {
+        this.sanity = Mathf.Clamp(sanity, 0 ,100);
+
+        this.jobSecurity = Mathf.Clamp(jobSecurity, 0 ,100);
+
+        Debug.Log(this.sanity + " / " + this.jobSecurity);
     }
 }

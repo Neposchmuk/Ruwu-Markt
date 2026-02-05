@@ -10,8 +10,6 @@ public class Nightmare_Escape_State : NightmareBaseState
 
     Flashlight _flashlight;
 
-    Image _keyImage;
-
     bool _flashActive = false;
 
     public override void EnterState(Nightmare_State_Manager stateManager)
@@ -22,13 +20,9 @@ public class Nightmare_Escape_State : NightmareBaseState
 
         _flashlight = GameObject.FindFirstObjectByType<Flashlight>();
 
-        _keyImage = GameObject.FindGameObjectWithTag("EscapeKeyImage").GetComponent<Image>();
-
         RayCast.OnMarketLeave += EndState;
 
         RayCast.OnKeyPickup += ToggleKeyImage;
-
-        _keyImage.enabled = false;
 
         GameEventsManager.instance.playerEvents.ToggleJump(false);
 

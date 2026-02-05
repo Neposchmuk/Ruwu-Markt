@@ -112,7 +112,8 @@ public class Hand_Actions: MonoBehaviour
 
     public void Place(RaycastHit hit)
     {
-        Instantiate(objectToPlace, hit.point, transform.localRotation);
+        GameObject placedObject = Instantiate(objectToPlace, hit.point, transform.localRotation);
+        placedObject.layer = 0;
     }
 
     public void Place(Vector3 positionOverride, Vector3 rotationOverride, Vector3 scaleOverride)

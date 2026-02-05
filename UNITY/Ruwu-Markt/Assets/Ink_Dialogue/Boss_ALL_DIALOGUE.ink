@@ -1,4 +1,5 @@
 EXTERNAL AdvanceQuest(endingType)
+EXTERNAL SendSpitEvent()
 
 VAR FinalQuestState = "NOT RUNNING"
 
@@ -17,14 +18,21 @@ I don't have time right now.
 
 Get back to work!
 
-Getback to work!
-*[Yes Boss :(]
-    Good slave.
-*[Fuk U!!!]
-    Owie my feelings!
+Get back to work!
+*[Yes Boss]
+    SCRAM!
+    -> END
 *[*Spit in his face*]
-    AAARRRGHHHH!!!!!
-- -> END
+    "***********!!!!
+    
+    WHAT THE FUCK!
+    
+    ONE MORE SLIP UP AND YOU'RE FIRED!"
+    
+    ~SendSpitEvent()
+    -> END
+     
+
 
 
 

@@ -146,4 +146,24 @@ public class GameEvents
             onKeepPlayerLocked(toggle);
         }
     }
+
+    public event Action<int, int> onSendSanityChange;
+
+    public void SendSanityChange(int changeSanity, int changeJob)
+    {
+        if(onSendSanityChange != null)
+        {
+            onSendSanityChange(changeSanity, changeJob);
+        }
+    }
+
+    public event Action<int, int> onSetSanity;
+
+    public void SetSanity(int changeSanity, int changeJob)
+    {
+        if(onSetSanity != null)
+        {
+            onSetSanity(changeSanity, changeJob);
+        }
+    }
 }

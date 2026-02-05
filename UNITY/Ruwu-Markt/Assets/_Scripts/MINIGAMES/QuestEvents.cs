@@ -234,4 +234,14 @@ public class QuestEvents
             onAllowPlayerLeave();
         }
     }
+
+    public event Action onShowTooMuchChangeText;
+
+    public void ShowTooMuchChangeText()
+    {
+        if(onShowTooMuchChangeText != null)
+        {
+            onShowTooMuchChangeText();
+        }
+    }
 }

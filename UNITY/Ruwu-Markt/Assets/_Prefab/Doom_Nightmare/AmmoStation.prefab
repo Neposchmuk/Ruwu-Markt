@@ -328,8 +328,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Ammo ready!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 540753bbb40238141947dd48a4d501cf, type: 2}
+  m_sharedMaterial: {fileID: 6995093471098998652, guid: 540753bbb40238141947dd48a4d501cf, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
