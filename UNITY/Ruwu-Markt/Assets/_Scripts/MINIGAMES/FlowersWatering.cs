@@ -7,9 +7,7 @@ public class FlowersWatering : MonoBehaviour
 {
     public static event Action OnFlowerWatered;
 
-    public Material DryMaterial;
-
-    public Material Wetmaterial;
+    public Color WetColor;
 
     public float saturationChange;
 
@@ -38,11 +36,7 @@ public class FlowersWatering : MonoBehaviour
     void TriggerWaterEvent()
     {
         OnFlowerWatered?.Invoke();
-        if(meshRenderer != null)
-        {
-            meshRenderer.material = Wetmaterial;
-        }
-
+        saturationMeter.color = WetColor;
     }
 
     public void AddWaterSaturation()

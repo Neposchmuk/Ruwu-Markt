@@ -5,6 +5,8 @@ public class MarketDoor : MonoBehaviour
 {
     [SerializeField] Animator animator;
 
+    [SerializeField] BoxCollider playerBarrier;
+
     private bool doorIsOpen;
 
     private bool allowPlayerLeave;
@@ -21,6 +23,8 @@ public class MarketDoor : MonoBehaviour
     private void SetLeaveBool()
     {
         allowPlayerLeave = true;
+
+        playerBarrier.enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -29,7 +33,8 @@ public class MarketDoor : MonoBehaviour
         {
             if (!doorIsOpen)
             {
-                animator.SetBool("OpenDoor", true);
+                animator.SetBool("IsOpen", true);
+                doorIsOpen = true;
             }
         }
 
@@ -37,7 +42,8 @@ public class MarketDoor : MonoBehaviour
         {
             if (allowPlayerLeave && !doorIsOpen)
             {
-                animator.SetBool("OpenDoor", true);
+                animator.SetBool("IsOpen", true);
+                doorIsOpen = true;
             }
         }
     }
@@ -48,7 +54,8 @@ public class MarketDoor : MonoBehaviour
         {
             if (doorIsOpen)
             {
-                animator.SetBool("OpenDoor", false);
+                animator.SetBool("IsOpen", false);
+                doorIsOpen = false;
             }
         }
 
@@ -56,7 +63,8 @@ public class MarketDoor : MonoBehaviour
         {
             if (allowPlayerLeave && doorIsOpen)
             {
-                animator.SetBool("OpenDoor", false);
+                animator.SetBool("IsOpen", false);
+                doorIsOpen = false;
             }
         }
     }

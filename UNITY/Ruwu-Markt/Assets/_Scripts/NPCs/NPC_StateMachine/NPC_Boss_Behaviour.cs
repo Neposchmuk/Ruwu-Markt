@@ -54,7 +54,7 @@ public class NPC_Boss_Behaviour : MonoBehaviour
 
     private void RandomizeBehaviour()
     {
-        int randomBehaviour = Random.Range(1,3);
+        int randomBehaviour = Random.Range(2,3); //reset lower limit to 1 after finishing debugging
 
         animator.ResetTrigger("Idle");
 
