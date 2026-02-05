@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4698589888127159723}
   - component: {fileID: 3642369565021038852}
   m_Layer: 0
-  m_Name: Smash System
+  m_Name: Enemy_Blood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4839,7 +4839,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5af725f52ceebd84c9deee7f71c91a72, type: 2}
+  - {fileID: 2100000, guid: c0b5c62e4aa5f104fb8e329a8d47eed6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
