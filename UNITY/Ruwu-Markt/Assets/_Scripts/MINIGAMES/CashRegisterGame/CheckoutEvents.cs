@@ -74,13 +74,23 @@ public class CheckoutEvents
         }
     }
 
-    public event Action<GameObject, bool> onSetNPCTrigger;
+    public event Action<GameObject, GameObject, bool> onSetNPCTrigger;
 
-    public void SetNPCTrigger(GameObject agent, bool inTrigger)
+    public void SetNPCTrigger(GameObject agent, GameObject trigger, bool inTrigger)
     {
         if(onSetNPCTrigger != null)
         {
-            onSetNPCTrigger(agent, inTrigger);
+            onSetNPCTrigger(agent, trigger, inTrigger);
+        }
+    }
+
+    public event Action<GameObject, bool> onSetTriggerVacancy;
+
+    public void SetTriggerVacancy(GameObject trigger, bool inTrigger)
+    {
+        if(onSetNPCTrigger != null)
+        {
+            onSetTriggerVacancy(trigger, inTrigger);
         }
     }
 
@@ -109,6 +119,26 @@ public class CheckoutEvents
         if(onRecalculateCheckoutSlot != null)
         {
             onRecalculateCheckoutSlot(agent);
+        }
+    }
+
+    public event Action<GameObject> onRequestCheckoutSlot;
+
+    public void RequestCheckoutSlot(GameObject agent)
+    {
+        if (onRequestCheckoutSlot != null)
+        {
+            onRequestCheckoutSlot(agent);
+        }
+    }
+
+    public event Action<GameObject, GameObject, int> onSendCheckoutSlot;
+
+    public void SendCheckoutSlot(GameObject agent, GameObject slot, int slotIndex)
+    {
+        if(onSendCheckoutSlot != null)
+        {
+            onSendCheckoutSlot(agent, slot, slotIndex);
         }
     }
 }

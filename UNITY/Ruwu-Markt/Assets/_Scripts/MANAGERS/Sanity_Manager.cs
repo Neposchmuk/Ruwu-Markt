@@ -24,6 +24,8 @@ public class Sanity_Manager : MonoBehaviour
 
     public GameObject GO_LostJob;
 
+    [SerializeField] GameObject sanityWidgetParent;
+
     public Button Restart;
 
     public int sanity;
@@ -35,10 +37,18 @@ public class Sanity_Manager : MonoBehaviour
     void Awake()
     {
         GameEventsManager.instance.gameEvents.onRequestSanityUpdate += SendSanityUpdate;
+        GameEventsManager.instance.gameEvents.onCheckGameOver += CheckGameOver;
+        GameEventsManager.instance.uiEvents.onToggleSanityWidget += ToggleWidget;
+        GameEventsManager.instance.gameEvents.onSendSanityChange += ChangeSanity;
+        GameEventsManager.instance.gameEvents.onSetSanity += SetSanity;
     }
-    void Oestroy()
+    void OnDestroy()
     {
         GameEventsManager.instance.gameEvents.onRequestSanityUpdate -= SendSanityUpdate;
+        GameEventsManager.instance.gameEvents.onCheckGameOver -= CheckGameOver;
+        GameEventsManager.instance.uiEvents.onToggleSanityWidget -= ToggleWidget;
+        GameEventsManager.instance.gameEvents.onSendSanityChange -= ChangeSanity;
+        GameEventsManager.instance.gameEvents.onSetSanity -= SetSanity;
     }
 
 
@@ -62,10 +72,14 @@ public class Sanity_Manager : MonoBehaviour
 
         isGameOver = false;
 
-        sanityBar.AdjustSanityFill(sanity);
+        GameEventsManager.instance.gameEvents.SendSanityUpdate(sanity, jobSecurity);
 
-        jobSecBar.AdjustSanityFill(jobSecurity);
+        //sanityBar.AdjustSanityFill(sanity);
+
+        //jobSecBar.AdjustSanityFill(jobSecurity);
     }
+
+    
 
     private void Update()
     {
@@ -93,18 +107,23 @@ public class Sanity_Manager : MonoBehaviour
 
         CheckGameOver();
 
-        sanityBar.AdjustSanityFill(sanity);
+        //sanityBar.AdjustSanityFill(sanity);
 
-        jobSecBar.AdjustSanityFill(jobSecurity);
+        //jobSecBar.AdjustSanityFill(jobSecurity);
+
+        GameEventsManager.instance.gameEvents.SendSanityUpdate(sanity, jobSecurity);
 
     }
+
 
     private void CheckGameOver()
     {
         if(sanity <= 0)
         {
             isGameOver = true;
-            GameObject.FindFirstObjectByType<FirstPersonController>().enabled = false;
+            GameEventsManager.instance.gameEvents.IsGameOver();
+            GameEventsManager.instance.playerEvents.LockPlayerMovement(true);
+            GameEventsManager.instance.playerEvents.LockCamera(true);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             GO_Insane.SetActive(true);
@@ -113,7 +132,9 @@ public class Sanity_Manager : MonoBehaviour
         else if(jobSecurity <= 0)
         {
             isGameOver = true;
-            GameObject.FindFirstObjectByType<FirstPersonController>().enabled = false;
+            GameEventsManager.instance.gameEvents.IsGameOver();
+            GameEventsManager.instance.playerEvents.LockPlayerMovement(true);
+            GameEventsManager.instance.playerEvents.LockCamera(true);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             Restart.gameObject.SetActive(true);
@@ -143,5 +164,19 @@ public class Sanity_Manager : MonoBehaviour
         }
 
         SceneManager.LoadScene("MAIN_MENU");
+    }
+
+    private void ToggleWidget(bool toggle)
+    {
+        sanityWidgetParent.SetActive(toggle);
+    }
+
+    private void SetSanity(int sanity, int jobSecurity)
+    {
+        this.sanity = Mathf.Clamp(sanity, 0 ,100);
+
+        this.jobSecurity = Mathf.Clamp(jobSecurity, 0 ,100);
+
+        Debug.Log(this.sanity + " / " + this.jobSecurity);
     }
 }

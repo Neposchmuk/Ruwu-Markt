@@ -47,11 +47,13 @@ public class Quest_Manager : MonoBehaviour
     private  void OnEnable()
     {
         GameEventsManager.instance.questEvents.onUpdateQuestText += UpdateQuestText;
+        GameEventsManager.instance.gameEvents.onSkipDay += SkipDay;
     }
 
     private void OnDisable()
     {
         GameEventsManager.instance.questEvents.onUpdateQuestText -= UpdateQuestText;
+        GameEventsManager.instance.gameEvents.onSkipDay -= SkipDay;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -68,6 +70,20 @@ public class Quest_Manager : MonoBehaviour
         GameEventsManager.instance.checkoutEvents.onPay += CheckCustomersServed;
 
         ResetQuests();
+    }
+
+    private void SkipDay()
+    {
+        shelfQuestCompleted = true;
+        floorQuestCompleted = true;
+        flowersQuestCompleted = true;
+        pfandQuestCompleted = true;
+
+        customersQuestCompleted = true;
+
+        DayComplete = true;
+
+        CheckDayCompletion();
     }
 
     private void UpdateQuestText(string text)
@@ -181,6 +197,7 @@ public class Quest_Manager : MonoBehaviour
         if (shelfQuestCompleted && floorQuestCompleted && pfandQuestCompleted && flowersQuestCompleted && customersQuestCompleted && !SM.isGameOver)
         {
             DayComplete = true;
+            GameEventsManager.instance.questEvents.UpdateQuestText("Pick up the cashtray");
         }
         else if(shelfQuestCompleted && floorQuestCompleted && pfandQuestCompleted && flowersQuestCompleted)
         {
@@ -193,7 +210,7 @@ public class Quest_Manager : MonoBehaviour
     {
         customersServed++;
 
-        if(customersServed == 3)
+        if(customersServed == 5)
         {
             StartCoroutine(DelayCustomersBool());
         }

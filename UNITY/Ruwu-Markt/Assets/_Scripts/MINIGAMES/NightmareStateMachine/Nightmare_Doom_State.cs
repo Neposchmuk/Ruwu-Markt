@@ -31,6 +31,9 @@ public class Nightmare_Doom_State : NightmareBaseState
         SubscribeEvents();
 
         GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.NIGHTMARE_DOOM);
+        GameEventsManager.instance.uiEvents.SendActionSprite(UI_Widget.GUN_LMB, 0);
+        GameEventsManager.instance.uiEvents.SendActionSprite(UI_Widget.GUN_R, 1);
+        GameEventsManager.instance.uiEvents.SendActionSprite(UI_Widget.BAT_F, 2);
 
         _stateManager = stateManager;
 
@@ -47,6 +50,10 @@ public class Nightmare_Doom_State : NightmareBaseState
         _player.MoveSpeed = 10;
 
         _player.SprintSpeed = 10;
+
+        GameEventsManager.instance.questEvents.UpdateLivesText($"{_playerHealth}");
+
+        GameEventsManager.instance.uiEvents.ShowCrosshair(true);
     }
 
     public override void UpdateState()
@@ -60,11 +67,11 @@ public class Nightmare_Doom_State : NightmareBaseState
 
         UnsubscribeEvents();
 
-        GameEventsManager.instance.questEvents.onHitEnemy -= CountKilled;
-
         _stateManager.EndNight(true, 10);
 
         GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.DEFAULT);
+
+        GameEventsManager.instance.uiEvents.ShowCrosshair(false);
     }
 
     void CountKilled(GameObject enemy)
@@ -81,6 +88,9 @@ public class Nightmare_Doom_State : NightmareBaseState
     {
         if(_stateManager.playerInvincible) return;
 
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PLAYER_HURT);
+        GameEventsManager.instance.questEvents.UpdateLivesText($"{_playerHealth - 1}");
+
         _playerHealth--;
         Debug.Log("Player HP: " + _playerHealth);
         if(_playerHealth <= 0)
@@ -92,6 +102,8 @@ public class Nightmare_Doom_State : NightmareBaseState
             _stateManager.EndNight(false, -20);
 
             GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.DEFAULT);
+
+            GameEventsManager.instance.uiEvents.ShowCrosshair(false);
         }   
     }
 

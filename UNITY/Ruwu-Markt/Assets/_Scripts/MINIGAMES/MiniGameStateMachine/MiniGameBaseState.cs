@@ -13,4 +13,6 @@ public abstract class MiniGameBaseState
     public abstract void Interact();
 
     public abstract void HoldingAttack(bool buttonIsPressed);
+
+    public abstract void WidgetRaycast();
 }

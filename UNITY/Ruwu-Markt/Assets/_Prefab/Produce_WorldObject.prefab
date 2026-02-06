@@ -43,7 +43,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5166449016664498782}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 3230952597442637576, guid: 4cd62e3c5e7345d42a2fdde10705ab3b, type: 3}
 --- !u!23 &3992290824335297274
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: cd8cacbbe5cf5564fa0a9d6a52bd3346, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -125,9 +125,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   productName: TestCan
-  price: 2.59
+  price: 2
   PLU: 9016
   ageRestricted: 0
+  hasBeenScanned: 0
 --- !u!1 &7295579631669492795
 GameObject:
   m_ObjectHideFlags: 0

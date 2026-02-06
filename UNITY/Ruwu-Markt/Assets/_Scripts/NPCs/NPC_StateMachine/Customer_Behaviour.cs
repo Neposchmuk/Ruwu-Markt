@@ -47,6 +47,8 @@ public class Customer_Behaviour : MonoBehaviour
 
     private Trigger_NPC_Method[] _checkoutTriggers;
 
+    private GameObject currentTrigger;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -97,6 +99,7 @@ public class Customer_Behaviour : MonoBehaviour
         GameEventsManager.instance.checkoutEvents.onKillAgent += Kill;
         GameEventsManager.instance.checkoutEvents.onPay += FinalDestination;
         GameEventsManager.instance.checkoutEvents.onSetNPCTrigger += SetTriggerMethod;
+        GameEventsManager.instance.checkoutEvents.onSendCheckoutSlot += MoveToSlot;
         
     }
 
@@ -108,6 +111,7 @@ public class Customer_Behaviour : MonoBehaviour
         GameEventsManager.instance.checkoutEvents.onPay -= FinalDestination;
         GameEventsManager.instance.checkoutEvents.onSetNPCTrigger -= SetTriggerMethod;
         GameEventsManager.instance.checkoutEvents.onEnteredCheckoutLine -= CheckCheckoutLine;
+        GameEventsManager.instance.checkoutEvents.onSendCheckoutSlot -= MoveToSlot;
         
     }
 
@@ -142,9 +146,11 @@ public class Customer_Behaviour : MonoBehaviour
         }
     }
 
-    private void SetTriggerMethod(GameObject agent, bool inTrigger)
+    private void SetTriggerMethod(GameObject agent, GameObject trigger, bool inTrigger)
     {
         if(agent != this.gameObject) return;
+
+        currentTrigger = trigger;
 
         IsInTrigger = inTrigger;
     }
@@ -197,6 +203,15 @@ public class Customer_Behaviour : MonoBehaviour
         _agent.SetPath(path);
 
         StartWalking();
+
+        if (IsInTrigger)
+        {
+            GameEventsManager.instance.checkoutEvents.SetTriggerVacancy(currentTrigger, false);
+
+            IsInTrigger = false;
+
+            currentTrigger = null;
+        }
     }
 
     private void StartCheckoutBehaviour()
@@ -205,7 +220,7 @@ public class Customer_Behaviour : MonoBehaviour
 
         GameEventsManager.instance.questEvents.onAllTasksCompleted -= StartCheckoutBehaviour;
 
-        GameEventsManager.instance.checkoutEvents.onRecalculateCheckoutSlot += RecalculateCheckoutSlot;
+        //GameEventsManager.instance.checkoutEvents.onRecalculateCheckoutSlot += RecalculateCheckoutSlot;
 
         GameEventsManager.instance.checkoutEvents.onEnteredCheckoutLine += CheckCheckoutLine;
 
@@ -224,18 +239,37 @@ public class Customer_Behaviour : MonoBehaviour
     {
         if(agent != this.gameObject) return;
 
+        GameEventsManager.instance.checkoutEvents.RequestCheckoutSlot(gameObject);
+
         if (!subscribedToMoveUp)
         {
             GameEventsManager.instance.checkoutEvents.onPay += MoveUpCheckout;
             subscribedToMoveUp = true;
         }
-
+        /*
         GameEventsManager.instance.checkoutEvents.onSendSlotUpdate += CheckSlotOccupation;
 
-        RequestSlotUpdate(0);
+        RequestSlotUpdate(0);*/
     }
 
-    private void RequestSlotUpdate(int slotIndex)
+    private void MoveToSlot(GameObject agent, GameObject slot, int slotIndex)
+    {
+        if(agent != this.gameObject) return;
+
+        _currentCheckoutSlot = slotIndex;
+
+        NavMeshPath path = new NavMeshPath();
+
+        _agent.areaMask += 1 << NavMesh.GetAreaFromName("Checkout");    
+
+        _agent.CalculatePath(slot.transform.position, path);
+
+        _agent.SetPath(path);
+
+        StartWalking();
+    }
+
+    /*private void RequestSlotUpdate(int slotIndex)
     {
         _currentCheckoutSlot = slotIndex;
 
@@ -291,7 +325,7 @@ public class Customer_Behaviour : MonoBehaviour
         StartWalking();
 
         GameEventsManager.instance.checkoutEvents.onSendSlotUpdate -= CheckSlotOccupation;
-    }
+    }*/
 
     public void CheckFinalDestination()
     {
@@ -311,7 +345,11 @@ public class Customer_Behaviour : MonoBehaviour
 
         if (_headingToCheckout && _currentCheckoutSlot > 0)
         {
+            GameEventsManager.instance.checkoutEvents.SetTriggerVacancy(_checkoutTriggers[_currentCheckoutSlot].gameObject, false);
+
             _currentCheckoutSlot--;
+
+            GameEventsManager.instance.checkoutEvents.ReserveSlot(_checkoutTriggers[_currentCheckoutSlot].gameObject);
 
             Debug.Log(gameObject + ": Moving up to Slot " + _currentCheckoutSlot);
             //Debug.Log(gameObject.name + " " + _currentCheckoutSlot);
@@ -332,6 +370,10 @@ public class Customer_Behaviour : MonoBehaviour
     {
         if(agent != this.gameObject) return;
 
+        GameEventsManager.instance.checkoutEvents.SetTriggerVacancy(_checkoutTriggers[_currentCheckoutSlot].gameObject, false);
+
+        GameEventsManager.instance.questEvents.WaitForCustomerCheckout(false);
+
         NavMeshPath path = new NavMeshPath();
 
         _agent.CalculatePath(LeaveMarketTarget.position, path);
@@ -340,7 +382,7 @@ public class Customer_Behaviour : MonoBehaviour
 
         StartWalking();
 
-        GameEventsManager.instance.checkoutEvents.onRecalculateCheckoutSlot -= RecalculateCheckoutSlot;
+        //GameEventsManager.instance.checkoutEvents.onRecalculateCheckoutSlot -= RecalculateCheckoutSlot;
 
         GameEventsManager.instance.checkoutEvents.onPay -= MoveUpCheckout;
     }

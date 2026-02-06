@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public class Hand_Actions: MonoBehaviour
 {
+    [SerializeField] private Animator animator;
+
     public GameObject[] instanceObject;
 
     public GameObject[] placeObject;
@@ -18,9 +20,33 @@ public class Hand_Actions: MonoBehaviour
 
     private float timeToPour = Mathf.Clamp(5, 0, 5); 
 
+    private float timeToSip = Mathf.Clamp(5, 0, 5); 
+
     private GameObject objectToPlace;
 
     private Collider MopTrigger;
+
+
+    private void OnEnable()
+    {
+        GameEventsManager.instance.questEvents.onplaceObject += PlayPlaceAnimation;
+    }
+    private void OnDisable()
+    {
+        GameEventsManager.instance.questEvents.onplaceObject -= PlayPlaceAnimation;
+    }
+
+    private void PlayPlaceAnimation()
+    {
+        animator.SetTrigger("Place");
+    }
+
+    public float TakeSip()
+    {
+        timeToSip -= 1 * Time.deltaTime;
+
+        return timeToSip;
+    }
 
     //Instantiates Object on Ray hit position, if Instance Object is already present, increases size of Object
     public float Pour()
@@ -33,7 +59,7 @@ public class Hand_Actions: MonoBehaviour
             }
             else
             {
-                Instantiate(instanceObject[1], hit.point + new Vector3 (0,0.02f,0), Quaternion.Euler (new Vector3 (0, UnityEngine.Random.Range(0, 359), 0)));
+                Instantiate(instanceObject[9], hit.point + new Vector3 (0,0.02f,0), Quaternion.Euler (new Vector3 (0, UnityEngine.Random.Range(0, 359), 0)));
             }
 
             timeToPour -= 1 * Time.deltaTime;
@@ -71,23 +97,23 @@ public class Hand_Actions: MonoBehaviour
         {
             GameEventsManager.instance.questEvents.WateringFillState(false);
         }
-        else if(timeToPour >= 0)
+        else if(timeToPour > 0)
         {
             GameEventsManager.instance.questEvents.WateringFillState(true);
+            GameEventsManager.instance.questEvents.CanPourTime(timeToPour*20);
         }
-
-        objectHolding.GetComponentInChildren<TMP_Text>().text = $"{Mathf.CeilToInt(timeToPour * 20f)}";
     }
 
     public void SetPourTime(float time)
     {
         timeToPour = time;
-        objectHolding.GetComponentInChildren<TMP_Text>().text = $"{Mathf.CeilToInt(timeToPour * 20f)}";
+        GameEventsManager.instance.questEvents.CanPourTime(timeToPour*20);
     }
 
     public void Place(RaycastHit hit)
     {
-        Instantiate(objectToPlace, hit.point, transform.localRotation);
+        GameObject placedObject = Instantiate(objectToPlace, hit.point, transform.localRotation);
+        placedObject.layer = 0;
     }
 
     public void Place(Vector3 positionOverride, Vector3 rotationOverride, Vector3 scaleOverride)
@@ -102,6 +128,8 @@ public class Hand_Actions: MonoBehaviour
         objectToPlace = placeObject[PickUp];
         Debug.Log(objectHolding);
 
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PICKUP);
+
         return objectHolding;
         
     }
@@ -111,6 +139,8 @@ public class Hand_Actions: MonoBehaviour
         objectHolding = Instantiate(instanceObject[PickUp], transform.position, Quaternion.Euler(transform.eulerAngles + RotationOverride), gameObject.transform);
         objectToPlace = placeObject[PickUp];
 
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PICKUP);
+
         return objectHolding;
     }
 
@@ -119,6 +149,7 @@ public class Hand_Actions: MonoBehaviour
         Debug.Log("Called throw object");
         GameObject objectThrown = Instantiate(placeObject[PickUp], transform.position, transform.rotation);
         GameEventsManager.instance.questEvents.AllowBottleExplode(objectThrown);
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.BOTTLE_THROW);
         try
         {
             Debug.Log("Trying to throw object");

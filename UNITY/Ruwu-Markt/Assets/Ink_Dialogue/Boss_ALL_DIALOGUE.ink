@@ -1,4 +1,5 @@
 EXTERNAL AdvanceQuest(endingType)
+EXTERNAL SendSpitEvent()
 
 VAR FinalQuestState = "NOT RUNNING"
 
@@ -16,26 +17,41 @@ What do you want?
 I don't have time right now.
 
 Get back to work!
-*[Yes Boss :(]
-    Good slave.
-*[Fuk U!!!]
-    Owie my feelings!
+
+Get back to work!
+*[Yes Boss]
+    SCRAM!
+    -> END
 *[*Spit in his face*]
-    AAARRRGHHHH!!!!!
-- -> END
+    "***********!!!!
+    
+    WHAT THE FUCK!
+    
+    ONE MORE SLIP UP AND YOU'RE FIRED!"
+    
+    ~SendSpitEvent()
+    -> END
+     
+
 
 
 
 =Good_Ending
 Yes?
 
+Yes?
+
 *[I need to speak with you]
+    Really?
+    
     Really?
     -> Good_Stitch_One
     
     = Good_Stitch_One
         *[It's about work.]
             Why bother me with it?
+            
+            I'm sure it's not that important.
             
             I'm sure it's not that important.
 
@@ -54,6 +70,8 @@ Yes?
             I CAN'T RUN THE STORE WITHOUT YOU!
             
             I BEG YOU!
+            
+            PLEASE!
             
             PLEASE!
             -> Good_Stitch_Three
@@ -94,6 +112,8 @@ Yes?
 
 
 =Bad_Ending
+Yes?
+
 Yes?
 
 *[You wanted to speak with me?]

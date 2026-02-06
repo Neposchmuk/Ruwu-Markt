@@ -49,6 +49,8 @@ public class FinalQuest : MonoBehaviour
     {
         GameEventsManager.instance.questEvents.UpdateQuestText("Leave the market");
 
+        GameEventsManager.instance.questEvents.AllowPlayerLeave();
+
         _canEndGame = true;
 
         _endingType = endingType;

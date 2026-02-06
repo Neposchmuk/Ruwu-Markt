@@ -7,6 +7,8 @@ public class Pause_Menu : MonoBehaviour
 
     private bool showPauseMenu = false;
 
+    private InputEventContext previousContext;
+
     private void Awake()
     {
         GameEventsManager.instance.gameEvents.onReturnToPreviousMenu += EnableMenu;
@@ -21,7 +23,9 @@ public class Pause_Menu : MonoBehaviour
 
     private void SwitchPauseMenu(InputEventContext context)
     {
-        if(context != InputEventContext.DEFAULT && context != InputEventContext.MENU_UI) return;
+        if((context == InputEventContext.UI || context == InputEventContext.DIALOGUE) && context != InputEventContext.MENU_UI) return;
+
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_OPEN);
 
         showPauseMenu = !showPauseMenu;
 
@@ -32,15 +36,20 @@ public class Pause_Menu : MonoBehaviour
             Cursor.visible = false;
             TogglePause(false);
             pauseMenu.SetActive(false);
-            GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.DEFAULT);
+            GameEventsManager.instance.playerEvents.ChangeInputEventContext(previousContext);
+            GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_CLICK);
         }
         else
         {
+            if(context == InputEventContext.TUTORIAL) return;
+
+            previousContext = context;
             TogglePause(true);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             pauseMenu.SetActive(true);
             GameEventsManager.instance.playerEvents.ChangeInputEventContext(InputEventContext.MENU_UI);
+            GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_CLICK);
         }
     }
 
@@ -57,12 +66,14 @@ public class Pause_Menu : MonoBehaviour
 
     public void SwitchSettingsMenu()
     {
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_CLICK);
         GameEventsManager.instance.gameEvents.ShowSettings(true);
         pauseMenu.SetActive(false);
     }
 
     public void ReturnToMenu()
     {
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_CLICK);
         TogglePause(false);
         GameEventsManager.instance.gameEvents.ChangeScene("Main_Menu");
         GameEventsManager.instance.gameEvents.DestroyDDOLObjects();

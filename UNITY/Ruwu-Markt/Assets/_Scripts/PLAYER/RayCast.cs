@@ -30,15 +30,23 @@ public class RayCast : MonoBehaviour
 
     private bool _hasMarketKey;
 
+    private bool showInteraction;
+
+    private bool showAction;
+
+    private bool waitForCustomers;
+
     private void OnEnable()
     {
         GameEventsManager.instance.playerEvents.onPressedInteract += Raycast;
+        GameEventsManager.instance.questEvents.onWaitForCustomerCheckout += LockMinigames;
         Debug.Log("Added RC Listener");
     }
 
     private void OnDisable()
     {
         GameEventsManager.instance.playerEvents.onPressedInteract -= Raycast;
+        GameEventsManager.instance.questEvents.onWaitForCustomerCheckout -= LockMinigames;
         Debug.Log("Removed RC listener");
     }
 
@@ -62,6 +70,17 @@ public class RayCast : MonoBehaviour
 
         Hand = gameObject.GetComponentInChildren<Hand_Actions>();
 
+        GameEventsManager.instance.uiEvents.HideInteractionWidget();
+    }
+
+    private void Update()
+    {
+        WidgetRaycast();
+    }
+
+    private void LockMinigames(bool wait)
+    {
+        waitForCustomers = wait;
     }
 
     private void Raycast(InputEventContext inputContext)
@@ -74,6 +93,12 @@ public class RayCast : MonoBehaviour
             {
                 if(hit.collider.tag == "ShelfQuest" && !QM.isDoingQuest && !QM.shelfQuestCompleted)
                 {
+                    if (waitForCustomers)
+                    {
+                        GameEventsManager.instance.questEvents.ShowCustomersWaitText();
+                        return;
+                    }
+
                     hit.collider.gameObject.GetComponent<Interaction_MenuTest>().ToggleUI(true);
                     questObject = hit.collider.gameObject;
                     Debug.Log(questObject.name);
@@ -82,6 +107,11 @@ public class RayCast : MonoBehaviour
 
                 if (hit.collider.tag == "FloorQuest" && !QM.isDoingQuest && !QM.floorQuestCompleted)
                 {
+                    if (waitForCustomers)
+                    {
+                        GameEventsManager.instance.questEvents.ShowCustomersWaitText();
+                        return;
+                    }
                     hit.collider.gameObject.GetComponent<Interaction_MenuTest>().ToggleUI(true);
                     questObject = hit.collider.gameObject;
                     Debug.Log(questObject.name);
@@ -90,6 +120,11 @@ public class RayCast : MonoBehaviour
 
                 if (hit.collider.tag == "PfandQuest" && !QM.isDoingQuest && !QM.pfandQuestCompleted)
                 {
+                    if (waitForCustomers)
+                    {
+                        GameEventsManager.instance.questEvents.ShowCustomersWaitText();
+                        return;
+                    }
                     hit.collider.gameObject.GetComponent<Interaction_MenuTest>().ToggleUI(true);
                     questObject = hit.collider.gameObject;
                     Debug.Log(questObject.name);
@@ -98,6 +133,11 @@ public class RayCast : MonoBehaviour
 
                 if(hit.collider.tag == "FlowersQuest" && !QM.isDoingQuest && !QM.flowersQuestCompleted)
                 {
+                    if (waitForCustomers)
+                    {
+                        GameEventsManager.instance.questEvents.ShowCustomersWaitText();
+                        return;
+                    }
                     hit.collider.gameObject.GetComponent<Interaction_MenuTest>().ToggleUI(true);
                     questObject = hit.collider.gameObject;
                     Debug.Log(questObject.name);
@@ -111,28 +151,41 @@ public class RayCast : MonoBehaviour
                         _object.SetActive(false);
                     }
                     Hand.PickUpObject(8);
-                    _carryingCashtray = true;               
+                    _carryingCashtray = true;   
+                    GameEventsManager.instance.questEvents.UpdateQuestText("Bring the tray to the safe");            
                 }
 
                 if(hit.collider.tag == "Safe" && _carryingCashtray)
                 {
+                    GameEventsManager.instance.soundEvents.TriggerSound(SoundType.SAFE);
                     Hand.DestroyObjectInHand();
                     QM.CompleteDay();
                 }
 
-                if(hit.collider.tag == "HomeDoor" && _dayManager.IsDay && _dayManager.CheckedPC)
+                if(hit.collider.tag == "HomeDoor")
                 {
-                    GameEventsManager.instance.gameEvents.ChangeScene("Greyboxing_Day");
+                    if(_dayManager.IsDay && _dayManager.CheckedPC)
+                    {
+                        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.DOOR_OPEN);
+                        GameEventsManager.instance.gameEvents.ChangeScene("Day_New");
+                    }
+                    else
+                    {
+                        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.DOOR_LOCKED);
+                    }
+                    
                 }
 
                 if(hit.collider.tag == "HomeMatress" && !_dayManager.IsDay)
                 {
+                    GameEventsManager.instance.soundEvents.TriggerSound(SoundType.MATRESS);
                     Debug.Log("Hit");
                     _dayManager.AddDay();
                 }
 
                 if(hit.collider.tag == "Computer")
                 {
+                    GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PC_CLICK);
                     PC_Interaction _pcInteraction = hit.collider.GetComponent<PC_Interaction>();
                     _pcInteraction.OpenInbox();
                 }
@@ -150,7 +203,12 @@ public class RayCast : MonoBehaviour
                 if (hit.collider.CompareTag("UI_Button"))
                 {
                     GameEventsManager.instance.questEvents.UIButtonInteract(hit.collider.gameObject);
-                }   
+                }
+
+                if (hit.collider.CompareTag("SkipButton"))
+                {
+                    GameEventsManager.instance.gameEvents.SkipDay();
+                }
             }
         }
 
@@ -163,6 +221,7 @@ public class RayCast : MonoBehaviour
         
                 if(hit.collider.tag == "MarketKey")
                 {
+                    GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PICKUP);
                     OnKeyPickup?.Invoke();
                     _hasMarketKey = true;
                     Destroy(hit.collider.gameObject);
@@ -172,11 +231,13 @@ public class RayCast : MonoBehaviour
                 {
                     if (_hasMarketKey)
                     {
+                        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.MARKET_DOOR_OPEN);
                         OnMarketLeave?.Invoke();
                     }
                     else
                     {
-                        //Message Need key
+                        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.MARKET_DOOR_CLOSED);
+                        GameEventsManager.instance.questEvents.ShowKeyText();
                     }
                 }
 
@@ -185,12 +246,118 @@ public class RayCast : MonoBehaviour
                     AmmoStation _ammoStation = hit.collider.GetComponent<AmmoStation>();
                     if (!_ammoStation.IsLocked)
                     {
+                        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PICKUP);
                         _ammoStation.AmmoPicked();
                     }     
                 }
             }
         }
     }
+
+    private void WidgetRaycast()
+    {
+        Ray ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
+
+            if(Physics.Raycast(ray, out RaycastHit hit, rayLength, layerMask))
+            {
+                if(showInteraction) return;
+
+                showInteraction = true;
+
+                if(hit.collider.tag == "ShelfQuest" && !QM.isDoingQuest && !QM.shelfQuestCompleted)
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.QUEST_E);
+                }
+
+                if (hit.collider.tag == "FloorQuest" && !QM.isDoingQuest && !QM.floorQuestCompleted)
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.QUEST_E);
+                }
+
+                if (hit.collider.tag == "PfandQuest" && !QM.isDoingQuest && !QM.pfandQuestCompleted)
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.QUEST_E);
+                }
+
+                if(hit.collider.tag == "FlowersQuest" && !QM.isDoingQuest && !QM.flowersQuestCompleted)
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.QUEST_E);
+                }
+
+                if(hit.collider.tag == "Cashtray" && QM.DayComplete)
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.QUEST_E);           
+                }
+
+                if(hit.collider.tag == "Safe" && _carryingCashtray)
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.PLACE);
+                }
+
+                if(hit.collider.tag == "HomeDoor")
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                }
+
+                if(hit.collider.tag == "HomeMatress" && !_dayManager.IsDay)
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                }
+
+                if(hit.collider.tag == "Computer")
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TALK);
+                }
+
+                if(hit.collider.tag == "NPC_Boss")
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TALK);
+                }
+
+                if (hit.collider.CompareTag("UI_Button"))
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                }   
+
+                if(hit.collider.tag == "MarketKey")
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                }
+
+                if(hit.collider.tag == "MarketDoor")
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                }
+
+                if(hit.collider.tag == "AmmoStation")
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);    
+                }
+
+                if (hit.collider.tag == "CheckOutProduct")
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                
+                }
+
+                if (hit.collider.tag == "Cash")
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                }
+
+                if (hit.collider.CompareTag("SkipButton"))
+                {
+                    GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+                }
+            }
+        else if(showInteraction)
+        {
+            GameEventsManager.instance.uiEvents.HideInteractionWidget();
+            showInteraction = false;
+        }
+        
+        
+        }
             /*if(hit.collider.tag == "ProduceCan" && QM.isDoingQuest && !QM.shelfQuestCompleted)
             {
                 Debug.Log("RayCast Hit");

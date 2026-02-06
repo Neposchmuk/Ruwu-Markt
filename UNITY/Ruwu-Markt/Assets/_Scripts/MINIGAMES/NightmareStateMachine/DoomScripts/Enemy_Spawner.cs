@@ -19,13 +19,13 @@ public class Enemy_Spawner : MonoBehaviour
 
         Nightmare_Doom_State.OnEndState += UnsubscribeEvents;
 
-        InvokeRepeating("SpawnEnemy", 5, 18);
+        InvokeRepeating("SpawnEnemy", 5, 15);
     }
 
     void SpawnEnemy()
     {
         float distanceToPlayer = (_player.transform.position - transform.position).magnitude;
-        if (distanceToPlayer <= 15) return;
+        if (distanceToPlayer <= 8) return;
         else
         {
             int randomIndex = UnityEngine.Random.Range(0, Enemies.Length);

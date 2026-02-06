@@ -154,4 +154,94 @@ public class QuestEvents
             onWateringFillState(toggle);
         }
     }
+
+    public event Action onplaceObject;
+
+    public void PlaceObject()
+    {
+        if(onplaceObject != null)
+        {
+            onplaceObject();
+        }
+    }
+
+    public event Action onShowKeytext;
+
+    public void ShowKeyText()
+    {
+        if(onShowKeytext != null)
+        {
+            onShowKeytext();
+        }
+    }
+
+    public event Action<float> onCanPourTime;
+
+    public void CanPourTime(float time)
+    {
+        if(onCanPourTime != null)
+        {
+            onCanPourTime(time);
+        }
+    }
+
+    public event Action<string> onUpdateAmmoText;
+
+    public void UpdateAmmoText(string text)
+    {
+        if(onUpdateAmmoText != null)
+        {
+            onUpdateAmmoText(text);
+        }
+    }
+
+    public event Action<string> onUpdateLivesText;
+
+    public void UpdateLivesText(string text)
+    {
+        if(onUpdateLivesText != null)
+        {
+            onUpdateLivesText(text);
+        }
+    }
+
+    public event Action<bool> onWaitForCustomerCheckout;
+
+    public void WaitForCustomerCheckout(bool wait)
+    {
+        if(onWaitForCustomerCheckout != null)
+        {
+            onWaitForCustomerCheckout(wait);
+        }
+    }
+
+    public event Action onShowCustomersWaitText;
+
+    public void ShowCustomersWaitText()
+    {
+        if(onShowCustomersWaitText != null)
+        {
+            onShowCustomersWaitText();
+        }
+    }
+
+    public event Action onAllowPlayerLeave;
+
+    public void AllowPlayerLeave()
+    {
+        if(onAllowPlayerLeave != null)
+        {
+            onAllowPlayerLeave();
+        }
+    }
+
+    public event Action onShowTooMuchChangeText;
+
+    public void ShowTooMuchChangeText()
+    {
+        if(onShowTooMuchChangeText != null)
+        {
+            onShowTooMuchChangeText();
+        }
+    }
 }

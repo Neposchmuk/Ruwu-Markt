@@ -8,6 +8,8 @@ public enum InputEventContext
 
    MENU_UI,
 
+   TUTORIAL,
+
    NIGHTMARE_DOOM,
 
    NIGHTMARE_ESCAPE,
@@ -15,4 +17,12 @@ public enum InputEventContext
    NIGHTMARE_SMASH,
 
    NIGHTMARE_JUMP
+}
+
+public enum QuestContext
+{
+   NONE,
+   SHELF_POUR,
+
+   SHELF_SIP
 }

@@ -21,6 +21,10 @@ public class MiniGameWaterPlants : MiniGameBaseState
 
     private bool isHoldingCan;
 
+    private bool showInteraction;
+
+    private float timeToPour = Mathf.Clamp(5, 0, 5);
+
     private int questStage;
     public override void StartQuest(MiniGame_Caller Quest, int questVariant)
     {
@@ -94,6 +98,8 @@ public class MiniGameWaterPlants : MiniGameBaseState
         GameEventsManager.instance.questEvents.QuestCompleted(QuestType.Flowers);
         GameEventsManager.instance.questEvents.ToggleQuestmarkers(true);
 
+        GameEventsManager.instance.uiEvents.HideActionWidget();
+
         QM.CompleteQuest(3, questVariant - 1, QuestSource.gameObject);
     }
 
@@ -107,22 +113,34 @@ public class MiniGameWaterPlants : MiniGameBaseState
             {
                 objectHeld = HA.PickUpObject(7);
                 HA.SetPourTime(0);
+                timeToPour = 0;
                 isHoldingCan = true;
                 GameObject.Destroy(hit.collider.gameObject);
                 questStage = 2;
                 UpdateQuest();
+
+                ToggleQuestMarkers(questStage, true);
+
+                GameEventsManager.instance.uiEvents.SendActionSprite(UI_Widget.WATER, 0);
             }
 
             if(hit.collider.tag == "Sink" && isHoldingCan && questStage !=3)
             {
                 questStage = 3;
                 HA.SetPourTime(5);
+                timeToPour = 5;
                 UpdateQuest();
                 ToggleQuestMarkers(questStage, true);
+
+                GameEventsManager.instance.uiEvents.ShowCrosshair(true);
             }
             else if(hit.collider.tag == "Sink" && isHoldingCan && questStage == 3)
             {
                 HA.SetPourTime(5);
+                timeToPour = 5;
+                ToggleQuestMarkers(questStage, true);
+
+                GameEventsManager.instance.uiEvents.ShowCrosshair(true);
             }
 
         }
@@ -132,7 +150,17 @@ public class MiniGameWaterPlants : MiniGameBaseState
     {
         if (buttonIsPressed && isHoldingCan && questStage == 3)
         {
+            timeToPour -= 1 * Time.deltaTime;
             HA.FlowerPour();
+            if(timeToPour <= 0)
+            {
+                QuestSource.QuestMarkerBig.SetActive(true);
+                GameEventsManager.instance.uiEvents.ShowCrosshair(false);
+                foreach (GameObject flowerStation in FlowerStations)
+                {
+                    flowerStation.GetComponentInChildren<Canvas>().enabled = false;
+                }
+            }
         }
     }
 
@@ -141,7 +169,15 @@ public class MiniGameWaterPlants : MiniGameBaseState
         flowersWatered++;
         if(flowersWatered == flowersToWater)
         {
+            GameEventsManager.instance.uiEvents.ShowCrosshair(false);
+
             questStage = 4;
+
+            foreach (GameObject flowerStation in FlowerStations)
+            {
+                flowerStation.GetComponentInChildren<Canvas>().enabled = false;
+            }
+
         }
         UpdateQuest();
     }
@@ -153,13 +189,19 @@ public class MiniGameWaterPlants : MiniGameBaseState
             case 1:
                 GameObject.FindGameObjectWithTag("WateringCan").GetComponentInChildren<Canvas>().enabled = isActive;
                 break;
+            case 2:
+                QuestSource.QuestMarkerBig.SetActive(true);
+                break;
+            
             case 3:
+                QuestSource.QuestMarkerBig.SetActive(!isActive);
                 foreach (GameObject flowerStation in FlowerStations)
                 {
                     flowerStation.GetComponentInChildren<Canvas>().enabled = isActive;
                 }
                 break;
             case 4:
+                QuestSource.QuestMarkerBig.SetActive(!isActive);
                 foreach (GameObject flowerStation in FlowerStations)
                 {
                     flowerStation.GetComponentInChildren<Canvas>().enabled = isActive;
@@ -167,5 +209,34 @@ public class MiniGameWaterPlants : MiniGameBaseState
                 break;
         }
         
+    }
+
+    public override void WidgetRaycast()
+    {
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 2, QuestSource.interactionLayer))
+        {
+            if(showInteraction) return;
+
+            showInteraction = true;
+
+            if(hit.collider.tag == "WateringCan")
+            {
+                GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+            }
+
+            if(hit.collider.tag == "Sink" && isHoldingCan)
+            {
+                GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TAKE);
+            }
+
+
+        }
+        else if (showInteraction)
+        {
+            showInteraction = false;
+            GameEventsManager.instance.uiEvents.HideInteractionWidget();
+        }
     }
 }

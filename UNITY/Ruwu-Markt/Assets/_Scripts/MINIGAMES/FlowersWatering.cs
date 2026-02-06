@@ -1,26 +1,27 @@
 using UnityEngine;
 using System;
 using TMPro;
+using UnityEngine.UI;
 
 public class FlowersWatering : MonoBehaviour
 {
     public static event Action OnFlowerWatered;
 
-    public Material DryMaterial;
-
-    public Material Wetmaterial;
+    public Color WetColor;
 
     public float saturationChange;
 
     public float maxSaturation;
 
-    private Renderer meshRenderer;
+    [SerializeField] private Image saturationMeter;
 
-    private TMP_Text saturationMeter;
+    private Renderer meshRenderer;
 
     private float waterSaturation;
 
     private bool isSaturated;
+
+    
 
 
 
@@ -29,19 +30,13 @@ public class FlowersWatering : MonoBehaviour
     {
         meshRenderer = GetComponent<Renderer>();
 
-        saturationMeter = GetComponentInChildren<TMP_Text>();
-
         waterSaturation = 0;
     }
 
     void TriggerWaterEvent()
     {
         OnFlowerWatered?.Invoke();
-        if(meshRenderer != null)
-        {
-            meshRenderer.material = Wetmaterial;
-        }
-
+        saturationMeter.color = WetColor;
     }
 
     public void AddWaterSaturation()
@@ -49,7 +44,7 @@ public class FlowersWatering : MonoBehaviour
         if (!isSaturated)
         {
             waterSaturation += saturationChange * Time.deltaTime;
-            saturationMeter.text = $"{Mathf.FloorToInt(waterSaturation)}";
+            saturationMeter.fillAmount = waterSaturation/100;
             if (waterSaturation >= maxSaturation)
             {
                 isSaturated = true;

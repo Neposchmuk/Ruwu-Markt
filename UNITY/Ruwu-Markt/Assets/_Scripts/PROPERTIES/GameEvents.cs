@@ -26,16 +26,6 @@ public class GameEvents
     }
 
 
-    public event Action<bool> onToggleSanityWidget;
-
-    public void ToggleSanityWidget(bool toggle)
-    {
-        if(onToggleSanityWidget != null)
-        {
-            onToggleSanityWidget(toggle);
-        }
-    }
-
     public event Action onDestroyDDOLObjects;
 
     public void DestroyDDOLObjects()
@@ -94,6 +84,86 @@ public class GameEvents
         if(onShowSettings != null)
         {
             onShowSettings(toggle);
+        }
+    }
+
+    public event Action<GameObject> onRequestPlayerObject;
+
+    public void RequestPlayerObject(GameObject requester)
+    {
+        if(onRequestPlayerObject != null)
+        {
+            onRequestPlayerObject(requester);
+        }
+    }
+
+    public event Action<GameObject, GameObject> onSendPlayerObject;
+
+    public void SendPlayerObject(GameObject requester, GameObject playerObject)
+    {
+        if(onSendPlayerObject != null)
+        {
+            onSendPlayerObject(requester, playerObject);
+        }
+    }
+
+    public event Action onSkipDay;
+
+    public void SkipDay()
+    {
+        if(onSkipDay != null)
+        {
+            onSkipDay();
+        }
+    }
+
+    public event Action onCheckGameOver;
+
+    public void CheckGameOver()
+    {
+        if(onCheckGameOver != null)
+        {
+            onCheckGameOver();
+        }
+    }
+
+    public event Action onIsGameOver;
+
+    public void IsGameOver()
+    {
+        if(onIsGameOver != null)
+        {
+            onIsGameOver();
+        }
+    }
+
+    public event Action<bool> onKeepPlayerLocked;
+
+    public void KeepPlayerLocked(bool toggle)
+    {
+        if(onKeepPlayerLocked != null)
+        {
+            onKeepPlayerLocked(toggle);
+        }
+    }
+
+    public event Action<int, int> onSendSanityChange;
+
+    public void SendSanityChange(int changeSanity, int changeJob)
+    {
+        if(onSendSanityChange != null)
+        {
+            onSendSanityChange(changeSanity, changeJob);
+        }
+    }
+
+    public event Action<int, int> onSetSanity;
+
+    public void SetSanity(int changeSanity, int changeJob)
+    {
+        if(onSetSanity != null)
+        {
+            onSetSanity(changeSanity, changeJob);
         }
     }
 }

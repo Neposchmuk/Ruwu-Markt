@@ -8,6 +8,12 @@ public class PfandPyramidObjects : MonoBehaviour
 
     public List<GameObject> placingZones;
 
+    public List<GameObject> placeCratesRed;
+
+    public List<GameObject> placeCratesBlue;
+
+    public List<GameObject> placeCratesYellow;
+
     public GameObject pyramidZone;
 
     private void Start()

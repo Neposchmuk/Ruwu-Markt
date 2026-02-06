@@ -80,6 +80,7 @@ public class DialogueManager : MonoBehaviour
         else
         {
             if (_story.currentChoices.Count > 0)
+            GameEventsManager.instance.soundEvents.TriggerSound(SoundType.UI_CLICK);
                 ContinueOrExitStory();
         }
     }
@@ -164,6 +165,8 @@ public class DialogueManager : MonoBehaviour
         GameEventsManager.instance.playerEvents.LockPlayerMovement(false);
 
         GameEventsManager.instance.playerEvents.LockCamera(false);
+
+        GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TALK);
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
