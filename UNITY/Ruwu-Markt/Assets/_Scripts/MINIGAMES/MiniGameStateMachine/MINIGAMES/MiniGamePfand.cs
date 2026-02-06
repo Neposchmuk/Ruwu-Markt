@@ -218,7 +218,7 @@ public class MiniGamePfand : MiniGameBaseState
 
                     if (hit.collider.tag == "CrateAreaBlue" && HA.objectHolding.CompareTag("CrateBlue"))
                     {
-                        HA.Place(PPO.placeCratesBlue[blueCratesplaced].transform.position, PPO.placeCratesBlue[blueCratesplaced].transform.localEulerAngles, new Vector3(0.6f, 0.6f, 0.6f));
+                        HA.Place(PPO.placeCratesBlue[blueCratesplaced].transform.position, PPO.placeCratesBlue[blueCratesplaced].transform.localEulerAngles, new Vector3(1f,1f,1f));
                         GameEventsManager.instance.questEvents.PlaceObject();
                         GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PLACE_CRATE);
                         GameEventsManager.instance.uiEvents.HideInteractionWidget();
@@ -235,7 +235,7 @@ public class MiniGamePfand : MiniGameBaseState
                     }
                     else if (hit.collider.tag == "CrateAreaYellow" && HA.objectHolding.CompareTag("CrateYellow"))
                     {
-                        HA.Place(PPO.placeCratesYellow[yellowCratesplaced].transform.position, PPO.placeCratesYellow[yellowCratesplaced].transform.localEulerAngles, new Vector3(0.6f, 0.6f, 0.6f));
+                        HA.Place(PPO.placeCratesYellow[yellowCratesplaced].transform.position, PPO.placeCratesYellow[yellowCratesplaced].transform.localEulerAngles, new Vector3(1f,1f,1f));
                         GameEventsManager.instance.questEvents.PlaceObject();
                         GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PLACE_CRATE);
                         GameEventsManager.instance.uiEvents.HideInteractionWidget();
@@ -252,7 +252,7 @@ public class MiniGamePfand : MiniGameBaseState
                     }
                     else if (hit.collider.tag == "CrateAreaRed" && HA.objectHolding.CompareTag("CrateRed"))
                     {
-                        HA.Place(PPO.placeCratesRed[redCratesplaced].transform.position, PPO.placeCratesRed[redCratesplaced].transform.localEulerAngles, new Vector3(0.6f, 0.6f, 0.6f));
+                        HA.Place(PPO.placeCratesRed[redCratesplaced].transform.position, PPO.placeCratesRed[redCratesplaced].transform.localEulerAngles, new Vector3(1f,1f,1f));
                         GameEventsManager.instance.questEvents.PlaceObject();
                         GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PLACE_CRATE);
                         GameEventsManager.instance.uiEvents.HideInteractionWidget();
@@ -314,7 +314,7 @@ public class MiniGamePfand : MiniGameBaseState
 
                     if (hit.collider.tag == "PyramidArea" && isHoldingObject)
                     {
-                        HA.Place(PPO.pyramidCrates[pyramidCratesPlaced].transform.position, PPO.pyramidCrates[pyramidCratesPlaced].transform.eulerAngles, new Vector3(0.6f,0.6f,0.6f));
+                        HA.Place(PPO.pyramidCrates[pyramidCratesPlaced].transform.position, PPO.pyramidCrates[pyramidCratesPlaced].transform.eulerAngles, new Vector3(1f,1f,1f));
                         GameEventsManager.instance.soundEvents.TriggerSound(SoundType.PLACE_CRATE);
                         GameEventsManager.instance.uiEvents.HideInteractionWidget();
                         HA.DestroyObjectInHand();

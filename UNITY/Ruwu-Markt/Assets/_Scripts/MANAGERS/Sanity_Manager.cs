@@ -72,9 +72,11 @@ public class Sanity_Manager : MonoBehaviour
 
         isGameOver = false;
 
-        sanityBar.AdjustSanityFill(sanity);
+        GameEventsManager.instance.gameEvents.SendSanityUpdate(sanity, jobSecurity);
 
-        jobSecBar.AdjustSanityFill(jobSecurity);
+        //sanityBar.AdjustSanityFill(sanity);
+
+        //jobSecBar.AdjustSanityFill(jobSecurity);
     }
 
     
@@ -105,9 +107,11 @@ public class Sanity_Manager : MonoBehaviour
 
         CheckGameOver();
 
-        sanityBar.AdjustSanityFill(sanity);
+        //sanityBar.AdjustSanityFill(sanity);
 
-        jobSecBar.AdjustSanityFill(jobSecurity);
+        //jobSecBar.AdjustSanityFill(jobSecurity);
+
+        GameEventsManager.instance.gameEvents.SendSanityUpdate(sanity, jobSecurity);
 
     }
 

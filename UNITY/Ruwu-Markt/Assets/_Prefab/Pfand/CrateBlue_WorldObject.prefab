@@ -126,8 +126,8 @@ GameObject:
   - component: {fileID: 1513331698612746782}
   - component: {fileID: 5752667947621489996}
   - component: {fileID: 2561612732208786361}
-  - component: {fileID: 6373407547955198298}
-  m_Layer: 0
+  - component: {fileID: 4709081380765352269}
+  m_Layer: 6
   m_Name: CrateBlue_WorldObject
   m_TagString: CrateBlue
   m_Icon: {fileID: 0}
@@ -203,8 +203,8 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5893796051778958547}
   m_Mesh: {fileID: -1025389379727294916, guid: 9ad063c935eda9640a6651598a137504, type: 3}
---- !u!64 &6373407547955198298
-MeshCollider:
+--- !u!65 &4709081380765352269
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -221,10 +221,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  serializedVersion: 3
+  m_Size: {x: 0.6933052, y: 0.39997938, z: 0.39997938}
+  m_Center: {x: 0, y: 0.19998969, z: 0}
 --- !u!1 &5906426248810569262
 GameObject:
   m_ObjectHideFlags: 0

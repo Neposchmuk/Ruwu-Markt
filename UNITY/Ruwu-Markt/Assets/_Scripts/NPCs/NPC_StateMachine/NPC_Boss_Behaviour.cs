@@ -54,7 +54,7 @@ public class NPC_Boss_Behaviour : MonoBehaviour
 
     private void RandomizeBehaviour()
     {
-        int randomBehaviour = Random.Range(2,3); //reset lower limit to 1 after finishing debugging
+        int randomBehaviour = Random.Range(1,2); //reset lower limit to 1 after finishing debugging
 
         animator.ResetTrigger("Idle");
 
@@ -75,6 +75,8 @@ public class NPC_Boss_Behaviour : MonoBehaviour
     private void SitBehaviour()
     {
         transform.position = chair.transform.position + new Vector3(0, -0.5f, 0);
+
+        transform.localRotation = chair.transform.localRotation;
 
         animator.SetTrigger("Sit");
     }

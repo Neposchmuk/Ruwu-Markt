@@ -48,9 +48,9 @@ public class Nightmare_Smash_State : NightmareBaseState
     {
         _objectsDestroyed++;
 
-        _smashedCounter.text = $"{_objectsDestroyed}" + "/" + $"40";
+        _smashedCounter.text = $"{_objectsDestroyed}" + "/" + $"70";
 
-        if(_objectsDestroyed == 40)
+        if(_objectsDestroyed == 70)
         {
             SmashThings.OnDestroy -= CountDestroyedObjects;
             EndState();

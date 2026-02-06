@@ -3,11 +3,19 @@ using UnityEngine.UI;
 
 public class MatchSanitySpriteFill : MonoBehaviour
 {
+    enum barType
+    {
+        SANITY,
+        JOB_SECURITY
+    }
+
     public float fillSpeed = 1;
 
     float fillAmount;
 
     Sanity_Manager SM;
+
+    [SerializeField] barType type;
 
     [SerializeField]Image sprite;
 
@@ -37,23 +45,41 @@ public class MatchSanitySpriteFill : MonoBehaviour
 
     private void OnEnable()
     {
-        GameEventsManager.instance.gameEvents.onUpdateSanity += AdjustSanityFill;
+        GameEventsManager.instance.gameEvents.onSendSanityUpdate += AdjustSanityFill;
     }
 
     private void OnDisable()
     {
-        GameEventsManager.instance.gameEvents.onUpdateSanity -= AdjustSanityFill;
+        GameEventsManager.instance.gameEvents.onSendSanityUpdate -= AdjustSanityFill;
     }
 
-    public void AdjustSanityFill(int givenValue)
+    public void AdjustSanityFill(int sanityValue, int jobSecurityValue)
     {
-        Debug.Log((float)givenValue/100);
 
-        fillAmount = Mathf.Lerp(0.15f, 1f, (float)givenValue/100);
+        switch (type)
+        {
+            case barType.SANITY:
+            Debug.Log((float)sanityValue/100);
 
-        Debug.Log(fillAmount);
+            fillAmount = Mathf.Lerp(0.15f, 1f, (float)sanityValue/100);
+
+            Debug.Log(fillAmount);
 
 
-        sprite.fillAmount = fillAmount;
+            sprite.fillAmount = fillAmount;
+            break;
+
+            case barType.JOB_SECURITY:
+            Debug.Log((float)jobSecurityValue/100);
+
+            fillAmount = Mathf.Lerp(0.15f, 1f, (float)jobSecurityValue/100);
+
+            Debug.Log(fillAmount);
+
+
+            sprite.fillAmount = fillAmount;
+            break;
+        }
+        
     }
 }
