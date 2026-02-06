@@ -1,23 +1,9 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:UNITY/Ruwu-Markt/Assets/Assets/glass.fbx.meta
 guid: 9ad063c935eda9640a6651598a137504
-========
-guid: ccaafe53dc0e12b46be5d53c541fba92
->>>>>>>> Tobs-Branch(New):UNITY/Ruwu-Markt/Assets/Assets/bottleCrate.fbx.meta
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-<<<<<<<< HEAD:UNITY/Ruwu-Markt/Assets/Assets/glass.fbx.meta
-      name: Material.070
-    second: {fileID: 2100000, guid: b8d0205bdc9e7ac4e8d14cd850259eea, type: 2}
-========
-      name: Material.077
-    second: {fileID: 2100000, guid: 6e9ad856826aec245bffa901e9cf3f4b, type: 2}
->>>>>>>> Tobs-Branch(New):UNITY/Ruwu-Markt/Assets/Assets/bottleCrate.fbx.meta
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0

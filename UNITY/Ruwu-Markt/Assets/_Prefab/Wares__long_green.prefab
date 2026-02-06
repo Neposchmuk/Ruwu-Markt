@@ -48,6 +48,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: d965138429bbe4d47962968c1ce336de, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: -1812103721715802958, guid: e71daa2d9dbcee34db819bd2a2f6b8b6, type: 3}
     - target: {fileID: 919132149155446097, guid: d965138429bbe4d47962968c1ce336de, type: 3}
       propertyPath: m_Name
       value: Wares__long_green

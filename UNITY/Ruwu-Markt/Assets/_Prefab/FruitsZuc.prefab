@@ -52,6 +52,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: FruitsZuc
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1157dfa85ef3fdd4fa24e74a67dccdc0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1188256223936568184, guid: 1157dfa85ef3fdd4fa24e74a67dccdc0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6206310013055689715, guid: 1157dfa85ef3fdd4fa24e74a67dccdc0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
