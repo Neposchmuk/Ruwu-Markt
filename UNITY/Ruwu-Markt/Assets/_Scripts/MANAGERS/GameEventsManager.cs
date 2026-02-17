@@ -22,6 +22,8 @@ public class GameEventsManager : MonoBehaviour
 
     public UI_Events uiEvents;
 
+    public CheatMenu_Events cmEvents;
+
     private void Awake()
     {
         if(instance != null) 
@@ -45,5 +47,7 @@ public class GameEventsManager : MonoBehaviour
         soundEvents = new SoundEvents();
 
         uiEvents = new UI_Events();
+
+        cmEvents = new CheatMenu_Events();
     }
 }

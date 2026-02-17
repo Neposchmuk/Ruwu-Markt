@@ -86,6 +86,8 @@ namespace StarterAssets
 
 		private InputAction _specialSecondary;
 
+		private InputAction _crouch;
+
         private const float _threshold = 0.01f;
 
 		private bool IsCurrentDeviceMouse
@@ -138,6 +140,7 @@ namespace StarterAssets
 			_attack = _playerInput.actions.FindAction("Attack");
 			_specialPrimary = _playerInput.actions.FindAction("Flash");
 			_specialSecondary = _playerInput.actions.FindAction("Reload");
+			_crouch = _playerInput.actions.FindAction("Crouch");
 #else
 			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif
@@ -193,6 +196,11 @@ namespace StarterAssets
 			{
 				GameEventsManager.instance.playerEvents.PressedSpecialSecondary();
 			}
+
+			/*if (_crouch.WasPressedThisDynamicUpdate())
+			{
+				GameEventsManager.instance.cmEvents.ToggleCheatMenu();
+			}*/
 		}
 
 		private void LateUpdate()

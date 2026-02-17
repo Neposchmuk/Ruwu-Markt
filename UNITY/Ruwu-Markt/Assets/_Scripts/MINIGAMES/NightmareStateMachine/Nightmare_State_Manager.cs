@@ -37,6 +37,8 @@ public class Nightmare_State_Manager : MonoBehaviour
 
         _sanityManager = FindFirstObjectByType<Sanity_Manager>();
 
+        GameEventsManager.instance.cmEvents.onTogglePlayerInvincible += SetPlayerInvincible;
+
         switch (_dayManager.Night)
         {
             case 1:
@@ -58,6 +60,11 @@ public class Nightmare_State_Manager : MonoBehaviour
                 CurrentState = EscapeState;
                 break;
         } 
+    }
+
+    void OnDisable()
+    {
+        GameEventsManager.instance.cmEvents.onTogglePlayerInvincible -= SetPlayerInvincible;
     }
 
     void Start()
@@ -113,5 +120,10 @@ public class Nightmare_State_Manager : MonoBehaviour
         {
             EndNight(true, 10);
         }  
+    }
+
+    void SetPlayerInvincible(bool toggle)
+    {
+        
     }
 }

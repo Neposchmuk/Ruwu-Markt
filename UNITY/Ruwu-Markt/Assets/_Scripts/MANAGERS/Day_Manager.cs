@@ -26,6 +26,9 @@ public class Day_Manager : MonoBehaviour
     {
         GameEventsManager.instance.gameEvents.onSendSanityUpdate += UpdateEndingBool;
         SceneManager.sceneLoaded += SendTutorialEvent;
+
+        GameEventsManager.instance.cmEvents.onToggleIsDay += ToggleIsDay;
+        GameEventsManager.instance.cmEvents.onChangeDayNight += ChangeDayNight;
     }
 
     private void OnDestroy()
@@ -33,6 +36,8 @@ public class Day_Manager : MonoBehaviour
         GameEventsManager.instance.gameEvents.onSendSanityUpdate -= UpdateEndingBool;
         SceneManager.sceneLoaded -= SendTutorialEvent;
 
+        GameEventsManager.instance.cmEvents.onToggleIsDay -= ToggleIsDay;
+        GameEventsManager.instance.cmEvents.onChangeDayNight -= ChangeDayNight;
     }
 
     private void Start()
@@ -110,5 +115,17 @@ public class Day_Manager : MonoBehaviour
         {
             GameEventsManager.instance.uiEvents.ShowWidgetTutorial(false);
         }
+    }
+
+    void ToggleIsDay(bool toggle)
+    {
+        IsDay = toggle;
+    }
+
+    void ChangeDayNight(int day, int night)
+    {
+        Day = day;
+
+        Night = night;
     }
 }

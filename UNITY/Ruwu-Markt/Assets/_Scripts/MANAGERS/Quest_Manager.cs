@@ -48,12 +48,16 @@ public class Quest_Manager : MonoBehaviour
     {
         GameEventsManager.instance.questEvents.onUpdateQuestText += UpdateQuestText;
         GameEventsManager.instance.gameEvents.onSkipDay += SkipDay;
+
+        GameEventsManager.instance.cmEvents.onSkipDay += SkipDay;
     }
 
     private void OnDisable()
     {
         GameEventsManager.instance.questEvents.onUpdateQuestText -= UpdateQuestText;
         GameEventsManager.instance.gameEvents.onSkipDay -= SkipDay;
+
+        GameEventsManager.instance.cmEvents.onSkipDay -= SkipDay;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
